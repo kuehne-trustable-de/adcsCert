@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.trustable.ca3s</groupId>
+		<artifactId>adcsCert</artifactId>
+		<version>1.1.3</version>
+	</parent>
+
+	<artifactId>adcsCertUtil</artifactId>
+
+	<licenses>
+		<license>
+			<name>European Union Public Licence (EUPL-1.2)</name>
+			<url>https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Andreas Kuehne</name>
+			<email>kuehne@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+		<developer>
+			<name>Damian Wabisch</name>
+			<email>damian@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+	</developers>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<adcsCertAdmin.version>${adcsCert.version}</adcsCertAdmin.version>
+		<adcsCertCli.version>${adcsCert.version}</adcsCertCli.version>
+		<adcsCertEnrol.version>${adcsCert.version}</adcsCertEnrol.version>
+		
+		<certUtil.version>1.1.0</certUtil.version>
+
+		<slf4j.version>1.7.26</slf4j.version>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.trustable.ca3s</groupId>
+			<artifactId>adcsCertAdmin</artifactId>
+			<version>${adcsCertAdmin.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.trustable.ca3s</groupId>
+			<artifactId>adcsCertCli</artifactId>
+			<version>${adcsCertCli.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.trustable.ca3s</groupId>
+			<artifactId>adcsCertEnrol</artifactId>
+			<version>${adcsCertEnrol.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.trustable</groupId>
+			<artifactId>cryptoUtil</artifactId>
+			<version>${certUtil.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependencyCheck.version}</version>
+                <configuration>
+                    <cveValidForHours>12</cveValidForHours>
+                    <failBuildOnCVSS>4</failBuildOnCVSS>
+                    <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
+                    <format>HTML</format>
+                    <skip>false</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+
+</project>
