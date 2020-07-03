@@ -1,5 +1,5 @@
 # adcsCert
-Connection fntionality to acess ADCS CA functionality
+Proxy to access ADCS CA functionality remotely
 
 ca3s handles different CAs and certificate inventories. Microsoft ADCS is a quite important one as it is deployed in many organizations. The ADCSProxy act as an intermediary to provide a REST-styled interface to connect remotely to an ADCS instance, independently from invoking language and OS. 
 
