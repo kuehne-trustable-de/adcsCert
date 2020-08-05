@@ -26,7 +26,7 @@
 		</developer>
 		<developer>
 			<name>Damian Wabisch</name>
-			<email>damian@trustable.de</email>
+			<email>wabisch@trustable.de</email>
 			<organization>trustable solutions UG</organization>
 			<organizationUrl>https://trustable.de</organizationUrl>
 		</developer>
@@ -421,6 +421,30 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
             </plugin>
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-source-plugin</artifactId>
+	      <executions>
+	        <execution>
+	          <id>attach-sources</id>
+	          <goals>
+	            <goal>jar</goal>
+	          </goals>
+	        </execution>
+	      </executions>
+	    </plugin>
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-javadoc-plugin</artifactId>
+	      <executions>
+	        <execution>
+	          <id>attach-javadocs</id>
+	          <goals>
+	            <goal>jar</goal>
+	          </goals>
+	        </execution>
+	      </executions>
+	    </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
         <pluginManagement>
