@@ -197,7 +197,7 @@ public class ADCSInstanceDetailsResponse   {
 	}
 
 	/**
-	 * @param templatess the templates to set
+	 * @param templates the templates to set
 	 */
 	public void setTemplates(String[] templates) {
 		this.templates = templates;

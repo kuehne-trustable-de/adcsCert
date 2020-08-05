@@ -75,7 +75,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     
 	public ADCSNativeImpl() throws ADCSException {
 		
-        // Initialize Factoríes for COM object creation, one intended for reading and one for creation and revocation
+        // Initialize Factories for COM object creation, one intended for reading and one for creation and revocation
 		// Every factory uses a dedicated thread for processing
 		factReadOnly = new Factory();
 		factModify = new Factory();

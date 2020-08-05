@@ -69,7 +69,7 @@ public class GetCertificateResponse {
 	}
 
 	/**
-	 * @param b64caCert the template to set
+	 * @param template the template to set
 	 */
 	public void setTemplate(String template) {
 		this.template = template;
