@@ -70,14 +70,14 @@ public class AdcsRequestsApiController implements AdcsRequestsApi {
             return new ResponseEntity<RequestIdsResponse>(HttpStatus.BAD_REQUEST);
         }
         
-        if( (intLimit < 0 ) || (intLimit > 65535)) {
-            log.error("Unexpected limit '" + limit + "', expected to by >= 0 and < 65535");
+        if( (intLimit < 0 ) || (intLimit > 4096)) {
+            log.error("Unexpected limit '" + limit + "', expected to by >= 0 and < 4096");
             return new ResponseEntity<RequestIdsResponse>(HttpStatus.BAD_REQUEST);
         }
         
         if (accept != null && accept.contains("application/json")) {
             try {
-            	List<String> adcsCertResp = localADCSService.getADCSConnector().getRequesIdList(intOffset, longResolvedWhenTimestamp, longRevokedWhenTimestamp, intLimit);
+            	List<String> adcsCertResp = localADCSService.getADCSConnector().getRequesIdList(intLimit, intOffset, longResolvedWhenTimestamp, longRevokedWhenTimestamp);
 
             	RequestIdsResponse reqIdList = new RequestIdsResponse();
             	for( String id: adcsCertResp) {

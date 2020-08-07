@@ -35,9 +35,9 @@ public interface AdcsRequestsApi {
     @RequestMapping(value = "/adcsRequests/Ids",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<RequestIdsResponse> getRequestIdList(@ApiParam(value = "The number of items to skip before starting to collect the result set") @Valid @RequestParam(value = "offset", required = false) Integer offset,
-    		@ApiParam(value = "The resolvedWhen value must be after this timestamp value ") @Valid @RequestParam(value = "resolvedWhenTimestamp", required = false) Long resolvedWhenTimestamp, 
-    		@ApiParam(value = "The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset.") @Valid @RequestParam(value = "revokedWhenTimestamp", required = false) Long revokedWhenTimestamp, 
-    		@ApiParam(value = "The numbers of items to return") @Valid @RequestParam(value = "limit", required = false) Integer limit);
+    ResponseEntity<RequestIdsResponse> getRequestIdList(@ApiParam(value = "The number of items to skip before starting to collect the result set", example = "1234") @Valid @RequestParam(value = "offset", required = false) Integer offset,
+    		@ApiParam(value = "The resolvedWhen value must be after this timestamp value (with milliseconds)", example = "1577836800000") @Valid @RequestParam(value = "resolvedWhenTimestamp", required = false) Long resolvedWhenTimestamp, 
+    		@ApiParam(value = "The revokedWhen value must be after this timestamp value (with milliseconds). Either provide this parameter or resolvedWhenTimestamp or offset.", example = "1577836800000") @Valid @RequestParam(value = "revokedWhenTimestamp", required = false) Long revokedWhenTimestamp, 
+    		@ApiParam(value = "The numbers of items to be returned", example = "100") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
 }

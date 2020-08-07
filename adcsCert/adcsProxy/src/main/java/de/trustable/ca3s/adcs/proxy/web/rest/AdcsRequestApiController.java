@@ -55,6 +55,10 @@ public class AdcsRequestApiController implements AdcsRequestApi {
 	            	addCertResponseElement("Template", adcsCertResp.getTemplate(), getCertResp);
 	            	addCertResponseElement("ResolvedDate", adcsCertResp.getResolvedDate(), getCertResp);
 	            	addCertResponseElement("Cert", adcsCertResp.getB64Cert(), getCertResp);
+	            	addCertResponseElement("RevokedDate", adcsCertResp.getRevokedDate(), getCertResp);
+	            	addCertResponseElement("RevokedReason", adcsCertResp.getRevokedReason(), getCertResp);
+	            	addCertResponseElement("Disposition", adcsCertResp.getDisposition(), getCertResp);
+	            	addCertResponseElement("DispositionMessage", adcsCertResp.getDispositionMessage(), getCertResp);
 	            	
 	                return new ResponseEntity<GetCertificateResponse>(getCertResp, HttpStatus.OK);
             	} else {
@@ -80,10 +84,12 @@ public class AdcsRequestApiController implements AdcsRequestApi {
 	private void addCertResponseElement(final String elementName,
 			final String value,
 			final GetCertificateResponse getCertResp) {
-		GetCertificateResponseValues valuesItemReqId = new GetCertificateResponseValues();
-		valuesItemReqId.setName(elementName);
-		valuesItemReqId.setValue(value);
-		getCertResp.addValuesItem(valuesItemReqId );
+		if( value != null && value.trim().length() > 0) {
+			GetCertificateResponseValues valuesItemReqId = new GetCertificateResponseValues();
+			valuesItemReqId.setName(elementName);
+			valuesItemReqId.setValue(value);
+			getCertResp.addValuesItem(valuesItemReqId );
+		}
 	}
 
 }

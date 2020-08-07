@@ -27,7 +27,7 @@ public interface ADCSWinNativeConnector {
 
 	void revokeCertifcate(String serial, int reason, Date revocationDate) throws ADCSException;
 	
-	List<String> getRequesIdList(int offset, long resolvedWhenTimestamp, long revokedEffectiveWhen, int limit) throws ADCSException;
+	List<String> getRequesIdList(int limit, int offset, long resolvedWhenTimestamp, long revokedEffectiveWhen) throws ADCSException;
 
 	GetCertificateResponse getCertificateByRequestId(String reqId) throws ADCSException;
 

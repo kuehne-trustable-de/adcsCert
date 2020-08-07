@@ -56,6 +56,9 @@ spring:
 
 server:
   port: 8080
+  tls:
+    port: 8443
+    host: 0.0.0.0
 
 # ===================================================================
 # JHipster specific properties

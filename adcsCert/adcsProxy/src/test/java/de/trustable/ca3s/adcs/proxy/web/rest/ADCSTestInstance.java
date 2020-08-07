@@ -38,7 +38,7 @@ public class ADCSTestInstance implements ADCSWinNativeConnector {
 	}
 
 	@Override
-	public List<String> getRequesIdList(int offset, long resolvedWhenTimestamp, long revokedWhenTimestamp, int limit) throws ADCSException {
+	public List<String> getRequesIdList(int limit, int offset, long resolvedWhenTimestamp, long revokedWhenTimestamp) throws ADCSException {
 		
 		List<String> reqList= new ArrayList<String>();
 		
@@ -81,7 +81,10 @@ public class ADCSTestInstance implements ADCSWinNativeConnector {
 					"-----END CERTIFICATE-----\r\n", 
 					"CA3SWebServer",
 					"01.01.1970",
-					"01.01.2020");
+					"01.01.2020",
+					"3",
+					"20",
+					"Issued");
 		}
 		
 		return null;

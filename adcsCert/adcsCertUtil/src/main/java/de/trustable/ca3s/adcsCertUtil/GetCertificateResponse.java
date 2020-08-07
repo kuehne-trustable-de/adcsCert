@@ -20,15 +20,27 @@ public class GetCertificateResponse {
 	@JsonProperty("revokedDate")
     private String revokedDate = null;
 	
+	@JsonProperty("revokedReason")
+    private String revokedReason = null;
+	
+	@JsonProperty("disposition")
+    private String disposition = null;
+	
+	@JsonProperty("dispositionMessage")
+    private String dispositionMessage = null;
+	
 	
 	public GetCertificateResponse() {}
 	
-	public GetCertificateResponse(final String requestID, final String b64Cert, final String template, final String resolvedDate, final String revokedDate) {
+	public GetCertificateResponse(final String requestID, final String b64Cert, final String template, final String resolvedDate, final String revokedDate, String revokedReason, String disposition, String dispositionMessage) {
 		this.reqId = requestID;
 		this.b64Cert = b64Cert;
 		this.template = template;
 		this.resolvedDate = resolvedDate;
 		this.revokedDate = revokedDate;
+		this.revokedReason = revokedReason;
+		this.disposition = disposition;
+		this.dispositionMessage = dispositionMessage;
 		
 	}
 
@@ -102,6 +114,30 @@ public class GetCertificateResponse {
 	public void setRevokedDate(String revokedDate) {
 		this.revokedDate = revokedDate;
 	}
+
+	public String getRevokedReason() {
+		return revokedReason;
+	}
+
+	public void setRevokedReason(String revokedReason) {
+		this.revokedReason = revokedReason;
+	}
+
+	public String getDisposition() {
+		return disposition;
+	}
+
+	public String getDispositionMessage() {
+		return dispositionMessage;
+	}
+
+	public void setDisposition(String disposition) {
+		this.disposition = disposition;
+	}
+
+	public void setDispositionMessage(String dispositionMessage) {
+		this.dispositionMessage = dispositionMessage;
+	}	
 
 	
 	

@@ -26,7 +26,7 @@ public class CertificateRetrievalTest {
 		for( int i =0; i < 100; i++) {
 			try {
 				ADCSWinNativeConnector ce = new ADCSNativeImpl();
-				List<String> reqList = ce.getRequesIdList(510,  0L, 0L, 100);
+				List<String> reqList = ce.getRequesIdList(100, 510,  0L, 0L);
 				
 				for( String reqId: reqList) {
 					LOGGER.info("reqId: " + reqId);

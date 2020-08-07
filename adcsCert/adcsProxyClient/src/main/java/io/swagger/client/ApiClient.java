@@ -75,7 +75,6 @@ public class ApiClient {
     public ApiClient() {
         httpClient = new OkHttpClient();
 
-
         verifyingSsl = true;
 
         json = new JSON();

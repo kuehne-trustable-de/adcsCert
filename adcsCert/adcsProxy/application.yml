@@ -14,6 +14,14 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+logging:
+  level:
+    ROOT: INFO
+    io.github.jhipster: INFO
+    de.trustable.ca3s.adcsCertUtil: DEBUG
+    de.trustable.ca3s.adcs.proxy: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
 feign:
   hystrix:
     enabled: true
@@ -82,10 +90,15 @@ spring:
   application:
     name: adcsProxy
   profiles:
-    # The commented value for `active` can be replaced with valid Spring profiles to load.
-    # Otherwise, it will be filled in by maven when building the JAR file
-    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
-    active: #spring.profiles.active#
+    active: prod
+    include:
+      # - swagger
+      # - tls
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
   jmx:
     enabled: false
   messages:
@@ -113,6 +126,27 @@ spring:
       console-available: true
 
 server:
+  port: 8080
+#  ssl:
+#    ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+#    enabled-protocols: TLSv1.2
+#    trust-store-type: WINDOWS-ROOT
+  tls:
+    port: 8443
+    host: 0.0.0.0
+    additionalSANs: ci-adcs.ca3s.org
+    key-store-password: password
+    key-store: /NUL
+#    key-store-type: LocalADCS
+#    key-store-provider: LocalADCSProvider
+    certificate:
+      preExpiryRefreshDays: 5
+    key:
+      alias: localADCSAlias@CIWebServer-2days
+      algorithm: RSA
+      length: 2048
+    signing:
+      algorithm: SHA256withRSA
   servlet:
     context-path: /ADCSConnector
     session:
@@ -131,6 +165,18 @@ info:
 # ===================================================================
 
 jhipster:
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        # As this is the PRODUCTION configuration, you MUST change the default key, and store it securely:
+        # - In the JHipster Registry (which includes a Spring Cloud Config server)
+        # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
+        # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
+        base64-secret: YjYyYzMwZDdkY2E5ODJmNTVjYzhiYmFhNDFlNjdiYzFjNGZkNGQzZWIwYmI2MDFiOTMzMTM4NGU3NDgxOTYwZGYzYmE3ZGYxOTAzZDUxODhiZTdjYmMxZTVmZjEzODlmYjdlZDQxMDRlYjQ3ZjQzMzRkM2QwNjIwNWUyYjdjZDg=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
   clientApp:
     name: 'adcsProxy'
   # By default CORS is disabled. Uncomment to enable.
@@ -143,6 +189,13 @@ jhipster:
   #     max-age: 1800
   mail:
     from: adcsProxy@localhost
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
   swagger:
     default-include-pattern: /adcs.*
     title: adcsProxy API
@@ -164,6 +217,11 @@ jhipster:
 # ===================================================================
 
 # application:
-
-connection:
-  secret: s3cr3t
+adcs-proxy:
+  connection:
+    # secret to authenticate the incoming modifying requests
+    secret: s3cr3t
+    # using simple api key to prevent easy DOS-attack on the read interface. The database of the ADCS may collapse very soon when flooded with requests.
+    # No additional value required, it will be derived from 'secret'  
+    api-key-header-name: X-API-Key
+    use-api-key: false

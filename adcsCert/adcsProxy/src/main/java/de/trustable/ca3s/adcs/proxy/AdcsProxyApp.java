@@ -24,8 +24,10 @@ import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import de.trustable.ca3s.adcs.proxy.config.ApplicationProperties;
+import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSBundleFactory;
 import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSKeyManagerProvider;
 import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSProvider;
 import io.github.jhipster.config.DefaultProfileUtil;
@@ -91,7 +93,9 @@ public class AdcsProxyApp implements InitializingBean{
     }
 
     private static void logApplicationStartup(Environment env) {
-    	
+
+//        log.info("server.ssl.key-store : " + env.getProperty("server.ssl.key-store"));
+
         String protocol = "http";
         if (env.getProperty("server.ssl.key-store") != null) {
             protocol = "https";
@@ -107,6 +111,7 @@ public class AdcsProxyApp implements InitializingBean{
         } catch (UnknownHostException e) {
             log.warn("The host name could not be determined, using `localhost` as fallback");
         }
+        
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application '{}' is running! Access URLs:\n\t" +
                 "Local: \t\t{}://localhost:{}{}\n\t" +
@@ -127,6 +132,10 @@ public class AdcsProxyApp implements InitializingBean{
     public UndertowServletWebServerFactory embeddedServletContainerFactory() {
     	
 		
+        log.info("\n----------------------------------------------------------\n\t" +
+                 " configure Undertow for TLS" +
+                 "\n----------------------------------------------------------\n\t");
+        		
         UndertowServletWebServerFactory factory = new UndertowServletWebServerFactory();
         
         factory.addBuilderCustomizers(new UndertowBuilderCustomizer() {
@@ -135,40 +144,69 @@ public class AdcsProxyApp implements InitializingBean{
             public void customize(Undertow.Builder builder) {
 
         		int port = 8443;
-
-        		String sslPort = env.getProperty("server.ssl.port");
+        		String host = "0.0.0.0";
+        		
+        		String sslPort = env.getProperty( LocalADCSBundleFactory.KEY_STORE_PROPERTIES_PREFIX + "port");
         		if( sslPort == null) {
                 	log.debug("TLS listen port undefined, using default port #" + port);
         		}else {
         			port = Integer.parseUnsignedInt(sslPort);
         		}
 
+        		String configuredHost = env.getProperty( LocalADCSBundleFactory.KEY_STORE_PROPERTIES_PREFIX + "host");
+        		if( sslPort == null) {
+                	log.debug("TLS listen host undefined, using default value '" + host + "'");
+        		}else {
+        			host = configuredHost.trim();
+        		}
+
             	try {
 	                KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(LocalADCSKeyManagerProvider.ALGO_NAME);
 	                
-	                
+
 	                KeyStore ks = KeyStore.getInstance(LocalADCSProvider.ALGO_NAME);
 	                ks.load(null, null);
 	                
 	                keyManagerFactory.init(ks, "password".toCharArray());
+	                
 	                KeyManager[] keyManagers = keyManagerFactory.getKeyManagers();
+                	log.debug("keyManagers has #{} elements, first one is a {}", keyManagers.length, keyManagers[0].getClass().getName());
 	
 	                SSLContext sslContext;
 	                sslContext = SSLContext.getInstance("TLS");
 	                sslContext.init(keyManagers, null, null);
 	
-	                builder.addHttpsListener(port, null, sslContext);
+	                builder.addHttpsListener(port, host, sslContext);
 	//                builder.setSocketOption(Options.SSL_CLIENT_AUTH_MODE, SslClientAuthMode.REQUESTED);
 	                
 	            	log.debug("added TLS listen port {} programmatically", port);
 	                
             	} catch(GeneralSecurityException | IOException gse) {
                 	log.error("problem configuring TLS port #" + port, gse);
-            	}
+				}
             }
         });
         
         return factory;
     }
 
+    /*
+     * uncomment to dump incoming requests
+     * also ensure debug level is enabled
+     * logging:
+     *   level:
+     *     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+	 *
+    */
+    @Bean
+    public CommonsRequestLoggingFilter logFilter() {
+        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+        
+        filter.setIncludeQueryString(true);
+        filter.setIncludePayload(true);
+        filter.setMaxPayloadLength(10000);
+        filter.setIncludeHeaders(true);
+        filter.setAfterMessagePrefix("REQUEST DATA : ");
+        return filter;
+    }
 }

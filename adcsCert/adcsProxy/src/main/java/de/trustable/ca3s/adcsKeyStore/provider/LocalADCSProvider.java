@@ -15,7 +15,6 @@ public class LocalADCSProvider extends Provider {
 
 	public static final String ALGO_NAME = "LocalADCS";
 	private static final String STORE_TYPE_KEYSTORE = "Keystore";
-//	private static final String STORE_TYPE_KEYMANAGERFACTORY = "KeyManagerFactory";
 
 
 	/**
@@ -34,19 +33,14 @@ public class LocalADCSProvider extends Provider {
 
 		propProvider = propProviderArg;
 
-		String alias = propProvider.getProperty("server.ssl.key-alias", "localADCSAlias");
+		String alias = propProvider.getProperty( LocalADCSBundleFactory.KEY_STORE_PROPERTIES_PREFIX + "key.alias", "localADCSAlias");
 		keystoreImpl = new KeyStoreImpl(certMap, alias);
 		keystoreImpl.engineGetCertificate(alias);
 
-// old school variant is to put class and a type		
-//		super.put("Keystore.LocalADCS", LocalADCSKeyStoreImpl.class.getName());
-//		super.put("Keystore.LocalADCS storetype", "LocalADCS");
-
 		// the more modern variant is to put a Service		
 		putService( new ProviderService(this, STORE_TYPE_KEYSTORE, ALGO_NAME, KeyStoreImpl.class.getName()));
-//		putService( new ProviderService(this, STORE_TYPE_KEYMANAGERFACTORY, ALGO_NAME, LocalADCSKeyStoreImpl.class.getName()));
 
-		LOG.debug("registered LocalADCSKeyStoreImpl in LocalADCSProvider");
+		LOG.debug("registered KeyStoreImpl in LocalADCSProvider");
 
 		for( String prop: super.stringPropertyNames()){
 			LOG.info("provider attribute {} : '{}'", prop, this.getProperty(prop));

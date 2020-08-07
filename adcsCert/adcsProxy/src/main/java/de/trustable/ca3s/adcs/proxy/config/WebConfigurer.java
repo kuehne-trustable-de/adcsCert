@@ -16,10 +16,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSBundleFactory;
+import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSKeyManager;
+import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSKeyManagerFactory;
 import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSKeyManagerProvider;
 import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSProvider;
 import de.trustable.ca3s.adcsKeyStore.provider.SpringEnvironmentPropertyProviderImpl;
 import de.trustable.ca3s.cert.bundle.TimedRenewalCertMap;
+import de.trustable.ca3s.cert.bundle.TimedRenewalKeyManagerFactorySpi;
 import de.trustable.util.JCAManager;
 import io.github.jhipster.config.JHipsterProperties;
 
@@ -44,12 +47,15 @@ public class WebConfigurer implements ServletContextInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
     	
 		JCAManager.getInstance();
-
 		
 		SpringEnvironmentPropertyProviderImpl propProvider = new SpringEnvironmentPropertyProviderImpl(env);
 		TimedRenewalCertMap certMap = new TimedRenewalCertMap(new LocalADCSBundleFactory(propProvider));
 
+		LocalADCSKeyManager keyManager = new LocalADCSKeyManager(certMap);
+		LocalADCSKeyManagerFactory keyMangerFactory = new LocalADCSKeyManagerFactory(keyManager);
+
     	Security.addProvider(new LocalADCSProvider( certMap, propProvider));
+    	
     	Security.addProvider(new LocalADCSKeyManagerProvider(certMap));
 	
         if (env.getActiveProfiles().length != 0) {

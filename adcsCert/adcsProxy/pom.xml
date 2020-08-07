@@ -5,7 +5,7 @@
 
     <groupId>de.trustable.ca3s</groupId>
     <artifactId>adcs-proxy</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
     <name>Adcs Proxy</name>
 
@@ -103,10 +103,10 @@
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <!-- jhipster-needle-maven-property -->
         
-        <adcsUtilVersion>1.1.3</adcsUtilVersion>
+        <adcsUtilVersion>1.2.0</adcsUtilVersion>
         <certBundleVersion>1.0.0</certBundleVersion>
 
-        <cryptoUtilVersion>1.1.0</cryptoUtilVersion>
+        <cryptoUtilVersion>1.1.2</cryptoUtilVersion>
     	<nimbus-jose-jwt-version>8.2.1</nimbus-jose-jwt-version>
         
         <jna.version>4.5.2</jna.version>
@@ -830,6 +830,25 @@
             </plugins>
         </pluginManagement>
     </build>
+    
+    <distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>trustable.eu</id>
+			<name>trustable Repository</name>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<layout>default</layout>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>Snap_trustable.eu</id>
+			<name>trustable Snapshots</name>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>
+
+    
     <profiles>
         <profile>
             <id>swagger</id>

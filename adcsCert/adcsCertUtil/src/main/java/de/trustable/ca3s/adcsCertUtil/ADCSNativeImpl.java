@@ -75,7 +75,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     
 	public ADCSNativeImpl() throws ADCSException {
 		
-        // Initialize Factoríes for COM object creation, one intended for reading and one for creation and revocation
+        // Initialize Factories for COM object creation, one intended for reading and one for creation and revocation
 		// Every factory uses a dedicated thread for processing
 		factReadOnly = new Factory();
 		factModify = new Factory();
@@ -292,20 +292,21 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
         try {
 	
-	        LOG.debug("revokeCertifcate param {}, '{}', {} ", config, serial, reason );
+	        LOG.debug("revokeCertificate param {}, '{}', {} ", config, serial, reason );
 	        cCertAdmin.RevokeCertificate(config, serial, reason, revocationDate);
 	        
         } catch( RuntimeException rt) {
         	handleCOMException(rt);
         	throw rt;
 		} catch (Exception e) {
-    		LOG.info("pool handling eyxception : ", e);
+    		LOG.info("pool handling exception : ", e);
     		throw new ADCSException(e.getLocalizedMessage());
         }finally {
        		System.gc();
         }
 	}
 
+	
 	/**
 	 * retrieve a list of available request ids in the given range defined by offset and range
 	 *  
@@ -316,17 +317,67 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	 * 
 	 * @throws ADCSException
 	 */
-	public List<String> getRequesIdList(int offset, long resolvedWhenTimestamp, long revokedEffectiveWhen, int limit) throws ADCSException  {
+	public List<String> getRequesIdList(int offset, int limit) throws ADCSException  {
+		return getRequesIdList( limit, offset, 0L, 0L);
+	}
 
-        LOG.debug("getRequestList starting ");
+	
+	/**
+	 * retrieve a list of available request ids resolved after resolvedWhenMinTimestamp
+	 *  
+	 * @param resolvedWhenMinTimestamp the minimal timestamp for 'resolvedWhen' 
+	 * @param limit the maximum number of request per retrieval call 
+	 * 
+	 * @return list of request ids present in the given range
+	 * 
+	 * @throws ADCSException
+	 */
+	public List<String> getRequesIdResolvedList(long resolvedWhenMinTimestamp, int limit) throws ADCSException  {
+		return getRequesIdList( limit, 0, resolvedWhenMinTimestamp, 0L);
+	}
+
+	
+	/**
+	 * retrieve a list of available request ids revoked after revokedWhenMinTimestamp
+	 *  
+	 * @param resolvedWhenMinTimestamp the minimal timestamp for 'revokedWhen' 
+	 * @param limit the maximum number of request per retrieval call 
+	 * 
+	 * @return list of request ids present in the given range
+	 * 
+	 * @throws ADCSException
+	 */
+	public List<String> getRequesIdRevokedList(long revokedWhenMinTimestamp, int limit) throws ADCSException  {
+		return getRequesIdList( limit, 0, 0L, revokedWhenMinTimestamp);
+	}
+
+	
+	/**
+	 * retrieve a list of available request ids in the given range limited by either offset, resolvedWhenMinTimestamp or revokedWhenMinTimestamp
+	 *  
+	 * @param limit the maximum number of request per retrieval call 
+	 * @param offset the starting number for request retrieval 
+	 * @param resolvedWhenMinTimestamp the minimal timestamp for 'resolvedWhen' 
+	 * @param revokedWhenMinTimestamp the minimal timestamp for 'revokedWhen' 
+	 * 
+	 * @return list of request ids present in the given range
+	 * 
+	 * @throws ADCSException
+	 * 
+	 */
+	public List<String> getRequesIdList(int limit, int offset, long resolvedWhenMinTimestamp, long revokedWhenMinTimestamp) throws ADCSException  {
+
+        LOG.debug("getRequestList starting for #{} items limited by offset {}, resolvedWhenMinTimestamp {}, revokedWhenMinTimestamp {}", limit, offset, resolvedWhenMinTimestamp, revokedWhenMinTimestamp);
 
         List<String> retList = new ArrayList<>();
 
         try {
         	
-        	CCertView cCertView = createMultipleCertView();
+        	CCertView cCertView = createMultipleCertView(false);
 /*
 //	        Integer nColumn = 1;
+
+ 			// enable all columns (for testing / debugging purposes)
 	        Integer nColumn = cCertView.GetColumnCount(CVRC_COLUMN_SCHEMA);
 	        
 	        cCertView.SetResultColumnCount(nColumn);
@@ -334,14 +385,18 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	        	cCertView.SetResultColumn(col);
 	        }
 */	        
-        	if( resolvedWhenTimestamp > 0L) {
-        		VARIANT v = new VARIANT(new Date(resolvedWhenTimestamp));
-        		cCertView.SetRestriction(cCertView.GetColumnIndex(0, "Request.ResolvedWhen"), CVR_SEEK_GE, CVR_SORT_ASCEND, v);
-        	} else if( revokedEffectiveWhen > 0L) {
-           		VARIANT v = new VARIANT(new Date(revokedEffectiveWhen));
-           		cCertView.SetRestriction(cCertView.GetColumnIndex(0, "Request.RevokedEffectiveWhen"), CVR_SEEK_GE, CVR_SORT_ASCEND, v);
+        	if( resolvedWhenMinTimestamp > 0L) {
+        		Date resolvedDate = new Date(resolvedWhenMinTimestamp);
+        		VARIANT v = new VARIANT(resolvedDate);
+        		cCertView.SetRestriction(cCertView.GetColumnIndex(0, "Request.ResolvedWhen"), CVR_SEEK_GT, CVR_SORT_ASCEND, v);
+                LOG.debug("getRequestList limited by resolvedWhenTimestamp > {} ", resolvedDate);
+        	} else if( revokedWhenMinTimestamp > 0L) {
+           		VARIANT v = new VARIANT(new Date(revokedWhenMinTimestamp));
+           		cCertView.SetRestriction(cCertView.GetColumnIndex(0, "Request.RevokedEffectiveWhen"), CVR_SEEK_GT, CVR_SORT_ASCEND, v);
+                LOG.debug("getRequestList limited by revokedEffectiveWhen > {} ", new Date(revokedWhenMinTimestamp));
         	}else {
             	cCertView.SetRestriction(cCertView.GetColumnIndex(0, "RequestID"), CVR_SEEK_GT, CVR_SORT_ASCEND, offset);
+                LOG.debug("getRequestList limited by requestId > {} ", offset);
         	}
         	
         	IEnumCERTVIEWROW certRow = cCertView.OpenView();
@@ -355,24 +410,28 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
         		String requestId = "";
 				int col = 0;
 	        	while( cols.Next() != -1) {
-//	        		LOG.debug("#" + col + ": "+ cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) );
+	        		LOG.debug("#" + col + ": "+ cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) );
 	        		
 					if(col == 0){
 						requestId = cols.GetValue(0).toString();
+						retList.add(requestId);
 					}
-					
+/*					
 					if(col == 3){
 						// check base64 certificate column, return this id only if there is a certificate present 
 						if( (cols.GetValue(0) != null ) && (cols.GetValue(0).toString().trim().length() > 0) ){
 							retList.add(requestId);
 						}
 					}
+*/					
 	        		col++;
 	        	}
 
 				if( retList.size() >= limit) {
 	        		LOG.debug("limit (" + limit + ") of result rows reached" );
 					break;
+				}else {
+	        		LOG.debug("current result set has size #{}", retList.size() );
 				}
 
 	        }
@@ -398,26 +457,32 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	 * 
 	 * @throws ADCSException something in the communication with ADCS went wrong
 	 */
-    public CCertView createMultipleCertView() throws ADCSException {
+    public CCertView createMultipleCertView(boolean includePEM) throws ADCSException {
 
 		LOG.debug("createMultipleCertView ");
 
 	   	CCertView cCertView = createCertView();
 	    
-        Integer nColumn = 4;
+        Integer nColumn = 3;
+        if(includePEM) {
+        	nColumn++;
+        }
         cCertView.SetResultColumnCount(nColumn);
         
         int requestIDColumnIndex = cCertView.GetColumnIndex(0, "RequestID");
         int resolvedDateColumnIndex = cCertView.GetColumnIndex(0, "Request.ResolvedWhen");
         int revokedDateColumnIndex = cCertView.GetColumnIndex(0, "Request.RevokedEffectiveWhen");
-        int certColumnIndex = cCertView.GetColumnIndex(0, "RawCertificate");
         
 
         cCertView.SetResultColumn(requestIDColumnIndex);
         cCertView.SetResultColumn(resolvedDateColumnIndex);
-        cCertView.SetResultColumn(certColumnIndex);
         cCertView.SetResultColumn(revokedDateColumnIndex);
-
+        
+        if(includePEM) {
+          int certColumnIndex = cCertView.GetColumnIndex(0, "RawCertificate");
+          cCertView.SetResultColumn(certColumnIndex);
+        }
+        
 		return cCertView;
     }
 
@@ -434,9 +499,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
         	scv.getcCertView().SetRestriction(scv.getcCertView().GetColumnIndex(0, "RequestID"), CVR_SEEK_EQ, CVR_SORT_NONE, Integer.parseInt(reqId));
 
-	        GetCertificateResponse resp = getRow(scv.getCertRowPEM());
-	        
-	        return resp;
+        	return getRow(scv.getCertRowPEM());
 	        
         } catch( RuntimeException rt) {
         	handleCOMException(rt);
@@ -471,41 +534,60 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 		    	IEnumCERTVIEWCOLUMN cols = certRow.EnumCertViewColumn();
 
 				cols.Next();
-//				LOG.info("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) );
+				LOG.info("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
 				
 				String requestID = cols.GetValue(0).toString();
 				String b64Cert = "";
 				String template = "";
 				String resolvedDate = "";
 				String revokedDate = "";
+				String revokedReason = "";
+				String disposition = "";
+				String dispositionMessage = "";
 				
 				cols.Next();
-//				LOG.info("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) );
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
 				if( cols.GetValue(0) != null){
 					b64Cert = cols.GetValue(0).toString();
 				}
 				
 				cols.Next();
-//				LOG.info("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) );
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
 				if( cols.GetValue(0) != null){
 					template = cols.GetValue(0).toString();
 				}
 
 				cols.Next();
-				LOG.info("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) + " " + cols.GetValue(0).getClass().getName() );
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
 				if( cols.GetValue(0) != null){
 					resolvedDate = Long.toString(((Date)cols.GetValue(0)).getTime());
 				}
 
 				cols.Next();
-				LOG.info("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0) + " " + cols.GetValue(0).getClass().getName() );
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
 				if( cols.GetValue(0) != null){
 					revokedDate = Long.toString(((Date)cols.GetValue(0)).getTime());
 				}
 
-				
-				return new GetCertificateResponse(requestID, b64Cert, template, resolvedDate, revokedDate);
+				cols.Next();
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
+				if( cols.GetValue(0) != null){
+					revokedReason = cols.GetValue(0).toString();
+				}
 
+				cols.Next();
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
+				if( cols.GetValue(0) != null){
+					disposition = cols.GetValue(0).toString();
+				}
+
+				cols.Next();
+//				LOG.debug("" + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
+				if( cols.GetValue(0) != null){
+					dispositionMessage = cols.GetValue(0).toString();
+				}
+			
+				return new GetCertificateResponse(requestID, b64Cert, template, resolvedDate, revokedDate, revokedReason, disposition, dispositionMessage);
 		    }
 		}
 		return null;
@@ -534,20 +616,17 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
 	   	CCertView cCertView = createCertView();
 	    
-        Integer nColumn = 5;
+        Integer nColumn = 8;
         cCertView.SetResultColumnCount(nColumn);
         
-        int requestIDColumnIndex = cCertView.GetColumnIndex(0, "RequestID");
-        int pemCertColumnIndex = cCertView.GetColumnIndex(0, "RawCertificate");
-        int templateColumnIndex = cCertView.GetColumnIndex(0, "CertificateTemplate");
-        int resolvedDateColumnIndex = cCertView.GetColumnIndex(0, "Request.ResolvedWhen");
-        int revokedDateColumnIndex = cCertView.GetColumnIndex(0, "Request.RevokedEffectiveWhen");
-
-        cCertView.SetResultColumn(requestIDColumnIndex);
-        cCertView.SetResultColumn(pemCertColumnIndex);
-        cCertView.SetResultColumn(templateColumnIndex);
-        cCertView.SetResultColumn(resolvedDateColumnIndex);
-        cCertView.SetResultColumn(revokedDateColumnIndex);
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "RequestID"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "RawCertificate"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "CertificateTemplate"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "Request.ResolvedWhen"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "Request.RevokedEffectiveWhen"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "Request.RevokedReason"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "Request.Disposition"));
+        cCertView.SetResultColumn(cCertView.GetColumnIndex(0, "Request.DispositionMessage"));
 
         IEnumCERTVIEWROW certRowPEM = cCertView.OpenView();
 		

@@ -22,19 +22,16 @@ public class LocalADCSKeyManagerProvider extends Provider {
     private static final Logger LOG = LoggerFactory.getLogger(LocalADCSKeyManagerProvider.class);
 
     
-	private static TimedRenewalCertMap certMap;
+	private static TimedRenewalKeyManagerFactorySpi keyMangerFactorySpi;
 
 	public LocalADCSKeyManagerProvider(final TimedRenewalCertMap certMap) {
 		super("LocalADCSKeyManagerProvider", 1.0, "Key management provider implemented by ADCSProxy");
 		
-		LocalADCSKeyManagerProvider.certMap = certMap;
+		LocalADCSKeyManagerProvider.keyMangerFactorySpi = new TimedRenewalKeyManagerFactorySpi(ALGO_NAME, certMap);
 		
-//		super.put("Keystore.ca3s", KeyStoreImpl.class.getName());
-//		super.put("Keystore.ca3s storetype", SERVICE_NAME);
-
-		putService( new ProviderService(this, PROVIDER_TYPE_KEYMANAGER, ALGO_NAME, TimedRenewalKeyManagerFactorySpi.class.getName()));
+		putService( new ProviderService(this, PROVIDER_TYPE_KEYMANAGER, ALGO_NAME, LocalADCSKeyManagerFactory.class.getName()));
 		
-		LOG.debug("registered TimedRenewalKeyManagerFactorySpi in LocalADCSKeyManagerProvider");
+		LOG.debug("registered LocalADCSKeyManagerFactory in LocalADCSKeyManagerProvider");
 		
 		for( String prop: super.stringPropertyNames()){
 			LOG.debug("provider attribute {} : '{}'", prop, this.getProperty(prop));
@@ -56,14 +53,13 @@ public class LocalADCSKeyManagerProvider extends Provider {
 			try {
 				if( PROVIDER_TYPE_KEYMANAGER.equalsIgnoreCase(type)) {
 					if( ALGO_NAME.equalsIgnoreCase(algo)) {
-						LOG.debug("creating TimedRenewalKeyManagerFactorySpi with a LocalADCSKeyManagerProvider instance for type '{}' / algo '{}'", type, algo);
-						TimedRenewalKeyManagerFactorySpi keyManfac = new TimedRenewalKeyManagerFactorySpi(ALGO_NAME, certMap);
-						return keyManfac;
+						LOG.debug("returning LocalADCSKeyManagerProvider instance for '{}' / algo '{}'", type, algo);
+						return keyMangerFactorySpi;
 					}
 				}
 			}catch(Exception ex ) {
 				LOG.error("exception while provider instantiation", ex );
-				throw new NoSuchAlgorithmException("Error constructing provider type '" + type + "' for algo '" + algo + "' using TimedRenewalKeyManagerFactorySpi ");
+				throw new NoSuchAlgorithmException("Error retrieving LocalADCSKeyManagerProvider instance for  " + type + " / " + algo + "using LocalADCSProvider ");
 
 			}
 			throw new NoSuchAlgorithmException("No impl for " + type + " / " + algo );

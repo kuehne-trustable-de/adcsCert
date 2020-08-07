@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jna.platform.win32.COM.COMException;
 
 import de.trustable.ca3s.adcs.proxy.web.dto.ADCSInstanceDetailsResponse;
 import de.trustable.ca3s.adcsCertUtil.ADCSException;
@@ -45,6 +46,9 @@ public class AdcsInfoApiController implements AdcsInfoApi {
             } catch (ADCSException e) {
                 log.error("Problem retrieving ADCS info", e);
                 return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }catch( Exception ex) {
+                log.error("Problem retrieving ADCS info", ex);
+                return new ResponseEntity<String>("", HttpStatus.OK);
             }
         }
 

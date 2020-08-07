@@ -47,6 +47,12 @@ public class LocalADCSBundleFactory implements BundleFactory{
 
     private static final Logger LOG = LoggerFactory.getLogger(LocalADCSBundleFactory.class);
 
+    public static final String  KEY_STORE_PROPERTIES_PREFIX = "server.tls.";
+    private static final String ADDITIONAL_SANS = KEY_STORE_PROPERTIES_PREFIX + "additionalSANs";
+    private static final String KEY_LENGTH = KEY_STORE_PROPERTIES_PREFIX + "key.length";
+    private static final String KEY_ALGO = KEY_STORE_PROPERTIES_PREFIX + "key.algorithm";
+    private static final String SIGNING_ALGO = KEY_STORE_PROPERTIES_PREFIX + "signing.algorithm";
+    
     private String keyAlgo = "RSA";
     private String signingAlgo = "SHA256withRSA";
     private int keylength = 2048;
@@ -61,18 +67,18 @@ public class LocalADCSBundleFactory implements BundleFactory{
 
 	    if( propProvider != null) {
 
-		    String san = propProvider.getProperty("server.keystore.additionalSANs", "");
+		    String san = propProvider.getProperty(ADDITIONAL_SANS, "");
 		    sanArr = san.split(",");
 		    for( String additionalSan: sanArr) {
 		    	LOG.debug("additionalSan : " + additionalSan);
 		    }
 
-		    String length = propProvider.getProperty("server.keystore.key.length", "2048");
+		    String length = propProvider.getProperty(KEY_LENGTH, "2048");
 		    keylength = Integer.parseUnsignedInt(length);
 		    
-		    keyAlgo = propProvider.getProperty("server.keystore.key.algorithm", "RSA");
+		    keyAlgo = propProvider.getProperty(KEY_ALGO, "RSA");
 
-		    signingAlgo = propProvider.getProperty("server.keystore.signing.algorithm", "SHA256withRSA");
+		    signingAlgo = propProvider.getProperty(SIGNING_ALGO, "SHA256withRSA");
 
 	    }
 

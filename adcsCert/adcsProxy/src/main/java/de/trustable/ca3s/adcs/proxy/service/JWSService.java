@@ -30,7 +30,7 @@ public class JWSService {
     
     private static final Logger log = LoggerFactory.getLogger(JWSService.class);
 
-	@Value("${connection.secret:@null}")
+	@Value("${adcs-proxy.connection.secret:#{null}}")
 	private String secretPassphrase;
 	
 
@@ -66,7 +66,7 @@ public class JWSService {
 	
 	    byte[] sharedSecret = getSharedSecret() ;
 	    
-//	    log.debug("calculated secret as " + Base64.encodeBase64String(sharedSecret));
+	    log.debug("calculated secret as " + Base64.encodeBase64String(sharedSecret));
 	    
 		JWSVerifier verifier = new MACVerifier(sharedSecret);
     	if( jwsObject.verify(verifier)) {
@@ -99,36 +99,43 @@ public class JWSService {
 	    PBEKeySpec spec = new PBEKeySpec(passphrase.toCharArray(), getAPIKeySalt(), getAPIKeyIterations(), 256);
 	    SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 	    
-	    return Base64.encodeBase64String(skf.generateSecret(spec).getEncoded());
+	    String apiKey = Base64.encodeBase64String(skf.generateSecret(spec).getEncoded());
+	    
+	    log.debug("expected api key '{}' " + apiKey);
+	    
+	    return apiKey;
+
     }
 
 	private String getPassphrase() {
-		Preferences userPref = Preferences.userRoot();
-        
-        // check own registry entry first. The registry has the advantage, that the secret cannot be found in process parameter
-        String passphrase = userPref.get(PREF_KEY_SECRET, null);
-        if( passphrase == null) {
-        	
-        	// no registry entry found, use the property from command line / property file
-        	if( secretPassphrase != null && (secretPassphrase.trim().length() >= 6)) {
-        		passphrase = secretPassphrase;
-        	} else {
+    	String passphrase = "";
 
-            	// no property from command line / property file available or too short
-        		if(secretPassphrase == null) {
-    	    	    log.warn("connection secret not available!", PREF_KEY_SECRET);
-        		} else if(secretPassphrase.trim().length() >= 6) {
-    	    	    log.warn("connection secret too short ( < 6 characters) !", PREF_KEY_SECRET);
-        		}
+	    log.debug("connection secret provided from command line / property file : '{}'", secretPassphrase);
 
+    	if( secretPassphrase != null && (secretPassphrase.trim().length() < 6)) {
+    		
+    	    log.warn("connection secret provided from command line / property file too short!");
+    	}
+
+    	if( secretPassphrase != null ) {
+    		// check content from command line / property file 
+    		passphrase = secretPassphrase;
+    	    log.info("connection secret provided from command line / property file. To take advantage of the registry key '{}', insert your secret in registry folder 'Computer\\\\HKEY_CURRENT_USER\\\\Software\\\\JavaSoft\\\\Prefs' !", PREF_KEY_SECRET);
+        } else {
+    		Preferences userPref = Preferences.userRoot();
+
+    		// check own registry entry. The registry has the advantage, that the secret cannot be found in process parameter
+	        passphrase = userPref.get(PREF_KEY_SECRET, null);
+	        if( passphrase == null) {
+	        	
+   	    	    log.warn("connection secret not available in registry entry '{}' !", PREF_KEY_SECRET);
         		passphrase = createRandomString();
 	        	userPref.put(PREF_KEY_SECRET, passphrase);
 	    	    log.info("new registry key '{}' populated with random secret", PREF_KEY_SECRET);
+        	}else {
+        	    log.debug("connection secret provided from registry : '{}'", passphrase);
         	}
-        } else {
-    	    log.info("connection secret provided by registry key '{}', taking precedence over connection secret from command line / property file !", PREF_KEY_SECRET);
-    	    log.info("See registry at 'Computer\\HKEY_CURRENT_USER\\Software\\JavaSoft\\Prefs'");
-        }
+    	}
 		return passphrase;
 	}
 
