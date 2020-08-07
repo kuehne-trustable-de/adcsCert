@@ -163,7 +163,6 @@ public class AdcsProxyApp implements InitializingBean{
             	try {
 	                KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(LocalADCSKeyManagerProvider.ALGO_NAME);
 	                
-
 	                KeyStore ks = KeyStore.getInstance(LocalADCSProvider.ALGO_NAME);
 	                ks.load(null, null);
 	                
@@ -197,7 +196,6 @@ public class AdcsProxyApp implements InitializingBean{
      *   level:
      *     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 	 *
-    */
     @Bean
     public CommonsRequestLoggingFilter logFilter() {
         CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
@@ -209,4 +207,5 @@ public class AdcsProxyApp implements InitializingBean{
         filter.setAfterMessagePrefix("REQUEST DATA : ");
         return filter;
     }
+    */
 }
