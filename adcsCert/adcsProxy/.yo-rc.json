@@ -4,7 +4,7 @@
       "packageName": "de.trustable.ca3s.adcs.proxy",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "6.8.0",
+    "jhipsterVersion": "6.10.5",
     "applicationType": "microservice",
     "baseName": "adcsProxy",
     "packageName": "de.trustable.ca3s.adcs.proxy",
