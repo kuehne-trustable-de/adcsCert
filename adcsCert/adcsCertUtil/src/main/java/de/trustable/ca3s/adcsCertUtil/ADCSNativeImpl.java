@@ -87,8 +87,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	/**
 	 * @param fact
 	 * @return
-	 * @throws NoLocalADCSException
-	 * @throws ADCSException
+	 * @throws NoLocalADCSException there is no ADCS instnace available
+	 * @throws ADCSException inormation about problems
 	 */
 	private String getConfig(Factory fact) throws NoLocalADCSException, ADCSException {
 		CCertConfig cCertConf = fact.createObject(CCertConfig.class);
@@ -122,10 +122,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 		return config;
 	}
 
-	/**
-	 * 
-	 * @return
-	 * @throws ADCSException
+	/* (non-Javadoc)
+	 * @see de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector#getInfo()
 	 */
 	@Override
 	public String getInfo() throws ADCSException  {
@@ -233,8 +231,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	 * @param config name of the instance to be addressed
 	 * @param cCertReq COM request object 
 	 * @return base64 encoded certificate
-	 * 
-	 * @throws ADCSException
+	 *
+	 * @throws ADCSException inormation about problems
 	 */
 	private String resubmitRequest(final Factory fact, final String config, final CCertRequest cCertReq) throws ADCSException {
 
@@ -314,8 +312,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	 * @param limit the maximum number of request per retrieval call 
 	 * 
 	 * @return list of request ids present in the given range
-	 * 
-	 * @throws ADCSException
+	 *
+	 * @throws ADCSException inormation about problems
 	 */
 	public List<String> getRequesIdList(int offset, int limit) throws ADCSException  {
 		return getRequesIdList( limit, offset, 0L, 0L);
@@ -329,8 +327,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	 * @param limit the maximum number of request per retrieval call 
 	 * 
 	 * @return list of request ids present in the given range
-	 * 
-	 * @throws ADCSException
+	 *
+	 * @throws ADCSException inormation about problems
 	 */
 	public List<String> getRequesIdResolvedList(long resolvedWhenMinTimestamp, int limit) throws ADCSException  {
 		return getRequesIdList( limit, 0, resolvedWhenMinTimestamp, 0L);
@@ -340,12 +338,12 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	/**
 	 * retrieve a list of available request ids revoked after revokedWhenMinTimestamp
 	 *  
-	 * @param resolvedWhenMinTimestamp the minimal timestamp for 'revokedWhen' 
+	 * @param revokedWhenMinTimestamp the minimal timestamp for 'revokedWhen'
 	 * @param limit the maximum number of request per retrieval call 
 	 * 
 	 * @return list of request ids present in the given range
-	 * 
-	 * @throws ADCSException
+	 *
+	 * @throws ADCSException inormation about problems
 	 */
 	public List<String> getRequesIdRevokedList(long revokedWhenMinTimestamp, int limit) throws ADCSException  {
 		return getRequesIdList( limit, 0, 0L, revokedWhenMinTimestamp);
@@ -361,8 +359,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 	 * @param revokedWhenMinTimestamp the minimal timestamp for 'revokedWhen' 
 	 * 
 	 * @return list of request ids present in the given range
-	 * 
-	 * @throws ADCSException
+	 *
+	 * @throws ADCSException inormation about problems
 	 * 
 	 */
 	public List<String> getRequesIdList(int limit, int offset, long resolvedWhenMinTimestamp, long revokedWhenMinTimestamp) throws ADCSException  {
@@ -450,14 +448,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
         return retList;
 	}
 
-	/**
-	 * build a simple view of three columns
-	 * 
-	 * @return the CCertView object configured to hold the columns 
-	 * 
-	 * @throws ADCSException something in the communication with ADCS went wrong
-	 */
-    public CCertView createMultipleCertView(boolean includePEM) throws ADCSException {
+    CCertView createMultipleCertView(boolean includePEM) throws ADCSException {
 
 		LOG.debug("createMultipleCertView ");
 
@@ -486,8 +477,9 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 		return cCertView;
     }
 
-	/**
-	 * 
+
+	/* (non-Javadoc)
+	 * @see de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector#getCertificateByRequestId(java.lang.String)
 	 */
 	public GetCertificateResponse getCertificateByRequestId(final String reqId) throws ADCSException  {
 
@@ -515,12 +507,6 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
         
 	}
 
-
-
-	/**
-	 * @param cCertView
-	 * @return
-	 */
 	private GetCertificateResponse getRow(IEnumCERTVIEWROW certRow) {
 		
 		if( certRow != null) {
@@ -644,11 +630,10 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     }
 
 
-    /**
-     * 
-     * @return
-     * @throws ADCSException
-     */
+	/* (non-Javadoc)
+	 * @see de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector#getCATemplates()
+	 */
+	@Override
     public String[] getCATemplates() throws ADCSException {
     	CCertRequest certReq = factReadOnly.createObject(CCertRequest.class);
     	
@@ -668,135 +653,120 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     		return new String[0];
     	}
     }
-    
-   
-	    /**
-	     * Get a set of details regarding the represented ADCS instance
-	     * 
-	     * For details about the used API see
-	     * https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wcce/7c715f9f-db50-41c3-abfc-0021c6390d4e
-	     * 
-	     * The JNI parameter are slightly different from the method signature prpopsed by the documentation. When implementing additional calls 
-	     * check back with the proven code below.
-	     * 
-	     * @return
-	     * @throws ADCSException
-	     */
-	    public ADCSInstanceDetails getCAInstanceDetails() throws ADCSException {
-	    	
-	    	ADCSInstanceDetails aiDetails = new ADCSInstanceDetails();
-	    	
-	    	CCertRequest certReq = factReadOnly.createObject(CCertRequest.class);
-	    	
-	    	try {
-	    		String info = getInfo();
-	    		
-		    	String caName = certReq.GetCAProperty(info, CR_PROP_CANAME, 0, PROPTYPE_STRING, 0).toString();
-		    	aiDetails.setCaName(caName);
-		    	
-		    	Integer type = (Integer) certReq.GetCAProperty(info, CR_PROP_CATYPE, 0, PROPTYPE_LONG, 0);
-		    	if( CA_TYPE_ROOT == type ) {
-			    	aiDetails.setCaType(CA_DETAILS_TYPE_ROOT);
-		    	}else if( CA_TYPE_INTERMEDIATE == type ) {
-			    	aiDetails.setCaType(CA_DETAILS_TYPE_INTERMEDIATE);
-		    	}else {
-			    	aiDetails.setCaType("Unknown type " + type);
-		    	}
 
-
-		    	try {
-			    	String fileVersion = certReq.GetCAProperty(info, CR_PROP_FILEVERSION, 0, PROPTYPE_STRING, 0).toString();
-			    	aiDetails.setFileVersion(fileVersion);
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for fileVersion: " + ex.getMessage() );
-		    	}
-		    	
-		    	try {
-			    	String productVersion = certReq.GetCAProperty(info, CR_PROP_PRODUCTVERSION, 0, PROPTYPE_STRING, 0).toString();
-			    	aiDetails.setProductVersion(productVersion);
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for productVersion: " + ex.getMessage() );
-		    	}
-		    	
-		    	try {
-			    	String parentCA = certReq.GetCAProperty(info, CR_PROP_PARENTCA, 0, PROPTYPE_STRING, 0).toString();
-			    	aiDetails.setParentCaName(parentCA);
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for parentCA: " + ex.getMessage() );
-		    	}
-		    	
-		    	try {
-			    	String dnsName = certReq.GetCAProperty(info, CR_PROP_DNSNAME, 0, PROPTYPE_STRING, 0).toString();
-			    	aiDetails.setDnsName(dnsName); 
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for dnsName: " + ex.getMessage() );
-		    	}
-		    	
-		    	try {
-			    	Integer count = (Integer) certReq.GetCAProperty(info, CR_PROP_CASIGCERTCOUNT, 0, PROPTYPE_LONG, 0);
-			    	
-			    	String[] sigCertArr = new String[count];
-			    	
-			    	for( int i = 0; i < count; i++) {
-			    		sigCertArr[i] = certReq.GetCAProperty(info, CR_PROP_CASIGCERT, i, PROPTYPE_BINARY, 0).toString().replaceAll("\\r\\n", "\\n");
-			    	}
-			    	aiDetails.setSigningCerts(sigCertArr);;
-			    	
-			    	String[] sigChainArr = new String[count];
-			    	
-			    	for( int i = 0; i < count; i++) {
-			    		sigChainArr[i] = certReq.GetCAProperty(info, CR_PROP_CASIGCERTCHAIN, i, PROPTYPE_BINARY, 0).toString().replaceAll("\\r\\n", "\\n");
-			    	}
-			    	aiDetails.setSigningCertChains(sigChainArr);
-			    	
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for signing certificates / chains: " + ex.getMessage() );
-		    	}
-		    	
-		    	try {
-			    	String templateString = certReq.GetCAProperty(info, CR_PROP_TEMPLATES, 0, PROPTYPE_STRING, 0).toString();
-			    	if( templateString != null ) {
-				        String[] pairArr =  templateString.split("\n");
-				        String[] nameArr = new String[pairArr.length / 2];
-				        String[] oidArr = new String[pairArr.length / 2];
-				        for( int i = 0, j = 0; i < pairArr.length; i+=2, j++) {
-				        	nameArr[j] = pairArr[i];
-				        	oidArr[j] = pairArr[i+1];
-				        }
-				        
-				        aiDetails.setTemplates(nameArr);
-				        aiDetails.setTemplateOIDs(oidArr);
-			    	}
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for templates: " + ex.getMessage() );
-		    	}
-		    	
-		        
-		    	try {
-			    	String templateString = certReq.GetCAProperty(info, CR_PROP_SUBJECTTEMPLATE_OIDS, 0, PROPTYPE_STRING, 0).toString();
-			    	if( templateString != null ) {
-				        aiDetails.setSubjectTemplateOIDs(templateString.split("\n"));
-			    	}
-		    	} catch(Exception ex ) {
-		    		LOG.debug("problem calling for subjectTemplateOIDs: " + ex.getMessage() );
-		    	}
-		    	
-		        
-		        
-	    	}catch( Exception e ) {
-	    		LOG.warn("problem retrieving data for getCAInstanceDetails", e);
-	    		throw new ADCSException(e.getMessage());
-	    	}
-	    	
-	    	return aiDetails;
-	    }
-	    
-	  
-	/**
-	 * @param rt
-	 * @throws OODBConnectionsADCSException
-	 * @throws ADCSException
+	/* (non-Javadoc)
+	 * @see de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector#getCAInstanceDetails()
 	 */
+	@Override
+	public ADCSInstanceDetails getCAInstanceDetails() throws ADCSException {
+
+		ADCSInstanceDetails aiDetails = new ADCSInstanceDetails();
+
+		CCertRequest certReq = factReadOnly.createObject(CCertRequest.class);
+
+		try {
+			String info = getInfo();
+
+			String caName = certReq.GetCAProperty(info, CR_PROP_CANAME, 0, PROPTYPE_STRING, 0).toString();
+			aiDetails.setCaName(caName);
+
+			Integer type = (Integer) certReq.GetCAProperty(info, CR_PROP_CATYPE, 0, PROPTYPE_LONG, 0);
+			if( CA_TYPE_ROOT == type ) {
+				aiDetails.setCaType(CA_DETAILS_TYPE_ROOT);
+			}else if( CA_TYPE_INTERMEDIATE == type ) {
+				aiDetails.setCaType(CA_DETAILS_TYPE_INTERMEDIATE);
+			}else {
+				aiDetails.setCaType("Unknown type " + type);
+			}
+
+
+			try {
+				String fileVersion = certReq.GetCAProperty(info, CR_PROP_FILEVERSION, 0, PROPTYPE_STRING, 0).toString();
+				aiDetails.setFileVersion(fileVersion);
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for fileVersion: " + ex.getMessage() );
+			}
+
+			try {
+				String productVersion = certReq.GetCAProperty(info, CR_PROP_PRODUCTVERSION, 0, PROPTYPE_STRING, 0).toString();
+				aiDetails.setProductVersion(productVersion);
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for productVersion: " + ex.getMessage() );
+			}
+
+			try {
+				String parentCA = certReq.GetCAProperty(info, CR_PROP_PARENTCA, 0, PROPTYPE_STRING, 0).toString();
+				aiDetails.setParentCaName(parentCA);
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for parentCA: " + ex.getMessage() );
+			}
+
+			try {
+				String dnsName = certReq.GetCAProperty(info, CR_PROP_DNSNAME, 0, PROPTYPE_STRING, 0).toString();
+				aiDetails.setDnsName(dnsName);
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for dnsName: " + ex.getMessage() );
+			}
+
+			try {
+				Integer count = (Integer) certReq.GetCAProperty(info, CR_PROP_CASIGCERTCOUNT, 0, PROPTYPE_LONG, 0);
+
+				String[] sigCertArr = new String[count];
+
+				for( int i = 0; i < count; i++) {
+					sigCertArr[i] = certReq.GetCAProperty(info, CR_PROP_CASIGCERT, i, PROPTYPE_BINARY, 0).toString().replaceAll("\\r\\n", "\\n");
+				}
+				aiDetails.setSigningCerts(sigCertArr);;
+
+				String[] sigChainArr = new String[count];
+
+				for( int i = 0; i < count; i++) {
+					sigChainArr[i] = certReq.GetCAProperty(info, CR_PROP_CASIGCERTCHAIN, i, PROPTYPE_BINARY, 0).toString().replaceAll("\\r\\n", "\\n");
+				}
+				aiDetails.setSigningCertChains(sigChainArr);
+
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for signing certificates / chains: " + ex.getMessage() );
+			}
+
+			try {
+				String templateString = certReq.GetCAProperty(info, CR_PROP_TEMPLATES, 0, PROPTYPE_STRING, 0).toString();
+				if( templateString != null ) {
+					String[] pairArr =  templateString.split("\n");
+					String[] nameArr = new String[pairArr.length / 2];
+					String[] oidArr = new String[pairArr.length / 2];
+					for( int i = 0, j = 0; i < pairArr.length; i+=2, j++) {
+						nameArr[j] = pairArr[i];
+						oidArr[j] = pairArr[i+1];
+					}
+
+					aiDetails.setTemplates(nameArr);
+					aiDetails.setTemplateOIDs(oidArr);
+				}
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for templates: " + ex.getMessage() );
+			}
+
+
+			try {
+				String templateString = certReq.GetCAProperty(info, CR_PROP_SUBJECTTEMPLATE_OIDS, 0, PROPTYPE_STRING, 0).toString();
+				if( templateString != null ) {
+					aiDetails.setSubjectTemplateOIDs(templateString.split("\n"));
+				}
+			} catch(Exception ex ) {
+				LOG.debug("problem calling for subjectTemplateOIDs: " + ex.getMessage() );
+			}
+
+
+
+		}catch( Exception e ) {
+			LOG.warn("problem retrieving data for getCAInstanceDetails", e);
+			throw new ADCSException(e.getMessage());
+		}
+
+		return aiDetails;
+	}
+
 	private void handleCOMException(RuntimeException rt) throws OODBConnectionsADCSException, ADCSException {
 		COMException comEx = getCOMException(rt);
 		if( comEx != null) {
@@ -825,12 +795,6 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
 	}
 
-
-	/**
-	 * 
-	 * @param ex
-	 * @return
-	 */
 	COMException getCOMException(Throwable ex) {
 		
 		for( int i=0; i < 10;i++) {
@@ -846,7 +810,5 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 		}
 		return null;
 	}
-
-	
 
 }
