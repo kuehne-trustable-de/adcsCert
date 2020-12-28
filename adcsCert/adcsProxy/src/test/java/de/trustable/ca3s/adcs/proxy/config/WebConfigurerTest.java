@@ -61,6 +61,7 @@ public class WebConfigurerTest {
         env.setProperty("adcs.implementation.nativeInterface", "adcsProxyTest");
         webConfigurer.onStartup(servletContext);
 
+
     }
 
     @Test
@@ -68,6 +69,7 @@ public class WebConfigurerTest {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT);
         env.setProperty("adcs.implementation.nativeInterface", "adcsProxyTest");
         webConfigurer.onStartup(servletContext);
+
 
     }
 */

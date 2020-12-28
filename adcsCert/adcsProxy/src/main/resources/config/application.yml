@@ -150,7 +150,7 @@ jhipster:
     version: 1.2.0-oas3
     terms-of-service-url:
     contact-name:
-    contact-url: 
+    contact-url:
     contact-email: kuehne@trustable.de
     license: Apache License, Version 2.0
     license-url: https://www.apache.org/licenses/LICENSE-2.0.txt
