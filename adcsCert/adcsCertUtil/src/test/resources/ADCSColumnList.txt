@@ -1,0 +1,284 @@
+17:57:30.522 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RequestID 1 1016
+17:57:30.522 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawCertificate 3 -----BEGIN CERTIFICATE-----
+17:57:30.522 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateHash 4 d3 49 2e ff 57 ba dd d7 f3 47 65 ca 04 48 36 a1 90 08 1a 9a
+17:57:30.522 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateTemplate 4 1.3.6.1.4.1.311.21.8.14452742.2507885.2510237.829813.10394016.243.2606716.5979865
+17:57:30.522 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EnrollmentFlags 1 0
+17:57:30.522 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GeneralFlags 1 131649
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PrivatekeyFlags 1 16842752
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SerialNumber 4 14000003f8e69a615d7a946f8c0000000003f8
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - IssuerNameID 1 0
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotBefore 2 Fri Aug 30 12:48:47 CEST 2019
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotAfter 2 Sun Aug 29 12:48:47 CEST 2021
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SubjectKeyIdentifier 4 7c 03 10 da 80 3c 5c c0 32 3e d5 e2 1d 3b d1 a1 79 32 2e b5
+17:57:30.537 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKey 3 -----BEGIN CERTIFICATE-----
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyLength 1 2048
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyAlgorithm 4 1.2.840.113549.1.1.1
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKeyAlgorithmParameters 3 -----BEGIN CERTIFICATE-----
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublishExpiredCertInCRL 1 0
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UPN 4 null
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DistinguishedName 4 CN=req1567169896207, OU=Test, O=trustable Ltd, C=DE
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Country 4 DE
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Organization 4 trustable Ltd
+17:57:30.553 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - OrgUnit 4 Test
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CommonName 4 req1567169896207
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Locality 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - State 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Title 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GivenName 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Initials 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SurName 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DomainComponent 4 null
+17:57:30.569 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EMail 4 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - StreetAddress 4 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredName 4 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredAddress 4 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DeviceSerialNumber 4 null
+
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - ret : 1017, row : 1016
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestID 1 1017
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawRequest 3 -----BEGIN CERTIFICATE-----
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawArchivedKey 3 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.KeyRecoveryHashes 4 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawOldCertificate 3 null
+17:57:30.584 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestAttributes 4
+CertificateTemplate:CA3SWebServer
+foo:bar
+ccm:CA3S-MS-SUB-CA1.CA3S.TEST
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestType 1 262400
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestFlags 1 36
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.StatusCode 1 0
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Disposition 1 20
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DispositionMessage 4 Issued
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SubmittedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.ResolvedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedWhen 2 null
+17:57:30.600 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedEffectiveWhen 2 null
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedReason 1 null
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequesterName 4 CA3S\Administrator
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.CallerName 4 CA3S\Administrator
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SignerPolicies 4 null
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SignerApplicationPolicies 4 null
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Officer 1 null
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DistinguishedName 4 CN=req1567169896207, O=trustable Ltd, OU=Test, C=DE
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.616 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Country 4 DE
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Organization 4 trustable Ltd
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.OrgUnit 4 Test
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.CommonName 4 req1567169896207
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Locality 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.State 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Title 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.GivenName 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Initials 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SurName 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DomainComponent 4 null
+17:57:30.632 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EMail 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.StreetAddress 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.UnstructuredName 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.UnstructuredAddress 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DeviceSerialNumber 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.AttestationChallenge 3 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EndorsementKeyHash 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EndorsementCertificateHash 4 null
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawPrecertificate 3 null
+
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RequestID 1 1017
+17:57:30.647 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawCertificate 3 -----BEGIN CERTIFICATE-----
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateHash 4 f5 c8 d4 64 d8 52 fe 87 9f 88 cd 5e 84 76 b6 f9 64 5f 05 c1
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateTemplate 4 1.3.6.1.4.1.311.21.8.14452742.2507885.2510237.829813.10394016.243.2606716.5979865
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EnrollmentFlags 1 0
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GeneralFlags 1 131649
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PrivatekeyFlags 1 16842752
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SerialNumber 4 14000003f920ce415a15747e1f0000000003f9
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - IssuerNameID 1 0
+17:57:30.662 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotBefore 2 Fri Aug 30 12:48:47 CEST 2019
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotAfter 2 Sun Aug 29 12:48:47 CEST 2021
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SubjectKeyIdentifier 4 7c 03 10 da 80 3c 5c c0 32 3e d5 e2 1d 3b d1 a1 79 32 2e b5
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKey 3 -----BEGIN CERTIFICATE-----
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyLength 1 2048
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyAlgorithm 4 1.2.840.113549.1.1.1
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKeyAlgorithmParameters 3 -----BEGIN CERTIFICATE-----
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublishExpiredCertInCRL 1 0
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UPN 4 null
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DistinguishedName 4 CN=req1567169896207, OU=Test, O=trustable Ltd, C=DE
+17:57:30.678 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Country 4 DE
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Organization 4 trustable Ltd
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - OrgUnit 4 Test
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CommonName 4 req1567169896207
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Locality 4 null
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - State 4 null
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Title 4 null
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GivenName 4 null
+17:57:30.694 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Initials 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SurName 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DomainComponent 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EMail 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - StreetAddress 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredName 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredAddress 4 null
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DeviceSerialNumber 4 null
+
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - ret : 1018, row : 1017
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestID 1 1018
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawRequest 3 -----BEGIN CERTIFICATE-----
+17:57:30.710 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawArchivedKey 3 null
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.KeyRecoveryHashes 4 null
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawOldCertificate 3 null
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestAttributes 4
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestType 1 262400
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestFlags 1 36
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.StatusCode 1 0
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Disposition 1 20
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DispositionMessage 4 Issued
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SubmittedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+17:57:30.725 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.ResolvedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedWhen 2 null
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedEffectiveWhen 2 null
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedReason 1 null
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequesterName 4 CA3S\Administrator
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.CallerName 4 CA3S\Administrator
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SignerPolicies 4 null
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SignerApplicationPolicies 4 null
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Officer 1 null
+17:57:30.742 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DistinguishedName 4 CN=req1567169896207, O=trustable Ltd, OU=Test, C=DE
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Country 4 DE
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Organization 4 trustable Ltd
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.OrgUnit 4 Test
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.CommonName 4 req1567169896207
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Locality 4 null
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.State 4 null
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Title 4 null
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.GivenName 4 null
+17:57:30.756 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Initials 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SurName 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DomainComponent 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EMail 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.StreetAddress 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.UnstructuredName 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.UnstructuredAddress 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DeviceSerialNumber 4 null
+17:57:30.774 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.AttestationChallenge 3 null
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EndorsementKeyHash 4 null
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EndorsementCertificateHash 4 null
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawPrecertificate 3 null
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RequestID 1 1018
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawCertificate 3 -----BEGIN CERTIFICATE-----
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateHash 4 b5 b7 e0 81 32 3f 2f 05 f5 f7 55 0e c5 1c a3 a9 3c 21 11 c9
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateTemplate 4 1.3.6.1.4.1.311.21.8.14452742.2507885.2510237.829813.10394016.243.2606716.5979865
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EnrollmentFlags 1 0
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GeneralFlags 1 131649
+17:57:30.787 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PrivatekeyFlags 1 16842752
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SerialNumber 4 14000003fa857abb02036c6f350000000003fa
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - IssuerNameID 1 0
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotBefore 2 Fri Aug 30 12:48:47 CEST 2019
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotAfter 2 Sun Aug 29 12:48:47 CEST 2021
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SubjectKeyIdentifier 4 7c 03 10 da 80 3c 5c c0 32 3e d5 e2 1d 3b d1 a1 79 32 2e b5
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKey 3 -----BEGIN CERTIFICATE-----
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyLength 1 2048
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyAlgorithm 4 1.2.840.113549.1.1.1
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKeyAlgorithmParameters 3 -----BEGIN CERTIFICATE-----
+17:57:30.803 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublishExpiredCertInCRL 1 0
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UPN 4 null
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DistinguishedName 4 CN=req1567169896207, OU=Test, O=trustable Ltd, C=DE
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Country 4 DE
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Organization 4 trustable Ltd
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - OrgUnit 4 Test
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CommonName 4 req1567169896207
+17:57:30.820 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Locality 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - State 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Title 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GivenName 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Initials 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SurName 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DomainComponent 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EMail 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - StreetAddress 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredName 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredAddress 4 null
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DeviceSerialNumber 4 null
+
+17:57:30.835 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - ret : 1019, row : 1018
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestID 1 1019
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawRequest 3 -----BEGIN CERTIFICATE-----
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawArchivedKey 3 null
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.KeyRecoveryHashes 4 null
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawOldCertificate 3 null
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestAttributes 4
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestType 1 262400
+17:57:30.851 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequestFlags 1 36
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.StatusCode 1 0
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Disposition 1 20
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DispositionMessage 4 Issued
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SubmittedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.ResolvedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedWhen 2 null
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedEffectiveWhen 2 null
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RevokedReason 1 null
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RequesterName 4 CA3S\Administrator
+17:57:30.866 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.CallerName 4 CA3S\Administrator
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SignerPolicies 4 null
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SignerApplicationPolicies 4 null
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Officer 1 null
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DistinguishedName 4 CN=req1567169896207, O=trustable Ltd, OU=Test, C=DE
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Country 4 DE
+17:57:30.882 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Organization 4 trustable Ltd
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.OrgUnit 4 Test
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.CommonName 4 req1567169896207
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Locality 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.State 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Title 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.GivenName 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.Initials 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.SurName 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DomainComponent 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EMail 4 null
+17:57:30.897 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.StreetAddress 4 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.UnstructuredName 4 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.UnstructuredAddress 4 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.DeviceSerialNumber 4 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.AttestationChallenge 3 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EndorsementKeyHash 4 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.EndorsementCertificateHash 4 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Request.RawPrecertificate 3 null
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RequestID 1 1019
+17:57:30.913 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawCertificate 3 -----BEGIN CERTIFICATE-----
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateHash 4 17 0c 0a 94 bd 2a 7f 32 82 bd 50 2b 1f df 9f d5 d2 8b d7 d7
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CertificateTemplate 4 1.3.6.1.4.1.311.21.8.14452742.2507885.2510237.829813.10394016.243.2606716.5979865
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EnrollmentFlags 1 0
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GeneralFlags 1 131649
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PrivatekeyFlags 1 16842752
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SerialNumber 4 14000003fb9171c1214de902250000000003fb
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - IssuerNameID 1 0
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotBefore 2 Fri Aug 30 12:48:47 CEST 2019
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - NotAfter 2 Sun Aug 29 12:48:47 CEST 2021
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SubjectKeyIdentifier 4 7c 03 10 da 80 3c 5c c0 32 3e d5 e2 1d 3b d1 a1 79 32 2e b5
+17:57:30.928 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKey 3 -----BEGIN CERTIFICATE-----
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyLength 1 2048
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublicKeyAlgorithm 4 1.2.840.113549.1.1.1
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawPublicKeyAlgorithmParameters 3 -----BEGIN CERTIFICATE-----
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - PublishExpiredCertInCRL 1 0
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UPN 4 null
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DistinguishedName 4 CN=req1567169896207, OU=Test, O=trustable Ltd, C=DE
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - RawName 3 -----BEGIN CERTIFICATE-----
+17:57:30.945 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Country 4 DE
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Organization 4 trustable Ltd
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - OrgUnit 4 Test
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - CommonName 4 req1567169896207
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Locality 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - State 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Title 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - GivenName 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - Initials 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - SurName 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DomainComponent 4 null
+17:57:30.960 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - EMail 4 null
+17:57:30.976 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - StreetAddress 4 null
+17:57:30.976 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredName 4 null
+17:57:30.976 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - UnstructuredAddress 4 null
+17:57:30.976 [main] INFO de.trustable.ca3s.adcsCertUtil.CertificateManagement - DeviceSerialNumber 4 null
+1

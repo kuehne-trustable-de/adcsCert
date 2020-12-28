@@ -1,0 +1,83 @@
+Request.RequestID 1 1017
+Request.RawRequest 3 -----BEGIN CERTIFICATE-----
+Request.RawArchivedKey 3 null
+Request.KeyRecoveryHashes 4 null
+Request.RawOldCertificate 3 null
+Request.RequestAttributes 4
+	CertificateTemplate:CA3SWebServer
+	foo:bar
+	ccm:CA3S-MS-SUB-CA1.CA3S.TEST
+Request.RequestType 1 262400
+Request.RequestFlags 1 36
+Request.StatusCode 1 0
+Request.Disposition 1 20
+Request.DispositionMessage 4 Issued
+Request.SubmittedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+Request.ResolvedWhen 2 Fri Aug 30 12:58:47 CEST 2019
+Request.RevokedWhen 2 null
+Request.RevokedEffectiveWhen 2 null
+Request.RevokedReason 1 null
+Request.RequesterName 4 CA3S\Administrator
+Request.CallerName 4 CA3S\Administrator
+Request.SignerPolicies 4 null
+Request.SignerApplicationPolicies 4 null
+Request.Officer 1 null
+Request.DistinguishedName 4 CN=req1567169896207, O=trustable Ltd, OU=Test, C=DE
+Request.RawName 3 -----BEGIN CERTIFICATE-----
+Request.Country 4 DE
+Request.Organization 4 trustable Ltd
+Request.OrgUnit 4 Test
+Request.CommonName 4 req1567169896207
+Request.Locality 4 null
+Request.State 4 null
+Request.Title 4 null
+Request.GivenName 4 null
+Request.Initials 4 null
+Request.SurName 4 null
+Request.DomainComponent 4 null
+Request.EMail 4 null
+Request.StreetAddress 4 null
+Request.UnstructuredName 4 null
+Request.UnstructuredAddress 4 null
+Request.DeviceSerialNumber 4 null
+Request.AttestationChallenge 3 null
+Request.EndorsementKeyHash 4 null
+Request.EndorsementCertificateHash 4 null
+Request.RawPrecertificate 3 null
+RequestID 1 1017
+RawCertificate 3 -----BEGIN CERTIFICATE-----
+CertificateHash 4 f5 c8 d4 64 d8 52 fe 87 9f 88 cd 5e 84 76 b6 f9 64 5f 05 c1
+CertificateTemplate 4 1.3.6.1.4.1.311.21.8.14452742.2507885.2510237.829813.10394016.243.2606716.5979865
+EnrollmentFlags 1 0
+GeneralFlags 1 131649
+PrivatekeyFlags 1 16842752
+SerialNumber 4 14000003f920ce415a15747e1f0000000003f9
+IssuerNameID 1 0
+NotBefore 2 Fri Aug 30 12:48:47 CEST 2019
+NotAfter 2 Sun Aug 29 12:48:47 CEST 2021
+SubjectKeyIdentifier 4 7c 03 10 da 80 3c 5c c0 32 3e d5 e2 1d 3b d1 a1 79 32 2e b5
+RawPublicKey 3 -----BEGIN CERTIFICATE-----
+PublicKeyLength 1 2048
+PublicKeyAlgorithm 4 1.2.840.113549.1.1.1
+RawPublicKeyAlgorithmParameters 3 -----BEGIN CERTIFICATE-----
+PublishExpiredCertInCRL 1 0
+UPN 4 null
+DistinguishedName 4 CN=req1567169896207, OU=Test, O=trustable Ltd, C=DE
+RawName 3 -----BEGIN CERTIFICATE-----
+Country 4 DE
+Organization 4 trustable Ltd
+OrgUnit 4 Test
+CommonName 4 req1567169896207
+Locality 4 null
+State 4 null
+Title 4 null
+GivenName 4 null
+Initials 4 null
+SurName 4 null
+DomainComponent 4 null
+EMail 4 null
+StreetAddress 4 null
+UnstructuredName 4 null
+UnstructuredAddress 4 null
+DeviceSerialNumber 4 null
+1

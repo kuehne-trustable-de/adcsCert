@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.trustable.ca3s</groupId>
+		<artifactId>adcsCert</artifactId>
+		<version>1.2.0</version>
+	</parent>
+
+	<artifactId>adcsCertAdmin</artifactId>
+	<packaging>jar</packaging>
+
+
+	<licenses>
+		<license>
+			<name>European Union Public Licence (EUPL-1.2)</name>
+			<url>https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Andreas Kuehne</name>
+			<email>kuehne@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+		<developer>
+			<name>Damian Wabisch</name>
+			<email>wabisch@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>eu.doppel_helix.jna.tlbcodegenerator</groupId>
+				<artifactId>TlbCodeGenerator</artifactId>
+				<version>1.0-SNAPSHOT</version>
+
+				<!-- {728ab348-217d-11da-b2a4-000e7bbb2b09} 1 0 certenrolllib CertEnroll 1.0 Type Library 
+				     {35DE99A0-7FB6-11D0-8817-00A0C903B83C} 1 0 certadminlib CertAdm 1.0 Type Library 
+				     {372FCE32-4324-11D0-8810-00A0C903B83C} 1 0 certclilib CertCli 1.0 Type Library 
+				     {39c0a710-7636-11d0-b413-00a0c91bbf8c} 1 0 certpolicylib Policy and Exit module legacy support 
+				     {3A0B7540-C2C8-11D2-B313-00C04F79DC72} 1 0 certpolicylib CertPol 1.0 Type Library -->
+				<configuration>
+					<file>c:/windows/system32/certadm.dll</file>
+				</configuration>
+			</plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependencyCheck.version}</version>
+                <configuration>
+                    <cveValidForHours>12</cveValidForHours>
+                    <failBuildOnCVSS>4</failBuildOnCVSS>
+                    <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
+                    <format>HTML</format>
+                    <skip>false</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			
+		</plugins>
+	</build>
+</project>
+
