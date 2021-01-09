@@ -1,7 +1,7 @@
 {
   "name": "adcs-proxy",
   "version": "0.0.0",
-  "description": "Description for adcsProxy",
+  "description": "adcsProxy enables a remote interface to an ADCS instance",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [

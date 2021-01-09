@@ -103,7 +103,8 @@
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <!-- jhipster-needle-maven-property -->
 
-        <adcsUtilVersion>1.2.0</adcsUtilVersion>
+        <adcsCert.version>1.2.1</adcsCert.version>
+        <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
         <certBundleVersion>1.0.0</certBundleVersion>
 
         <cryptoUtil.version>1.1.4</cryptoUtil.version>

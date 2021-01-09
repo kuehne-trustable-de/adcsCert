@@ -26,12 +26,16 @@
 	</developers>
 	
 	<properties>
-	    <adcsCert.version>1.2.0</adcsCert.version>
+		<adcsCert.version>1.2.1</adcsCert.version>
+
 		<cryptoUtil.version>1.1.4</cryptoUtil.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		
+
+		<maven.source.version>3.2.1</maven.source.version>
+		<maven.javadoc.version>3.2.0</maven.javadoc.version>
+
 		<jna.version>4.5.2</jna.version>
 		<commons-pool2.version>2.7.0</commons-pool2.version>
 		
