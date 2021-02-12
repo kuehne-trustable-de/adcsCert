@@ -6,7 +6,7 @@
 	
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsCert</artifactId>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
     
     <packaging>pom</packaging>
 
@@ -39,7 +39,9 @@
 		<jna.version>4.5.2</jna.version>
 		<commons-pool2.version>2.7.0</commons-pool2.version>
 		
-		<dependencyCheck.version>5.3.1</dependencyCheck.version>
+		<dependencyCheck.version>6.0.3</dependencyCheck.version>
+        <dependencyCheck.skip>false</dependencyCheck.skip>
+		
  	</properties>
       	 	
 	<dependencies>
@@ -87,6 +89,11 @@
 	      <plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-javadoc-plugin</artifactId>
+			<configuration>
+				<detectJavaApiLink>false</detectJavaApiLink>
+				<source>${maven.compiler.source}</source>
+				<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+			</configuration>
 	        <executions>
 	          <execution>
 	            <id>attach-javadocs</id>
@@ -138,6 +145,92 @@
 			<layout>default</layout>
 		</snapshotRepository>
 	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>prepare-central</id>
+			<build>
+				<plugins>
+		            <plugin>
+		                <groupId>org.owasp</groupId>
+		                <artifactId>dependency-check-maven</artifactId>
+		                <version>${dependencyCheck.version}</version>
+		                <configuration>
+		                    <cveValidForHours>12</cveValidForHours>
+		                    <failBuildOnCVSS>4</failBuildOnCVSS>
+		                    <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
+		                    <format>HTML</format>
+		                    <skip>${dependencyCheck.skip}</skip>
+		                </configuration>
+		                <executions>
+		                    <execution>
+		                        <goals>
+		                            <goal>check</goal>
+		                        </goals>
+		                    </execution>
+		                </executions>
+		            </plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!--plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>${maven-checkstyle.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>com.puppycrawl.tools</groupId>
+								<artifactId>checkstyle</artifactId>
+								<version>${checkstyle.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>io.spring.nohttp</groupId>
+								<artifactId>nohttp-checkstyle</artifactId>
+								<version>${spring-nohttp-checkstyle.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<configLocation>checkstyle.xml</configLocation>
+							<includes>pom.xml,README.md</includes>
+							<excludes>.git/**/*,target/**/*,node_modules/**/*,node/**/*</excludes>
+							<sourceDirectories>./</sourceDirectories>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin-->
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<modules>
 		<module>certcli</module>
