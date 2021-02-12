@@ -12,6 +12,7 @@
     "generator-jhipster": "6.10.5",
     "husky": "4.2.5",
     "lint-staged": "8.2.1",
+    "axios": "^0.21.1",
     "prettier": "2.1.2"
   },
   "engines": {
