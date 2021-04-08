@@ -25,9 +25,6 @@ spring:
     allow-bean-definition-overriding: true
   messages:
     basename: i18n/messages
-  mvc:
-    favicon:
-      enabled: false
   task:
     execution:
       thread-name-prefix: adcs-proxy-task-
@@ -57,7 +54,7 @@ jhipster:
     name: 'adcsProxyApp'
   logging:
     # To test json console appender
-    use-json-format: true # By default, logs are in Json format
+    use-json-format: false
     logstash:
       enabled: false
       host: localhost
@@ -70,11 +67,6 @@ jhipster:
         base64-secret: YjYyYzMwZDdkY2E5ODJmNTVjYzhiYmFhNDFlNjdiYzFjNGZkNGQzZWIwYmI2MDFiOTMzMTM4NGU3NDgxOTYwZGYzYmE3ZGYxOTAzZDUxODhiZTdjYmMxZTVmZjEzODlmYjdlZDQxMDRlYjQ3ZjQzMzRkM2QwNjIwNWUyYjdjZDg=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: true
-      report-frequency: 60 # in seconds
-
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

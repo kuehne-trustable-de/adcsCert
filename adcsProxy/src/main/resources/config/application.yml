@@ -18,10 +18,10 @@ feign:
   hystrix:
     enabled: true
   # client:
-  #     config:
-  #         default:
-  #             connectTimeout: 5000
-  #             readTimeout: 5000
+  #   config:
+  #     default:
+  #       connectTimeout: 5000
+  #       readTimeout: 5000
 
 # See https://github.com/Netflix/Hystrix/wiki/Configuration
 hystrix:
@@ -32,7 +32,7 @@ hystrix:
           strategy: SEMAPHORE
           # See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
           # thread:
-          #     timeoutInMilliseconds: 10000
+          #   timeoutInMilliseconds: 10000
   shareSecurityContext: true
 
 management:
@@ -45,12 +45,19 @@ management:
     health:
       show-details: when_authorized
       roles: 'ROLE_ADMIN'
+      probes:
+        enabled: true
     jhimetrics:
       enabled: true
   info:
     git:
       mode: full
   health:
+    group:
+      liveness:
+        include: livenessState
+      readiness:
+        include: readinessState
     mail:
       enabled: false # When using the MailService, configure an SMTP server and set this to true
   metrics:
@@ -86,15 +93,18 @@ spring:
     # Otherwise, it will be filled in by maven when building the JAR file
     # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
     active: #spring.profiles.active#
+    group:
+      dev:
+        - dev
+        - api-docs
+        # Uncomment to activate TLS for the dev profile
+        #- tls
   jmx:
     enabled: false
   messages:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
-  mvc:
-    favicon:
-      enabled: false
   task:
     execution:
       thread-name-prefix: adcs-proxy-task-
@@ -134,16 +144,17 @@ jhipster:
     name: 'adcsProxyApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
-  #     allowed-origins: "*"
-  #     allowed-methods: "*"
-  #     allowed-headers: "*"
-  #     exposed-headers: "Authorization,Link,X-Total-Count"
-  #     allow-credentials: true
-  #     max-age: 1800
+  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
+  #   allowed-methods: "*"
+  #   allowed-headers: "*"
+  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
+  #   allow-credentials: true
+  #   max-age: 1800
   mail:
     from: adcsProxy@localhost
-  swagger:
-    default-include-pattern: /api/.*
+  api-docs:
+    default-include-pattern: ${server.servlet.context-path:}/api/.*
+    management-include-pattern: ${server.servlet.context-path:}/management/.*
     title: adcsProxy API
     description: adcsProxy API documentation
     version: 0.0.1
@@ -151,8 +162,10 @@ jhipster:
     contact-name:
     contact-url:
     contact-email:
-    license:
+    license: unlicensed
     license-url:
+  security:
+    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
