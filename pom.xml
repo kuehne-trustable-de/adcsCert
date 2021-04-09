@@ -6,7 +6,7 @@
 	
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsCert</artifactId>
-	<version>1.2.1</version>
+	<version>1.2.2</version>
     
     <packaging>pom</packaging>
 
@@ -26,7 +26,7 @@
 	</developers>
 	
 	<properties>
-		<adcsCert.version>1.2.1</adcsCert.version>
+		<adcsCert.version>1.2.2</adcsCert.version>
 
 		<cryptoUtil.version>1.1.8</cryptoUtil.version>
 
@@ -156,8 +156,9 @@
 		                <artifactId>dependency-check-maven</artifactId>
 		                <version>${dependencyCheck.version}</version>
 		                <configuration>
-		                    <cveValidForHours>12</cveValidForHours>
+		                    <cveValidForHours>24</cveValidForHours>
 		                    <failBuildOnCVSS>4</failBuildOnCVSS>
+							<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
 		                    <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
 		                    <format>HTML</format>
 		                    <skip>${dependencyCheck.skip}</skip>

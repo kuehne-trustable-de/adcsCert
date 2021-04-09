@@ -1,9 +1,11 @@
 package de.trustable.ca3s.adcs.proxy.config;
 
-import com.google.common.base.Predicates;
-import io.github.jhipster.config.JHipsterConstants;
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.config.apidoc.customizer.SwaggerCustomizer;
+import static springfox.documentation.builders.PathSelectors.regex;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -14,27 +16,29 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-
-import static springfox.documentation.builders.PathSelectors.regex;
+import tech.jhipster.config.JHipsterConstants;
+import tech.jhipster.config.JHipsterProperties;
+import tech.jhipster.config.apidoc.customizer.SpringfoxCustomizer;
 
 @Configuration
-@Profile(JHipsterConstants.SPRING_PROFILE_SWAGGER)
+@Profile(JHipsterConstants.SPRING_PROFILE_API_DOCS)
 public class OpenApiConfiguration {
 
     @Bean
-    public SwaggerCustomizer noApiFirstCustomizer() {
-        return docket -> docket.select()
-            .apis(Predicates.not(RequestHandlerSelectors.basePackage("de.trustable.ca3s.adcs.proxy.web.api")));
+    public SpringfoxCustomizer noApiFirstCustomizer() {
+        return docket ->
+            docket
+                .select()
+                .apis(
+                    RequestHandlerSelectors
+                        .basePackage("de.trustable.ca3s.adcs.proxy.web.api")
+                        .negate()
+                );
     }
 
     @Bean
     public Docket apiFirstDocket(JHipsterProperties jHipsterProperties) {
-        JHipsterProperties.Swagger properties = jHipsterProperties.getSwagger();
+        JHipsterProperties.ApiDocs properties = jHipsterProperties.getApiDocs();
         Contact contact = new Contact(
             properties.getContactName(),
             properties.getContactUrl(),
@@ -52,21 +56,25 @@ public class OpenApiConfiguration {
             new ArrayList<>()
         );
 
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
             .groupName("openapi")
             .host(properties.getHost())
             .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
             .apiInfo(apiInfo)
-            .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
+            .useDefaultResponseMessages(
+                properties.isUseDefaultResponseMessages()
+            )
             .forCodeGeneration(true)
             .directModelSubstitute(ByteBuffer.class, String.class)
             .genericModelSubstitutes(ResponseEntity.class)
             .ignoredParameterTypes(Pageable.class)
             .select()
-            .apis(RequestHandlerSelectors.basePackage("de.trustable.ca3s.adcs.proxy.web.api"))
+            .apis(
+                RequestHandlerSelectors.basePackage(
+                    "de.trustable.ca3s.adcs.proxy.web.api"
+                )
+            )
             .paths(regex(properties.getDefaultIncludePattern()))
             .build();
     }
-
-
 }

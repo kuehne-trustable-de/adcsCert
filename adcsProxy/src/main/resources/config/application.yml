@@ -40,17 +40,35 @@ management:
     web:
       base-path: /management
       exposure:
-        include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump']
+        include:
+          [
+            "configprops",
+            "env",
+            "health",
+            "info",
+            "jhimetrics",
+            "logfile",
+            "loggers",
+            "prometheus",
+            "threaddump",
+          ]
   endpoint:
     health:
       show-details: when_authorized
-      roles: 'ROLE_ADMIN'
+      roles: "ROLE_ADMIN"
+      probes:
+        enabled: true
     jhimetrics:
       enabled: true
   info:
     git:
       mode: full
   health:
+    group:
+      liveness:
+        include: livenessState
+      readiness:
+        include: readinessState
     mail:
       enabled: false # When using the MailService, configure an SMTP server and set this to true
   metrics:
@@ -86,15 +104,18 @@ spring:
     # Otherwise, it will be filled in by maven when building the JAR file
     # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
     active: #spring.profiles.active#
+    group:
+      dev:
+        - dev
+        - api-docs
+        # Uncomment to activate TLS for the dev profile
+        #- tls
   jmx:
     enabled: false
   messages:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
-  mvc:
-    favicon:
-      enabled: false
   task:
     execution:
       thread-name-prefix: adcs-proxy-task-
@@ -114,7 +135,6 @@ spring:
 
 server:
   servlet:
-    context-path: /ADCSConnector
     session:
       cookie:
         http-only: true
@@ -122,7 +142,7 @@ server:
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
-  display-ribbon-on-profiles: 'dev'
+  display-ribbon-on-profiles: "dev"
 
 # ===================================================================
 # JHipster specific properties
@@ -132,7 +152,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'adcsProxy'
+    name: "adcsProxyApp"
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #     allowed-origins: "*"
@@ -151,9 +171,11 @@ jhipster:
     terms-of-service-url:
     contact-name:
     contact-url:
-    contact-email: kuehne@trustable.de
-    license: Apache License, Version 2.0
-    license-url: https://www.apache.org/licenses/LICENSE-2.0.txt
+    contact-email:
+    license: unlicensed
+    license-url:
+  security:
+    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

@@ -51,7 +51,7 @@ server:
 
 jhipster:
   clientApp:
-    name: 'adcsProxyApp'
+    name: "adcsProxyApp"
   logging:
     # To test json console appender
     use-json-format: false
@@ -67,11 +67,6 @@ jhipster:
         base64-secret: YjYyYzMwZDdkY2E5ODJmNTVjYzhiYmFhNDFlNjdiYzFjNGZkNGQzZWIwYmI2MDFiOTMzMTM4NGU3NDgxOTYwZGYzYmE3ZGYxOTAzZDUxODhiZTdjYmMxZTVmZjEzODlmYjdlZDQxMDRlYjQ3ZjQzMzRkM2QwNjIwNWUyYjdjZDg=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: true
-      report-frequency: 60 # in seconds
-
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

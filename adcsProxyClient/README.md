@@ -34,7 +34,7 @@ Add this dependency to your project's POM:
 
 ```xml
 <properties>
-  <adcsProxyClientVersion>1.2.1</adcsProxyClientVersion>
+  <adcsProxyClientVersion>1.2.2</adcsProxyClientVersion>
 </properties>
 
 <dependency>
