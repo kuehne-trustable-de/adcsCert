@@ -2,15 +2,16 @@ package de.trustable.ca3s.adcs.proxy;
 
 import de.trustable.ca3s.adcs.proxy.config.ApplicationProperties;
 import de.trustable.ca3s.adcs.proxy.config.ApplicationProperties;
-import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSBundleFactory;
-import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSKeyManagerProvider;
-import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSProvider;
+import de.trustable.ca3s.adcsKeyStore.provider.*;
+import de.trustable.ca3s.cert.bundle.TimedRenewalCertMap;
+import de.trustable.util.JCAManager;
 import io.undertow.Undertow;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.security.Security;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -18,6 +19,8 @@ import javax.annotation.PostConstruct;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import tech.jhipster.config.DefaultProfileUtil;
@@ -144,6 +148,52 @@ public class AdcsProxyApp implements InitializingBean {
     }
 
     @Bean
+    public TimedRenewalCertMap timedRenewalCertMap() {
+        log.debug("in timedRenewalCertMap()");
+
+        JCAManager.getInstance();
+
+        SpringEnvironmentPropertyProviderImpl propProvider = new SpringEnvironmentPropertyProviderImpl(
+            env
+        );
+        return new TimedRenewalCertMap(
+            new LocalADCSBundleFactory(propProvider)
+        );
+    }
+
+    @Bean
+    @DependsOn({ "timedRenewalCertMap" })
+    public LocalADCSKeyManagerProvider localADCSKeyManagerProvider() {
+        log.debug("in localADCSKeyManagerProvider()");
+
+        LocalADCSKeyManagerProvider localADCSKeyManagerProvider = new LocalADCSKeyManagerProvider(
+            timedRenewalCertMap()
+        );
+        Security.addProvider(localADCSKeyManagerProvider);
+
+        return localADCSKeyManagerProvider;
+    }
+
+    @Bean
+    @DependsOn({ "timedRenewalCertMap" })
+    public LocalADCSProvider localADCSProvider() {
+        log.debug("in localADCSProvider()");
+
+        SpringEnvironmentPropertyProviderImpl propProvider = new SpringEnvironmentPropertyProviderImpl(
+            env
+        );
+
+        LocalADCSProvider localADCSProvider = new LocalADCSProvider(
+            timedRenewalCertMap(),
+            propProvider
+        );
+        Security.addProvider(localADCSProvider);
+
+        return localADCSProvider;
+    }
+
+    @Bean
+    @DependsOn({ "localADCSKeyManagerProvider", "localADCSProvider" })
     public UndertowServletWebServerFactory embeddedServletContainerFactory() {
         log.info(
             "\n----------------------------------------------------------\n\t" +
@@ -164,6 +214,7 @@ public class AdcsProxyApp implements InitializingBean {
                         LocalADCSBundleFactory.KEY_STORE_PROPERTIES_PREFIX +
                         "port"
                     );
+
                     if (sslPort == null) {
                         log.debug(
                             "TLS listen port undefined, using default port #" +

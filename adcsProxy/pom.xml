@@ -7,7 +7,7 @@
 
     <groupId>de.trustable.ca3s</groupId>
     <artifactId>adcs-proxy</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <packaging>jar</packaging>
     <name>Adcs Proxy</name>
 
@@ -102,9 +102,9 @@
 
         <adcsCert.version>1.2.2</adcsCert.version>
         <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
-        <certBundleVersion>1.0.0</certBundleVersion>
+        <certBundleVersion>1.1.1</certBundleVersion>
 
-        <cryptoUtil.version>1.1.4</cryptoUtil.version>
+        <cryptoUtil.version>1.1.8</cryptoUtil.version>
 
     	<nimbus-jose-jwt-version>8.2.1</nimbus-jose-jwt-version>
 

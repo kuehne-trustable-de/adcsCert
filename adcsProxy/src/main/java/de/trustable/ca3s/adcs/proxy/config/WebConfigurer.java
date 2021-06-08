@@ -51,24 +51,19 @@ public class WebConfigurer implements ServletContextInitializer {
     @Override
     public void onStartup(ServletContext servletContext)
         throws ServletException {
+        /*
         JCAManager.getInstance();
 
-        SpringEnvironmentPropertyProviderImpl propProvider = new SpringEnvironmentPropertyProviderImpl(
-            env
-        );
-        TimedRenewalCertMap certMap = new TimedRenewalCertMap(
-            new LocalADCSBundleFactory(propProvider)
-        );
+        SpringEnvironmentPropertyProviderImpl propProvider = new SpringEnvironmentPropertyProviderImpl(env);
+        TimedRenewalCertMap certMap = new TimedRenewalCertMap(new LocalADCSBundleFactory(propProvider));
 
         LocalADCSKeyManager keyManager = new LocalADCSKeyManager(certMap);
-        LocalADCSKeyManagerFactory keyMangerFactory = new LocalADCSKeyManagerFactory(
-            keyManager
-        );
+        LocalADCSKeyManagerFactory keyMangerFactory = new LocalADCSKeyManagerFactory(keyManager);
 
         Security.addProvider(new LocalADCSProvider(certMap, propProvider));
 
         Security.addProvider(new LocalADCSKeyManagerProvider(certMap));
-
+*/
         if (env.getActiveProfiles().length != 0) {
             log.info(
                 "Web application configuration, using profiles: {}",
