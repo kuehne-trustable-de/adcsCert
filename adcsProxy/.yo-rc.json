@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "de.trustable.ca3s.adcs.proxy",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.8.0",
+    "applicationType": "microservice",
+    "baseName": "adcsProxy",
+    "packageName": "de.trustable.ca3s.adcs.proxy",
+    "packageFolder": "de/trustable/ca3s/adcs/proxy",
+    "serverPort": "8081",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "no",
+    "devDatabaseType": "no",
+    "prodDatabaseType": "no",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "YjYyYzMwZDdkY2E5ODJmNTVjYzhiYmFhNDFlNjdiYzFjNGZkNGQzZWIwYmI2MDFiOTMzMTM4NGU3NDgxOTYwZGYzYmE3ZGYxOTAzZDUxODhiZTdjYmMxZTVmZjEzODlmYjdlZDQxMDRlYjQ3ZjQzMzRkM2QwNjIwNWUyYjdjZDg=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1591373258866,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "clientPackageManager": "npm",
+    "nativeLanguage": "en",
+    "languages": ["en"],
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

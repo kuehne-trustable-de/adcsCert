@@ -1,0 +1,260 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>de.trustable.ca3s</groupId>
+	<artifactId>adcsCert</artifactId>
+	<version>1.2.2</version>
+    
+    <packaging>pom</packaging>
+
+  	<developers>
+		<developer>
+			<name>Andreas Kuehne</name>
+			<email>kuehne@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+		<developer>
+			<name>Damian Wabisch</name>
+			<email>wabisch@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+	</developers>
+	
+	<properties>
+		<adcsCert.version>1.2.2</adcsCert.version>
+
+		<cryptoUtil.version>1.1.8</cryptoUtil.version>
+
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<maven.source.version>3.2.1</maven.source.version>
+		<maven.javadoc.version>3.2.0</maven.javadoc.version>
+
+		<jna.version>4.5.2</jna.version>
+		<commons-pool2.version>2.7.0</commons-pool2.version>
+		
+		<dependencyCheck.version>6.1.6</dependencyCheck.version>
+        <dependencyCheck.skip>false</dependencyCheck.skip>
+		
+ 	</properties>
+      	 	
+	<dependencies>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>${jna.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>${jna.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-pool2</artifactId>
+		    <version>${commons-pool2.version}</version>
+		</dependency>
+		
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>4.13.1</version>
+	      <scope>test</scope>
+	    </dependency>
+	</dependencies>
+	<build>
+      <defaultGoal>spring-boot:run</defaultGoal>
+	  <plugins>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-source-plugin</artifactId>
+	        <executions>
+	          <execution>
+	            <id>attach-sources</id>
+	            <goals>
+	              <goal>jar</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-javadoc-plugin</artifactId>
+			<configuration>
+				<detectJavaApiLink>false</detectJavaApiLink>
+				<source>${maven.compiler.source}</source>
+				<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+			</configuration>
+	        <executions>
+	          <execution>
+	            <id>attach-javadocs</id>
+	            <goals>
+	              <goal>jar</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+		  <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-gpg-plugin</artifactId>
+		    <version>1.6</version>
+			  <executions>
+			    <execution>
+				  <id>sign-artifacts</id>
+				  <phase>deploy</phase>
+				  <goals>
+				    <goal>sign</goal>
+				  </goals>
+				  <configuration>
+				    <keyname>${gpg.keyname}</keyname>
+				    <passphraseServerId>${gpg.keyname}</passphraseServerId>
+				    <gpgArguments>
+				      <arg>--pinentry-mode</arg>
+				      <arg>loopback</arg>
+				    </gpgArguments>
+				  </configuration>
+			    </execution>
+			  </executions>
+		  </plugin>
+        <!-- jhipster-needle-maven-add-plugin -->
+
+		  <plugin>
+			  <groupId>org.codehaus.mojo</groupId>
+			  <artifactId>license-maven-plugin</artifactId>
+			  <version>2.0.0</version>
+			  <executions>
+				  <execution>
+					  <id>download-licenses</id>
+					  <goals>
+						  <goal>download-licenses</goal>
+					  </goals>
+				  </execution>
+			  </executions>
+		  </plugin>
+
+	  </plugins>
+    </build>
+
+    <distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>trustable.eu</id>
+			<name>trustable Repository</name>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<layout>default</layout>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>Snap_trustable.eu</id>
+			<name>trustable Snapshots</name>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>prepare-central</id>
+			<build>
+				<plugins>
+		            <plugin>
+		                <groupId>org.owasp</groupId>
+		                <artifactId>dependency-check-maven</artifactId>
+		                <version>${dependencyCheck.version}</version>
+		                <configuration>
+		                    <cveValidForHours>24</cveValidForHours>
+		                    <failBuildOnCVSS>4</failBuildOnCVSS>
+							<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+		                    <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
+		                    <format>HTML</format>
+		                    <skip>${dependencyCheck.skip}</skip>
+		                </configuration>
+		                <executions>
+		                    <execution>
+		                        <goals>
+		                            <goal>check</goal>
+		                        </goals>
+		                    </execution>
+		                </executions>
+		            </plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!--plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>${maven-checkstyle.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>com.puppycrawl.tools</groupId>
+								<artifactId>checkstyle</artifactId>
+								<version>${checkstyle.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>io.spring.nohttp</groupId>
+								<artifactId>nohttp-checkstyle</artifactId>
+								<version>${spring-nohttp-checkstyle.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<configLocation>checkstyle.xml</configLocation>
+							<includes>pom.xml,README.md</includes>
+							<excludes>.git/**/*,target/**/*,node_modules/**/*,node/**/*</excludes>
+							<sourceDirectories>./</sourceDirectories>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin-->
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>certcli</module>
+		<module>certenrol</module>
+		<module>certadmin</module>
+		<module>adcsCertUtil</module>
+		<module>adcsProxy</module>
+		<module>adcsProxyClient</module>
+	</modules>
+	
+</project>
