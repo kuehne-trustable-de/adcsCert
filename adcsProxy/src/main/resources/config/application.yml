@@ -15,26 +15,13 @@
 # ===================================================================
 
 feign:
-  hystrix:
+  circuitbreaker:
     enabled: true
   # client:
-  #     config:
-  #         default:
-  #             connectTimeout: 5000
-  #             readTimeout: 5000
-
-# See https://github.com/Netflix/Hystrix/wiki/Configuration
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          # See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
-          # thread:
-          #     timeoutInMilliseconds: 10000
-  shareSecurityContext: true
-
+  #   config:
+  #     default:
+  #       connectTimeout: 5000
+  #       readTimeout: 5000
 management:
   endpoints:
     web:
@@ -55,7 +42,11 @@ management:
   endpoint:
     health:
       show-details: when_authorized
+<<<<<<< HEAD
       roles: "ROLE_ADMIN"
+=======
+      roles: 'ROLE_ADMIN'
+>>>>>>> jhipster_upgrade
       probes:
         enabled: true
     jhimetrics:
@@ -155,25 +146,37 @@ jhipster:
     name: "adcsProxyApp"
   # By default CORS is disabled. Uncomment to enable.
   # cors:
-  #     allowed-origins: "*"
-  #     allowed-methods: "*"
-  #     allowed-headers: "*"
-  #     exposed-headers: "Authorization,Link,X-Total-Count"
-  #     allow-credentials: true
-  #     max-age: 1800
+  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
+  #   allowed-methods: "*"
+  #   allowed-headers: "*"
+  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
+  #   allow-credentials: true
+  #   max-age: 1800
   mail:
     from: adcsProxy@localhost
+<<<<<<< HEAD
   swagger:
     default-include-pattern: /adcs.*
+=======
+  api-docs:
+    default-include-pattern: ${server.servlet.context-path:}/api/.*
+    management-include-pattern: ${server.servlet.context-path:}/management/.*
+>>>>>>> jhipster_upgrade
     title: adcsProxy API
     description: API to query the local ADCS instance and to request and revoke certificates from an ADCS instance
     version: 1.2.0-oas3
     terms-of-service-url:
     contact-name:
     contact-url:
+<<<<<<< HEAD
     contact-email: kuehne@trustable.de
     license: Apache License, Version 2.0
     license-url: https://www.apache.org/licenses/LICENSE-2.0.txt
+=======
+    contact-email:
+    license: unlicensed
+    license-url:
+>>>>>>> jhipster_upgrade
   security:
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
 # ===================================================================

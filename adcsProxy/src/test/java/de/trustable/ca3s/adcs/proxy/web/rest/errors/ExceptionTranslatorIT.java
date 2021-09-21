@@ -29,6 +29,7 @@ class ExceptionTranslatorIT {
     @Test
     void testMethodArgumentNotValid() throws Exception {
         mockMvc
+<<<<<<< HEAD
             .perform(
                 post("/api/exception-translator-test/method-argument")
                     .content("{}")
@@ -46,16 +47,29 @@ class ExceptionTranslatorIT {
             .andExpect(
                 jsonPath("$.fieldErrors.[0].message").value("must not be null")
             );
+=======
+            .perform(post("/api/exception-translator-test/method-argument").content("{}").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_VALIDATION))
+            .andExpect(jsonPath("$.fieldErrors.[0].objectName").value("test"))
+            .andExpect(jsonPath("$.fieldErrors.[0].field").value("test"))
+            .andExpect(jsonPath("$.fieldErrors.[0].message").value("must not be null"));
+>>>>>>> jhipster_upgrade
     }
 
     @Test
     void testMissingServletRequestPartException() throws Exception {
         mockMvc
+<<<<<<< HEAD
             .perform(
                 get(
                     "/api/exception-translator-test/missing-servlet-request-part"
                 )
             )
+=======
+            .perform(get("/api/exception-translator-test/missing-servlet-request-part"))
+>>>>>>> jhipster_upgrade
             .andExpect(status().isBadRequest())
             .andExpect(
                 content().contentType(MediaType.APPLICATION_PROBLEM_JSON)
@@ -66,11 +80,15 @@ class ExceptionTranslatorIT {
     @Test
     void testMissingServletRequestParameterException() throws Exception {
         mockMvc
+<<<<<<< HEAD
             .perform(
                 get(
                     "/api/exception-translator-test/missing-servlet-request-parameter"
                 )
             )
+=======
+            .perform(get("/api/exception-translator-test/missing-servlet-request-parameter"))
+>>>>>>> jhipster_upgrade
             .andExpect(status().isBadRequest())
             .andExpect(
                 content().contentType(MediaType.APPLICATION_PROBLEM_JSON)
@@ -138,9 +156,13 @@ class ExceptionTranslatorIT {
     @Test
     void testInternalServerError() throws Exception {
         mockMvc
+<<<<<<< HEAD
             .perform(
                 get("/api/exception-translator-test/internal-server-error")
             )
+=======
+            .perform(get("/api/exception-translator-test/internal-server-error"))
+>>>>>>> jhipster_upgrade
             .andExpect(status().isInternalServerError())
             .andExpect(
                 content().contentType(MediaType.APPLICATION_PROBLEM_JSON)

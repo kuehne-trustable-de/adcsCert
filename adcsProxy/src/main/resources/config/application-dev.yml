@@ -21,12 +21,6 @@ logging:
     de.trustable.ca3s.adcs.proxy: DEBUG
 
 spring:
-  profiles:
-    active: dev
-    include:
-      - swagger
-      # Uncomment to activate TLS for the dev profile
-      #- tls
   devtools:
     restart:
       enabled: true
@@ -36,11 +30,6 @@ spring:
   jackson:
     serialization:
       indent-output: true
-  mail:
-    host: localhost
-    port: 25
-    username:
-    password:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
@@ -71,12 +60,12 @@ jhipster:
   # CORS is disabled by default on microservices, as you should access them through a gateway.
   # If you want to enable it, please uncomment the configuration below.
   # cors:
-  #     allowed-origins: "*"
-  #     allowed-methods: "*"
-  #     allowed-headers: "*"
-  #     exposed-headers: "Authorization,Link,X-Total-Count"
-  #     allow-credentials: true
-  #     max-age: 1800
+  #   allowed-origins: "http://localhost:9000,https://localhost:9000"
+  #   allowed-methods: "*"
+  #   allowed-headers: "*"
+  #   exposed-headers: "Authorization,Link,X-Total-Count"
+  #   allow-credentials: true
+  #   max-age: 1800
   security:
     authentication:
       jwt:
@@ -85,12 +74,6 @@ jhipster:
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
-  mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://127.0.0.1:8081
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: false
-      report-frequency: 60 # in seconds
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration

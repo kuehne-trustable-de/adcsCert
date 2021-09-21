@@ -86,12 +86,16 @@ public final class TestUtil {
                 }
                 return true;
             } catch (DateTimeParseException e) {
+<<<<<<< HEAD
                 mismatchDescription
                     .appendText("was ")
                     .appendValue(item)
                     .appendText(
                         ", which could not be parsed as a ZonedDateTime"
                     );
+=======
+                mismatchDescription.appendText("was ").appendValue(item).appendText(", which could not be parsed as a ZonedDateTime");
+>>>>>>> jhipster_upgrade
                 return false;
             }
         }

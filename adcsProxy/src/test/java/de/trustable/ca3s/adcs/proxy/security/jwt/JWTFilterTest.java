@@ -27,6 +27,7 @@ class JWTFilterTest {
     @BeforeEach
     public void setup() {
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
+<<<<<<< HEAD
         String base64Secret =
             "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
         jHipsterProperties
@@ -40,6 +41,12 @@ class JWTFilterTest {
             "key",
             Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret))
         );
+=======
+        String base64Secret = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
+        jHipsterProperties.getSecurity().getAuthentication().getJwt().setBase64Secret(base64Secret);
+        tokenProvider = new TokenProvider(jHipsterProperties);
+        ReflectionTestUtils.setField(tokenProvider, "key", Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret)));
+>>>>>>> jhipster_upgrade
 
         ReflectionTestUtils.setField(
             tokenProvider,
@@ -67,6 +74,7 @@ class JWTFilterTest {
         MockFilterChain filterChain = new MockFilterChain();
         jwtFilter.doFilter(request, response, filterChain);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+<<<<<<< HEAD
         assertThat(
             SecurityContextHolder.getContext().getAuthentication().getName()
         )
@@ -78,6 +86,10 @@ class JWTFilterTest {
                 .getCredentials()
         )
             .hasToString(jwt);
+=======
+        assertThat(SecurityContextHolder.getContext().getAuthentication().getName()).isEqualTo("test-user");
+        assertThat(SecurityContextHolder.getContext().getAuthentication().getCredentials()).hasToString(jwt);
+>>>>>>> jhipster_upgrade
     }
 
     @Test

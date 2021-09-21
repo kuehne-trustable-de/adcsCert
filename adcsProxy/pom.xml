@@ -69,42 +69,45 @@
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>7.0.1</jhipster-dependencies.version>
+        <jhipster-dependencies.version>7.2.0</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
-        <spring-boot.version>2.4.4</spring-boot.version>
-        <archunit-junit5.version>0.17.0</archunit-junit5.version>
+        <spring-boot.version>2.5.4</spring-boot.version>
+        <archunit-junit5.version>0.21.0</archunit-junit5.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
-        <maven-checkstyle.version>3.1.2</maven-checkstyle.version>
-        <checkstyle.version>8.41.1</checkstyle.version>
-        <spring-nohttp-checkstyle.version>0.0.5.RELEASE</spring-nohttp-checkstyle.version>
-        <git-commit-id-plugin.version>4.0.4</git-commit-id-plugin.version>
-        <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>2.8.0</jib-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <checkstyle.version>9.0</checkstyle.version>
+        <nohttp-checkstyle.version>0.0.9</nohttp-checkstyle.version>
+        <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
+        <modernizer-maven-plugin.version>2.3.0</modernizer-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+        <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-        <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>5.2.1</openapi-generator-maven-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <sonar-maven-plugin.version>3.8.0.2131</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
         <!-- jhipster-needle-maven-property -->
 
         <adcsCert.version>1.2.2</adcsCert.version>
         <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
         <certBundleVersion>1.1.1</certBundleVersion>
 
-        <cryptoUtil.version>1.1.8</cryptoUtil.version>
+	<cryptoUtil.version>1.1.12</cryptoUtil.version>
 
     	<nimbus-jose-jwt-version>8.2.1</nimbus-jose-jwt-version>
 
@@ -164,7 +167,6 @@
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hppc</artifactId>
@@ -190,17 +192,9 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
             <version>${jackson-databind-nullable.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -225,10 +219,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -310,7 +300,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.retry</groupId>
@@ -433,6 +423,10 @@
                 <artifactId>properties-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.gaul</groupId>
+                <artifactId>modernizer-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <!--
                     Plugin that provides API-first development using openapi-generator to
                     generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
@@ -447,7 +441,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven-checkstyle.version}</version>
+                    <version>${maven-checkstyle-plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
@@ -457,7 +451,7 @@
                         <dependency>
                             <groupId>io.spring.nohttp</groupId>
                             <artifactId>nohttp-checkstyle</artifactId>
-                            <version>${spring-nohttp-checkstyle.version}</version>
+                            <version>${nohttp-checkstyle.version}</version>
                         </dependency>
                     </dependencies>
                     <configuration>
@@ -542,8 +536,8 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
+                    <groupId>io.github.git-commit-id</groupId>
+                    <artifactId>git-commit-id-maven-plugin</artifactId>
                     <version>${git-commit-id-plugin.version}</version>
                     <executions>
                         <execution>
@@ -561,6 +555,23 @@
                             <includeOnlyProperty>^git.commit.id.describe$</includeOnlyProperty>
                             <includeOnlyProperty>^git.branch$</includeOnlyProperty>
                         </includeOnlyProperties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.gaul</groupId>
+                    <artifactId>modernizer-maven-plugin</artifactId>
+                    <version>${modernizer-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>modernizer</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>modernizer</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                      <javaVersion>${java.version}</javaVersion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -604,7 +615,13 @@
                     <version>${jib-maven-plugin.version}</version>
                     <configuration>
                         <from>
-                            <image>adoptopenjdk:11-jre-hotspot</image>
+                            <image>${jib-maven-plugin.image}</image>
+                            <platforms>
+                                <platform>
+                                    <architecture>${jib-maven-plugin.architecture}</architecture>
+                                    <os>linux</os>
+                                </platform>
+                            </platforms>
                         </from>
                         <to>
                             <image>adcsproxy:latest</image>
@@ -639,6 +656,10 @@
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -680,8 +701,8 @@
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 15.</message>
-                                <version>[1.8,16)</version>
+                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 16.</message>
+                                <version>[1.8,17)</version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
@@ -791,7 +812,7 @@
                                 <inputSpec>${project.basedir}/src/main/resources/swagger/api.yml</inputSpec>
                                 <generatorName>spring</generatorName>
                                 <apiPackage>de.trustable.ca3s.adcs.proxy.web.api</apiPackage>
-                                <modelPackage>de.trustable.ca3s.adcs.proxy.web.api.model</modelPackage>
+                                <modelPackage>de.trustable.ca3s.adcs.proxy.service.api.dto</modelPackage>
                                 <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                                 <importMappings>Problem=org.zalando.problem.Problem</importMappings>
                                 <skipValidateSpec>false</skipValidateSpec>
@@ -918,8 +939,8 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>pl.project13.maven</groupId>
-                        <artifactId>git-commit-id-plugin</artifactId>
+                        <groupId>io.github.git-commit-id</groupId>
+                        <artifactId>git-commit-id-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>

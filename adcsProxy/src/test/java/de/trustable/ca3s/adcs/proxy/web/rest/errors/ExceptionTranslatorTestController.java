@@ -18,9 +18,13 @@ public class ExceptionTranslatorTestController {
     public void missingServletRequestPartException(@RequestPart String part) {}
 
     @GetMapping("/missing-servlet-request-parameter")
+<<<<<<< HEAD
     public void missingServletRequestParameterException(
         @RequestParam String param
     ) {}
+=======
+    public void missingServletRequestParameterException(@RequestParam String param) {}
+>>>>>>> jhipster_upgrade
 
     @GetMapping("/access-denied")
     public void accessdenied() {

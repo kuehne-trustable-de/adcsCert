@@ -33,12 +33,14 @@ import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFa
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
+
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ ApplicationProperties.class })
+
 public class AdcsProxyApp implements InitializingBean {
 
     private static final Logger log = LoggerFactory.getLogger(
@@ -294,6 +296,8 @@ public class AdcsProxyApp implements InitializingBean {
         filter.setIncludeHeaders(true);
         filter.setAfterMessagePrefix("REQUEST DATA : ");
         return filter;
+            env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
+        );
     }
     */
 }

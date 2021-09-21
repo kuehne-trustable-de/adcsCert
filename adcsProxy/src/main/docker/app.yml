@@ -1,5 +1,9 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+<<<<<<< HEAD
 version: "3.8"
+=======
+version: '3.8'
+>>>>>>> jhipster_upgrade
 services:
   adcsproxy-app:
     image: adcsproxy

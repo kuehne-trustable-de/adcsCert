@@ -1,8 +1,15 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+<<<<<<< HEAD
 version: "3.8"
 services:
   adcsproxy-sonar:
     image: sonarqube:8.8-community
+=======
+version: '3.8'
+services:
+  adcsproxy-sonar:
+    image: sonarqube:8.9.2-community
+>>>>>>> jhipster_upgrade
     # Authentication is turned off for out of the box experience while trying out SonarQube
     # For real use cases delete sonar.forceAuthentication variable or set sonar.forceAuthentication=true
     environment:

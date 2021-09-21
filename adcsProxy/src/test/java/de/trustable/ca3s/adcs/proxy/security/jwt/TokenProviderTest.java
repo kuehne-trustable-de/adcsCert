@@ -29,6 +29,7 @@ class TokenProviderTest {
     @BeforeEach
     public void setup() {
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
+<<<<<<< HEAD
         String base64Secret =
             "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
         jHipsterProperties
@@ -36,6 +37,10 @@ class TokenProviderTest {
             .getAuthentication()
             .getJwt()
             .setBase64Secret(base64Secret);
+=======
+        String base64Secret = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
+        jHipsterProperties.getSecurity().getAuthentication().getJwt().setBase64Secret(base64Secret);
+>>>>>>> jhipster_upgrade
         tokenProvider = new TokenProvider(jHipsterProperties);
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret));
 
@@ -49,9 +54,13 @@ class TokenProviderTest {
 
     @Test
     void testReturnFalseWhenJWThasInvalidSignature() {
+<<<<<<< HEAD
         boolean isTokenValid = tokenProvider.validateToken(
             createTokenWithDifferentSignature()
         );
+=======
+        boolean isTokenValid = tokenProvider.validateToken(createTokenWithDifferentSignature());
+>>>>>>> jhipster_upgrade
 
         assertThat(isTokenValid).isFalse();
     }
@@ -68,11 +77,15 @@ class TokenProviderTest {
 
     @Test
     void testReturnFalseWhenJWTisExpired() {
+<<<<<<< HEAD
         ReflectionTestUtils.setField(
             tokenProvider,
             "tokenValidityInMilliseconds",
             -ONE_MINUTE
         );
+=======
+        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -ONE_MINUTE);
+>>>>>>> jhipster_upgrade
 
         Authentication authentication = createAuthentication();
         String token = tokenProvider.createToken(authentication, false);
@@ -102,24 +115,33 @@ class TokenProviderTest {
     void testKeyIsSetFromSecretWhenSecretIsNotEmpty() {
         final String secret = "NwskoUmKHZtzGRKJKVjsJF7BtQMMxNWi";
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
+<<<<<<< HEAD
         jHipsterProperties
             .getSecurity()
             .getAuthentication()
             .getJwt()
             .setSecret(secret);
+=======
+        jHipsterProperties.getSecurity().getAuthentication().getJwt().setSecret(secret);
+>>>>>>> jhipster_upgrade
 
         TokenProvider tokenProvider = new TokenProvider(jHipsterProperties);
 
         Key key = (Key) ReflectionTestUtils.getField(tokenProvider, "key");
+<<<<<<< HEAD
         assertThat(key)
             .isNotNull()
             .isEqualTo(
                 Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8))
             );
+=======
+        assertThat(key).isNotNull().isEqualTo(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)));
+>>>>>>> jhipster_upgrade
     }
 
     @Test
     void testKeyIsSetFromBase64SecretWhenSecretIsEmpty() {
+<<<<<<< HEAD
         final String base64Secret =
             "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
@@ -128,15 +150,24 @@ class TokenProviderTest {
             .getAuthentication()
             .getJwt()
             .setBase64Secret(base64Secret);
+=======
+        final String base64Secret = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
+        JHipsterProperties jHipsterProperties = new JHipsterProperties();
+        jHipsterProperties.getSecurity().getAuthentication().getJwt().setBase64Secret(base64Secret);
+>>>>>>> jhipster_upgrade
 
         TokenProvider tokenProvider = new TokenProvider(jHipsterProperties);
 
         Key key = (Key) ReflectionTestUtils.getField(tokenProvider, "key");
+<<<<<<< HEAD
         assertThat(key)
             .isNotNull()
             .isEqualTo(
                 Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret))
             );
+=======
+        assertThat(key).isNotNull().isEqualTo(Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret)));
+>>>>>>> jhipster_upgrade
     }
 
     private Authentication createAuthentication() {
@@ -152,18 +183,26 @@ class TokenProviderTest {
     }
 
     private String createUnsupportedToken() {
+<<<<<<< HEAD
         return Jwts
             .builder()
             .setPayload("payload")
             .signWith(key, SignatureAlgorithm.HS512)
             .compact();
+=======
+        return Jwts.builder().setPayload("payload").signWith(key, SignatureAlgorithm.HS512).compact();
+>>>>>>> jhipster_upgrade
     }
 
     private String createTokenWithDifferentSignature() {
         Key otherKey = Keys.hmacShaKeyFor(
+<<<<<<< HEAD
             Decoders.BASE64.decode(
                 "Xfd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8"
             )
+=======
+            Decoders.BASE64.decode("Xfd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8")
+>>>>>>> jhipster_upgrade
         );
 
         return Jwts

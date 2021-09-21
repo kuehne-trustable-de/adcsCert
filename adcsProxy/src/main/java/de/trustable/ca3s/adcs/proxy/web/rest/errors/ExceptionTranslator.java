@@ -98,10 +98,7 @@ public class ExceptionTranslator
                 )
                 .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION);
         } else {
-            builder
-                .withCause(((DefaultProblem) problem).getCause())
-                .withDetail(problem.getDetail())
-                .withInstance(problem.getInstance());
+            builder.withCause(((DefaultProblem) problem).getCause()).withDetail(problem.getDetail()).withInstance(problem.getInstance());
             problem.getParameters().forEach(builder::with);
             if (
                 !problem.getParameters().containsKey(MESSAGE_KEY) &&
@@ -153,36 +150,19 @@ public class ExceptionTranslator
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleBadRequestAlertException(
-        BadRequestAlertException ex,
-        NativeWebRequest request
-    ) {
+    public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
         return create(
             ex,
             request,
-            HeaderUtil.createFailureAlert(
-                applicationName,
-                true,
-                ex.getEntityName(),
-                ex.getErrorKey(),
-                ex.getMessage()
-            )
+            HeaderUtil.createFailureAlert(applicationName, true, ex.getEntityName(), ex.getErrorKey(), ex.getMessage())
         );
     }
 
     @Override
-    public ProblemBuilder prepare(
-        final Throwable throwable,
-        final StatusType status,
-        final URI type
-    ) {
-        Collection<String> activeProfiles = Arrays.asList(
-            env.getActiveProfiles()
-        );
+    public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
+        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
 
-        if (
-            activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)
-        ) {
+        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             if (throwable instanceof HttpMessageConversionException) {
                 return Problem
                     .builder()
@@ -191,11 +171,7 @@ public class ExceptionTranslator
                     .withStatus(status)
                     .withDetail("Unable to convert http message")
                     .withCause(
-                        Optional
-                            .ofNullable(throwable.getCause())
-                            .filter(cause -> isCausalChainsEnabled())
-                            .map(this::toProblem)
-                            .orElse(null)
+                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
                     );
             }
             if (containsPackageName(throwable.getMessage())) {
@@ -206,11 +182,7 @@ public class ExceptionTranslator
                     .withStatus(status)
                     .withDetail("Unexpected runtime exception")
                     .withCause(
-                        Optional
-                            .ofNullable(throwable.getCause())
-                            .filter(cause -> isCausalChainsEnabled())
-                            .map(this::toProblem)
-                            .orElse(null)
+                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
                     );
             }
         }
@@ -222,11 +194,7 @@ public class ExceptionTranslator
             .withStatus(status)
             .withDetail(throwable.getMessage())
             .withCause(
-                Optional
-                    .ofNullable(throwable.getCause())
-                    .filter(cause -> isCausalChainsEnabled())
-                    .map(this::toProblem)
-                    .orElse(null)
+                Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
             );
     }
 

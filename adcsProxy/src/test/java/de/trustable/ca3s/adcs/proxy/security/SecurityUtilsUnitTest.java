@@ -37,7 +37,11 @@ class SecurityUtilsUnitTest {
     }
 
     @Test
+<<<<<<< HEAD
     void testgetCurrentUserJWT() {
+=======
+    void testGetCurrentUserJWT() {
+>>>>>>> jhipster_upgrade
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(
             new UsernamePasswordAuthenticationToken("admin", "token")
@@ -79,6 +83,21 @@ class SecurityUtilsUnitTest {
 
     @Test
     void testHasCurrentUserThisAuthority() {
+<<<<<<< HEAD
+=======
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
+        SecurityContextHolder.setContext(securityContext);
+
+        assertThat(SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.USER)).isTrue();
+        assertThat(SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)).isFalse();
+    }
+
+    @Test
+    void testHasCurrentUserAnyOfAuthorities() {
+>>>>>>> jhipster_upgrade
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
@@ -87,6 +106,7 @@ class SecurityUtilsUnitTest {
         );
         SecurityContextHolder.setContext(securityContext);
 
+<<<<<<< HEAD
         assertThat(
             SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.USER)
         )
@@ -98,4 +118,21 @@ class SecurityUtilsUnitTest {
         )
             .isFalse();
     }
+=======
+        assertThat(SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)).isTrue();
+        assertThat(SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.ADMIN)).isFalse();
+    }
+
+    @Test
+    void testHasCurrentUserNoneOfAuthorities() {
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
+        SecurityContextHolder.setContext(securityContext);
+
+        assertThat(SecurityUtils.hasCurrentUserNoneOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)).isFalse();
+        assertThat(SecurityUtils.hasCurrentUserNoneOfAuthorities(AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.ADMIN)).isTrue();
+    }
+>>>>>>> jhipster_upgrade
 }
