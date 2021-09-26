@@ -26,7 +26,6 @@ public class OpenApiConfiguration {
 
     @Bean
     public SpringfoxCustomizer noApiFirstCustomizer() {
-<<<<<<< HEAD
         return docket ->
             docket
                 .select()
@@ -35,23 +34,16 @@ public class OpenApiConfiguration {
                         .basePackage("de.trustable.ca3s.adcs.proxy.web.api")
                         .negate()
                 );
-=======
-        return docket -> docket.select().apis(RequestHandlerSelectors.basePackage("de.trustable.ca3s.adcs.proxy.web.api").negate());
->>>>>>> jhipster_upgrade
     }
 
     @Bean
     public Docket apiFirstDocket(JHipsterProperties jHipsterProperties) {
         JHipsterProperties.ApiDocs properties = jHipsterProperties.getApiDocs();
-<<<<<<< HEAD
         Contact contact = new Contact(
             properties.getContactName(),
             properties.getContactUrl(),
             properties.getContactEmail()
         );
-=======
-        Contact contact = new Contact(properties.getContactName(), properties.getContactUrl(), properties.getContactEmail());
->>>>>>> jhipster_upgrade
 
         ApiInfo apiInfo = new ApiInfo(
             "API First " + properties.getTitle(),
@@ -69,27 +61,19 @@ public class OpenApiConfiguration {
             .host(properties.getHost())
             .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
             .apiInfo(apiInfo)
-<<<<<<< HEAD
             .useDefaultResponseMessages(
                 properties.isUseDefaultResponseMessages()
             )
-=======
-            .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
->>>>>>> jhipster_upgrade
             .forCodeGeneration(true)
             .directModelSubstitute(ByteBuffer.class, String.class)
             .genericModelSubstitutes(ResponseEntity.class)
             .ignoredParameterTypes(Pageable.class)
             .select()
-<<<<<<< HEAD
             .apis(
                 RequestHandlerSelectors.basePackage(
                     "de.trustable.ca3s.adcs.proxy.web.api"
                 )
             )
-=======
-            .apis(RequestHandlerSelectors.basePackage("de.trustable.ca3s.adcs.proxy.web.api"))
->>>>>>> jhipster_upgrade
             .paths(regex(properties.getDefaultIncludePattern()))
             .build();
     }

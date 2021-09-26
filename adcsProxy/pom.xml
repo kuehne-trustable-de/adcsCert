@@ -7,7 +7,7 @@
 
     <groupId>de.trustable.ca3s</groupId>
     <artifactId>adcs-proxy</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <packaging>jar</packaging>
     <name>Adcs Proxy</name>
 
@@ -155,6 +155,44 @@
                 <artifactId>HdrHistogram</artifactId>
                 <version>2.1.12</version>
             </dependency>
+
+            <!-- recheck in 2022 -->
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging-processor</artifactId>
+                <version>2.2.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging-annotations</artifactId>
+                <version>2.2.1.Final</version>
+            </dependency>
+
+            <!-- recheck in 2022 -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>org.osgi.core</artifactId>
+                <version>6.0.0</version>
+            </dependency>
+
+            <!-- depends on the implementation of adcsCertUtil and the jna API -->
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>4.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>4.5.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -361,6 +399,11 @@
             <scope>test</scope>
         </dependency-->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -435,6 +478,7 @@
                 <artifactId>openapi-generator-maven-plugin</artifactId>
             </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
+
         </plugins>
         <pluginManagement>
             <plugins>

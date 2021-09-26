@@ -1,8 +1,10 @@
 package de.trustable.ca3s.adcs.proxy;
 
 import de.trustable.ca3s.adcs.proxy.config.ApplicationProperties;
-import de.trustable.ca3s.adcs.proxy.config.ApplicationProperties;
-import de.trustable.ca3s.adcsKeyStore.provider.*;
+import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSBundleFactory;
+import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSKeyManagerProvider;
+import de.trustable.ca3s.adcsKeyStore.provider.LocalADCSProvider;
+import de.trustable.ca3s.adcsKeyStore.provider.SpringEnvironmentPropertyProviderImpl;
 import de.trustable.ca3s.cert.bundle.TimedRenewalCertMap;
 import de.trustable.util.JCAManager;
 import io.undertow.Undertow;
@@ -19,8 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +33,11 @@ import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFa
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
-
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ ApplicationProperties.class })
-
 public class AdcsProxyApp implements InitializingBean {
 
     private static final Logger log = LoggerFactory.getLogger(
@@ -97,7 +94,7 @@ public class AdcsProxyApp implements InitializingBean {
      * You can find more information on how profiles work with JHipster on <a href="https://www.jhipster.tech/profiles/">https://www.jhipster.tech/profiles/</a>.
      */
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         initApplication();
     }
 
@@ -228,7 +225,8 @@ public class AdcsProxyApp implements InitializingBean {
 
                     String configuredHost = env.getProperty(
                         LocalADCSBundleFactory.KEY_STORE_PROPERTIES_PREFIX +
-                        "host"
+                        "host",
+                        "localhost"
                     );
                     if (sslPort == null) {
                         log.debug(

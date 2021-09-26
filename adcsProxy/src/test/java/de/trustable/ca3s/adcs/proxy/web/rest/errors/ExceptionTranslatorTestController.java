@@ -18,13 +18,9 @@ public class ExceptionTranslatorTestController {
     public void missingServletRequestPartException(@RequestPart String part) {}
 
     @GetMapping("/missing-servlet-request-parameter")
-<<<<<<< HEAD
     public void missingServletRequestParameterException(
         @RequestParam String param
     ) {}
-=======
-    public void missingServletRequestParameterException(@RequestParam String param) {}
->>>>>>> jhipster_upgrade
 
     @GetMapping("/access-denied")
     public void accessdenied() {
@@ -64,6 +60,5 @@ public class ExceptionTranslatorTestController {
         value = HttpStatus.BAD_REQUEST,
         reason = "test response status"
     )
-    @SuppressWarnings("serial")
     public static class TestResponseStatusException extends RuntimeException {}
 }

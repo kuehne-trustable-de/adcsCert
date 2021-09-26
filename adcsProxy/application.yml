@@ -48,11 +48,22 @@ management:
     web:
       base-path: /management
       exposure:
-        include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump']
+        include:
+          [
+            "configprops",
+            "env",
+            "health",
+            "info",
+            "jhimetrics",
+            "logfile",
+            "loggers",
+            "prometheus",
+            "threaddump",
+          ]
   endpoint:
     health:
       show-details: when_authorized
-      roles: 'ROLE_ADMIN'
+      roles: "ROLE_ADMIN"
     jhimetrics:
       enabled: true
   info:
@@ -127,18 +138,18 @@ spring:
 
 server:
   port: 8080
-#  ssl:
-#    ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
-#    enabled-protocols: TLSv1.2
-#    trust-store-type: WINDOWS-ROOT
+  #  ssl:
+  #    ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+  #    enabled-protocols: TLSv1.2
+  #    trust-store-type: WINDOWS-ROOT
   tls:
     port: 8443
     host: 0.0.0.0
     additionalSANs: ci-adcs.ca3s.org
     key-store-password: password
     key-store: /NUL
-#    key-store-type: LocalADCS
-#    key-store-provider: LocalADCSProvider
+    #    key-store-type: LocalADCS
+    #    key-store-provider: LocalADCSProvider
     certificate:
       preExpiryRefreshDays: 5
     key:
@@ -156,7 +167,7 @@ server:
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
-  display-ribbon-on-profiles: 'dev'
+  display-ribbon-on-profiles: "dev"
 
 # ===================================================================
 # JHipster specific properties
@@ -178,7 +189,7 @@ jhipster:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   clientApp:
-    name: 'adcsProxy'
+    name: "adcsProxy"
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #     allowed-origins: "*"
@@ -196,14 +207,14 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
-  swagger:
+  api-docs:
     default-include-pattern: /adcs.*
     title: adcsProxy API
     description: API to query the local ADCS instance and to request and revoke certificates from an ADCS instance
     version: 1.2.0-oas3
     terms-of-service-url:
     contact-name:
-    contact-url: 
+    contact-url:
     contact-email: kuehne@trustable.de
     license: Apache License, Version 2.0
     license-url: https://www.apache.org/licenses/LICENSE-2.0.txt
@@ -222,6 +233,6 @@ adcs-proxy:
     # secret to authenticate the incoming modifying requests
     secret: s3cr3t
     # using simple api key to prevent easy DOS-attack on the read interface. The database of the ADCS may collapse very soon when flooded with requests.
-    # No additional value required, it will be derived from 'secret'  
+    # No additional value required, it will be derived from 'secret'
     api-key-header-name: X-API-Key
     use-api-key: false

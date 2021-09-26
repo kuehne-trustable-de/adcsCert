@@ -35,28 +35,26 @@ public class TokenProvider {
 
     public TokenProvider(JHipsterProperties jHipsterProperties) {
         byte[] keyBytes;
-<<<<<<< HEAD
         String secret = jHipsterProperties
             .getSecurity()
             .getAuthentication()
             .getJwt()
-            .getSecret();
+            .getBase64Secret();
         if (!ObjectUtils.isEmpty(secret)) {
+            log.debug("Using a Base64-encoded JWT secret key");
+            keyBytes = Decoders.BASE64.decode(secret);
+        } else {
             log.warn(
                 "Warning: the JWT key used is not Base64-encoded. " +
                 "We recommend using the `jhipster.security.authentication.jwt.base64-secret` key for optimum security."
             );
+            secret =
+                jHipsterProperties
+                    .getSecurity()
+                    .getAuthentication()
+                    .getJwt()
+                    .getSecret();
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        } else {
-            log.debug("Using a Base64-encoded JWT secret key");
-            keyBytes =
-                Decoders.BASE64.decode(
-                    jHipsterProperties
-                        .getSecurity()
-                        .getAuthentication()
-                        .getJwt()
-                        .getBase64Secret()
-                );
         }
         key = Keys.hmacShaKeyFor(keyBytes);
         jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
@@ -85,29 +83,6 @@ public class TokenProvider {
             .stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
-=======
-        String secret = jHipsterProperties.getSecurity().getAuthentication().getJwt().getBase64Secret();
-        if (!ObjectUtils.isEmpty(secret)) {
-            log.debug("Using a Base64-encoded JWT secret key");
-            keyBytes = Decoders.BASE64.decode(secret);
-        } else {
-            log.warn(
-                "Warning: the JWT key used is not Base64-encoded. " +
-                "We recommend using the `jhipster.security.authentication.jwt.base64-secret` key for optimum security."
-            );
-            secret = jHipsterProperties.getSecurity().getAuthentication().getJwt().getSecret();
-            keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        }
-        key = Keys.hmacShaKeyFor(keyBytes);
-        jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
-        this.tokenValidityInMilliseconds = 1000 * jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
-        this.tokenValidityInMillisecondsForRememberMe =
-            1000 * jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
-    }
-
-    public String createToken(Authentication authentication, boolean rememberMe) {
-        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
->>>>>>> jhipster_upgrade
 
         long now = (new Date()).getTime();
         Date validity;

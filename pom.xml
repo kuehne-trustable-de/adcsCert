@@ -37,10 +37,12 @@
 		<maven.javadoc.version>3.2.0</maven.javadoc.version>
 
 		<jna.version>4.5.2</jna.version>
+		<!-- versio 5 needs some rework ... -->
+		<!--jna.version>5.3.1</jna.version-->
 		<commons-pool2.version>2.7.0</commons-pool2.version>
 		
 		<dependencyCheck.version>6.3.1</dependencyCheck.version>
-        	<dependencyCheck.skip>false</dependencyCheck.skip>
+		<dependencyCheck.skip>false</dependencyCheck.skip>
 		
  	</properties>
       	 	

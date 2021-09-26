@@ -37,17 +37,12 @@ class WebConfigurerTest {
     @BeforeEach
     public void setup() {
         servletContext = spy(new MockServletContext());
-<<<<<<< HEAD
         doReturn(mock(FilterRegistration.Dynamic.class))
             .when(servletContext)
             .addFilter(anyString(), any(Filter.class));
         doReturn(mock(ServletRegistration.Dynamic.class))
             .when(servletContext)
             .addServlet(anyString(), any(Servlet.class));
-=======
-        doReturn(mock(FilterRegistration.Dynamic.class)).when(servletContext).addFilter(anyString(), any(Filter.class));
-        doReturn(mock(ServletRegistration.Dynamic.class)).when(servletContext).addServlet(anyString(), any(Servlet.class));
->>>>>>> jhipster_upgrade
 
         env = new MockEnvironment();
         props = new JHipsterProperties();
@@ -59,51 +54,34 @@ class WebConfigurerTest {
     void shouldStartUpProdServletContext() throws ServletException {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
 
-<<<<<<< HEAD
         assertThatCode(() -> webConfigurer.onStartup(servletContext))
             .doesNotThrowAnyException();
-=======
-        assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
->>>>>>> jhipster_upgrade
     }
 
     @Test
     void shouldStartUpDevServletContext() throws ServletException {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT);
 
-<<<<<<< HEAD
         assertThatCode(() -> webConfigurer.onStartup(servletContext))
             .doesNotThrowAnyException();
-=======
-        assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
->>>>>>> jhipster_upgrade
     }
 
     @Test
     void shouldCorsFilterOnApiPath() throws Exception {
-<<<<<<< HEAD
         props
             .getCors()
             .setAllowedOrigins(Collections.singletonList("other.domain.com"));
         props
             .getCors()
             .setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-=======
-        props.getCors().setAllowedOrigins(Collections.singletonList("other.domain.com"));
-        props.getCors().setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
->>>>>>> jhipster_upgrade
         props.getCors().setAllowedHeaders(Collections.singletonList("*"));
         props.getCors().setMaxAge(1800L);
         props.getCors().setAllowCredentials(true);
 
-<<<<<<< HEAD
         MockMvc mockMvc = MockMvcBuilders
             .standaloneSetup(new WebConfigurerTestController())
             .addFilters(webConfigurer.corsFilter())
             .build();
-=======
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new WebConfigurerTestController()).addFilters(webConfigurer.corsFilter()).build();
->>>>>>> jhipster_upgrade
 
         mockMvc
             .perform(
@@ -120,7 +98,6 @@ class WebConfigurerTest {
                     )
             )
             .andExpect(header().string(HttpHeaders.VARY, "Origin"))
-<<<<<<< HEAD
             .andExpect(
                 header()
                     .string(
@@ -144,14 +121,6 @@ class WebConfigurerTest {
                 get("/api/test-cors")
                     .header(HttpHeaders.ORIGIN, "other.domain.com")
             )
-=======
-            .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET,POST,PUT,DELETE"))
-            .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"))
-            .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "1800"));
-
-        mockMvc
-            .perform(get("/api/test-cors").header(HttpHeaders.ORIGIN, "other.domain.com"))
->>>>>>> jhipster_upgrade
             .andExpect(status().isOk())
             .andExpect(
                 header()
@@ -172,7 +141,6 @@ class WebConfigurerTest {
         props.getCors().setMaxAge(1800L);
         props.getCors().setAllowCredentials(true);
 
-<<<<<<< HEAD
         MockMvc mockMvc = MockMvcBuilders
             .standaloneSetup(new WebConfigurerTestController())
             .addFilters(webConfigurer.corsFilter())
@@ -183,12 +151,6 @@ class WebConfigurerTest {
                 get("/test/test-cors")
                     .header(HttpHeaders.ORIGIN, "other.domain.com")
             )
-=======
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new WebConfigurerTestController()).addFilters(webConfigurer.corsFilter()).build();
-
-        mockMvc
-            .perform(get("/test/test-cors").header(HttpHeaders.ORIGIN, "other.domain.com"))
->>>>>>> jhipster_upgrade
             .andExpect(status().isOk())
             .andExpect(
                 header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN)
@@ -199,7 +161,6 @@ class WebConfigurerTest {
     void shouldCorsFilterDeactivatedForNullAllowedOrigins() throws Exception {
         props.getCors().setAllowedOrigins(null);
 
-<<<<<<< HEAD
         MockMvc mockMvc = MockMvcBuilders
             .standaloneSetup(new WebConfigurerTestController())
             .addFilters(webConfigurer.corsFilter())
@@ -210,12 +171,6 @@ class WebConfigurerTest {
                 get("/api/test-cors")
                     .header(HttpHeaders.ORIGIN, "other.domain.com")
             )
-=======
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new WebConfigurerTestController()).addFilters(webConfigurer.corsFilter()).build();
-
-        mockMvc
-            .perform(get("/api/test-cors").header(HttpHeaders.ORIGIN, "other.domain.com"))
->>>>>>> jhipster_upgrade
             .andExpect(status().isOk())
             .andExpect(
                 header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN)
@@ -226,7 +181,6 @@ class WebConfigurerTest {
     void shouldCorsFilterDeactivatedForEmptyAllowedOrigins() throws Exception {
         props.getCors().setAllowedOrigins(new ArrayList<>());
 
-<<<<<<< HEAD
         MockMvc mockMvc = MockMvcBuilders
             .standaloneSetup(new WebConfigurerTestController())
             .addFilters(webConfigurer.corsFilter())
@@ -237,12 +191,6 @@ class WebConfigurerTest {
                 get("/api/test-cors")
                     .header(HttpHeaders.ORIGIN, "other.domain.com")
             )
-=======
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new WebConfigurerTestController()).addFilters(webConfigurer.corsFilter()).build();
-
-        mockMvc
-            .perform(get("/api/test-cors").header(HttpHeaders.ORIGIN, "other.domain.com"))
->>>>>>> jhipster_upgrade
             .andExpect(status().isOk())
             .andExpect(
                 header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN)
