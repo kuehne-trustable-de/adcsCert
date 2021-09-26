@@ -1,8 +1,6 @@
 package de.trustable.ca3s.adcs.proxy.config;
 
-import de.trustable.ca3s.adcs.proxy.security.*;
 import de.trustable.ca3s.adcs.proxy.security.AuthoritiesConstants;
-import de.trustable.ca3s.adcs.proxy.security.jwt.*;
 import de.trustable.ca3s.adcs.proxy.security.jwt.JWTConfigurer;
 import de.trustable.ca3s.adcs.proxy.security.jwt.TokenProvider;
 import de.trustable.ca3s.adcs.proxy.service.JWSService;
@@ -10,12 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;

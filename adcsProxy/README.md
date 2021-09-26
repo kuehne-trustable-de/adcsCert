@@ -1,9 +1,8 @@
 # adcsProxy
 
-This application was generated using JHipster 6.8.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.8.0](https://www.jhipster.tech/documentation-archive/v6.8.0).
+This application was generated using JHipster 7.2.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.2.0](https://www.jhipster.tech/documentation-archive/v7.2.0).
 
 This is a "microservice" application intended to be part of a microservice architecture, please refer to the [Doing microservices with JHipster][] page of the documentation for more information.
-
 This application is configured for Service Discovery and Configuration with . On launch, it will refuse to start if it is not able to connect to .
 
 ## Development
@@ -15,6 +14,14 @@ To start your application in the dev profile, run:
 ```
 
 For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+
+### JHipster Control Center
+
+JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
+
+```
+docker-compose -f src/main/docker/jhipster-control-center.yml up
+```
 
 ### Doing API-First development using openapi-generator
 
@@ -116,6 +123,7 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
+<<<<<<< HEAD
 [jhipster 7.0.1 archive]: https://www.jhipster.tech/documentation-archive/v7.0.1
 [doing microservices with jhipster]: https://www.jhipster.tech/documentation-archive/v7.0.1/microservices-architecture/
 [using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.0.1/development/
@@ -127,3 +135,18 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [openapi-generator]: https://openapi-generator.tech
 [swagger-editor]: https://editor.swagger.io
 [doing api-first development]: https://www.jhipster.tech/documentation-archive/v7.0.1/doing-api-first-development/
+=======
+[jhipster 7.2.0 archive]: https://www.jhipster.tech/documentation-archive/v7.2.0
+[doing microservices with jhipster]: https://www.jhipster.tech/documentation-archive/v7.2.0/microservices-architecture/
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.2.0/development/
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.2.0/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.2.0/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v7.2.0/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v7.2.0/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v7.2.0/setting-up-ci/
+[node.js]: https://nodejs.org/
+[npm]: https://www.npmjs.com/
+[openapi-generator]: https://openapi-generator.tech
+[swagger-editor]: https://editor.swagger.io
+[doing api-first development]: https://www.jhipster.tech/documentation-archive/v7.2.0/doing-api-first-development/
+>>>>>>> jhipster_upgrade

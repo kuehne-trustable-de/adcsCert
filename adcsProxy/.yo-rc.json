@@ -4,7 +4,7 @@
       "packageName": "de.trustable.ca3s.adcs.proxy",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "6.8.0",
+    "jhipsterVersion": "7.2.0",
     "applicationType": "microservice",
     "baseName": "adcsProxy",
     "packageName": "de.trustable.ca3s.adcs.proxy",
@@ -36,6 +36,19 @@
     "languages": ["en"],
     "blueprints": [],
     "skipClient": true,
-    "skipUserManagement": true
+    "skipUserManagement": true,
+    "skipServer": false,
+    "skipCheckLengthOfIdentifier": false,
+    "skipFakeData": false,
+    "pages": [],
+    "reactive": false,
+    "enableGradleEnterprise": false,
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "withAdminUi": false,
+    "monorepository": true,
+    "skipCommitHook": true,
+    "entities": []
   }
 }

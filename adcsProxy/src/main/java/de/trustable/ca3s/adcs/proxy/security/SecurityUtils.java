@@ -1,5 +1,6 @@
 package de.trustable.ca3s.adcs.proxy.security;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 import org.springframework.security.core.Authentication;
@@ -48,10 +49,7 @@ public final class SecurityUtils {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional
             .ofNullable(securityContext.getAuthentication())
-            .filter(
-                authentication ->
-                    authentication.getCredentials() instanceof String
-            )
+            .filter(authentication -> authentication.getCredentials() instanceof String)
             .map(authentication -> (String) authentication.getCredentials());
     }
 
@@ -61,14 +59,31 @@ public final class SecurityUtils {
      * @return true if the user is authenticated, false otherwise.
      */
     public static boolean isAuthenticated() {
-        Authentication authentication = SecurityContextHolder
-            .getContext()
-            .getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && getAuthorities(authentication).noneMatch(AuthoritiesConstants.ANONYMOUS::equals);
+    }
+
+    /**
+     * Checks if the current user has any of the authorities.
+     *
+     * @param authorities the authorities to check.
+     * @return true if the current user has any of the authorities, false otherwise.
+     */
+    public static boolean hasCurrentUserAnyOfAuthorities(String... authorities) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (
-            authentication != null &&
-            getAuthorities(authentication)
-                .noneMatch(AuthoritiesConstants.ANONYMOUS::equals)
+            authentication != null && getAuthorities(authentication).anyMatch(authority -> Arrays.asList(authorities).contains(authority))
         );
+    }
+
+    /**
+     * Checks if the current user has none of the authorities.
+     *
+     * @param authorities the authorities to check.
+     * @return true if the current user has none of the authorities, false otherwise.
+     */
+    public static boolean hasCurrentUserNoneOfAuthorities(String... authorities) {
+        return !hasCurrentUserAnyOfAuthorities(authorities);
     }
 
     /**
@@ -78,21 +93,10 @@ public final class SecurityUtils {
      * @return true if the current user has the authority, false otherwise.
      */
     public static boolean hasCurrentUserThisAuthority(String authority) {
-        Authentication authentication = SecurityContextHolder
-            .getContext()
-            .getAuthentication();
-        return (
-            authentication != null &&
-            getAuthorities(authentication).anyMatch(authority::equals)
-        );
+        return hasCurrentUserAnyOfAuthorities(authority);
     }
 
-    private static Stream<String> getAuthorities(
-        Authentication authentication
-    ) {
-        return authentication
-            .getAuthorities()
-            .stream()
-            .map(GrantedAuthority::getAuthority);
+    private static Stream<String> getAuthorities(Authentication authentication) {
+        return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority);
     }
 }

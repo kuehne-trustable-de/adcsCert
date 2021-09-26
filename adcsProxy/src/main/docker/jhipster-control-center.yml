@@ -28,10 +28,17 @@
 # - In Consul mode, the ports are in the consul.yml file.
 # - In Eureka mode, the ports are in the jhipster-registry.yml file.
 
+<<<<<<< HEAD
 version: "3.8"
 services:
   jhipster-control-center:
     image: "jhipster/jhipster-control-center:v0.4.1"
+=======
+version: '3.8'
+services:
+  jhipster-control-center:
+    image: 'jhipster/jhipster-control-center:v0.5.0'
+>>>>>>> jhipster_upgrade
     command:
       - /bin/sh
       - -c
