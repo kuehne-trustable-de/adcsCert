@@ -12,7 +12,7 @@ import java.util.prefs.Preferences;
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import org.apache.commons.codec.binary.Base64;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,23 +26,46 @@ public class JWSService {
 
     private static final Logger log = LoggerFactory.getLogger(JWSService.class);
 
-    @Value("${adcs-proxy.connection.secret:#{null}}")
-    private String secretPassphrase;
+
+    private final String secretPassphrase;
+    private final String salt;
+    private final int iterations;
+    private final String apiKeySalt;
+    private final int apiKeyIterations;
+    private final String pbeAlgo;
+
+    public JWSService(@Value("${adcs-proxy.connection.secret:#{null}}") String secretPassphrase,
+                      @Value("${adcs-proxy.connection.salt:ca3sSalt}") String salt,
+                      @Value("${adcs-proxy.connection.iterations:4567}") int iterations,
+                      @Value("${adcs-proxy.connection.api-key-salt:apiKeySalt}") String apiKeySalt,
+                      @Value("${adcs-proxy.connection.api-key-iterations:3756}") int apiKeyIterations,
+                      @Value("${adcs-proxy.connection.pbeAlgo:PBKDF2WithHmacSHA256}") String pbeAlgo) {
+        this.secretPassphrase = secretPassphrase;
+        this.salt = salt;
+        this.iterations = iterations;
+        this.apiKeySalt = apiKeySalt;
+        this.apiKeyIterations = apiKeyIterations;
+        this.pbeAlgo = pbeAlgo;
+    }
 
     byte[] getSalt() {
-        return "ca3sSalt".getBytes();
+        return salt.getBytes();
+        // return "ca3sSalt".getBytes();
     }
 
     int getIterations() {
-        return 4567;
+        return iterations;
+//        return 4567;
     }
 
     byte[] getAPIKeySalt() {
-        return "apiKeySalt".getBytes();
+        return apiKeySalt.getBytes();
+//        return "apiKeySalt".getBytes();
     }
 
     int getAPIKeyIterations() {
-        return 3756;
+        return apiKeyIterations;
+//        return 3756;
     }
 
     /**
@@ -57,14 +80,14 @@ public class JWSService {
         throws JOSEException, ParseException, GeneralSecurityException {
         // To parse the JWS and verify it, e.g. on client-side
         JWSObject jwsObject = JWSObject.parse(jwsAsString);
-        log.debug("jwsObject " + jwsObject.serialize());
+
+        // enable for debugging purposes only!
+//        log.debug("NOT FOR PRODUCTION: jwsObject " + jwsObject.serialize());
 
         byte[] sharedSecret = getSharedSecret();
 
-        log.debug(
-            "calculated secret as " +
-            java.util.Base64.getEncoder().encodeToString(sharedSecret)
-        );
+        // enable for debugging purposes only!
+//        log.debug("NOT FOR PRODUCTION: calculated secret as " + java.util.Base64.getEncoder().encodeToString(sharedSecret));
 
         JWSVerifier verifier = new MACVerifier(sharedSecret);
         if (jwsObject.verify(verifier)) {
@@ -84,9 +107,8 @@ public class JWSService {
             getIterations(),
             256
         );
-        SecretKeyFactory skf = SecretKeyFactory.getInstance(
-            "PBKDF2WithHmacSHA256"
-        );
+        SecretKeyFactory skf = SecretKeyFactory.getInstance(pbeAlgo);
+
         return skf.generateSecret(spec).getEncoded();
     }
 
@@ -104,15 +126,15 @@ public class JWSService {
             getAPIKeyIterations(),
             256
         );
-        SecretKeyFactory skf = SecretKeyFactory.getInstance(
-            "PBKDF2WithHmacSHA256"
-        );
+
+        SecretKeyFactory skf = SecretKeyFactory.getInstance(pbeAlgo);
 
         String apiKey = java.util.Base64
             .getEncoder()
             .encodeToString(skf.generateSecret(spec).getEncoded());
 
-        log.debug("expected api key '{}' " + apiKey);
+        // enable for debugging purposes only!
+//        log.debug("NOT FOR PRODUCTION: expected api key '{}' " + apiKey);
 
         return apiKey;
     }
@@ -120,24 +142,21 @@ public class JWSService {
     private String getPassphrase() {
         String passphrase = "";
 
-        log.debug(
-            "connection secret provided from command line / property file : '{}'",
-            secretPassphrase
+        if (secretPassphrase == null || (secretPassphrase.trim().length() < 6)) {
+            log.warn("connection secret missing / too short!");
+            return passphrase;
+        }
+
+        int passLen = secretPassphrase.length();
+        log.debug("NOT FOR PRODUCTION: connection secret provided from command line / property file : '{}'",
+            "*****" + secretPassphrase.substring(passLen-3, passLen)
         );
 
-        if (
-            secretPassphrase != null && (secretPassphrase.trim().length() < 6)
-        ) {
-            log.warn(
-                "connection secret provided from command line / property file too short!"
-            );
-        }
 
         if (secretPassphrase != null) {
             // check content from command line / property file
             passphrase = secretPassphrase;
-            log.info(
-                "connection secret provided from command line / property file. To take advantage of the registry key '{}', insert your secret in registry folder 'Computer\\\\HKEY_CURRENT_USER\\\\Software\\\\JavaSoft\\\\Prefs' !",
+            log.debug( "connection secret provided from command line / property file. To take advantage of the registry key '{}', insert your secret in registry folder 'Computer\\\\HKEY_CURRENT_USER\\\\Software\\\\JavaSoft\\\\Prefs' !",
                 PREF_KEY_SECRET
             );
         } else {
@@ -146,20 +165,15 @@ public class JWSService {
             // check own registry entry. The registry has the advantage, that the secret cannot be found in process parameter
             passphrase = userPref.get(PREF_KEY_SECRET, null);
             if (passphrase == null) {
-                log.warn(
-                    "connection secret not available in registry entry '{}' !",
-                    PREF_KEY_SECRET
-                );
+                log.warn("connection secret not available in registry entry '{}' !",PREF_KEY_SECRET);
                 passphrase = createRandomString();
                 userPref.put(PREF_KEY_SECRET, passphrase);
-                log.info(
-                    "new registry key '{}' populated with random secret",
-                    PREF_KEY_SECRET
-                );
+                log.info("new registry key '{}' populated with random secret",
+                    PREF_KEY_SECRET);
             } else {
-                log.debug(
-                    "connection secret provided from registry : '{}'",
-                    passphrase
+                passLen = passphrase.length();
+                log.debug("NOT FOR PRODUCTION: connection secret provided from registry : '{}'",
+                    "*****" + passphrase.substring(passLen-3, passLen)
                 );
             }
         }

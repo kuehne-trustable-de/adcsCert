@@ -26,9 +26,9 @@
 	</developers>
 	
 	<properties>
-		<adcsCert.version>1.2.2</adcsCert.version>
+		<adcsCert.version>1.2.5</adcsCert.version>
 
-		<cryptoUtil.version>1.3.2</cryptoUtil.version>
+		<cryptoUtil.version>1.3.4</cryptoUtil.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -170,26 +170,26 @@
 			<id>prepare-central</id>
 			<build>
 				<plugins>
-		            <plugin>
-		                <groupId>org.owasp</groupId>
-		                <artifactId>dependency-check-maven</artifactId>
-		                <version>${dependencyCheck.version}</version>
-		                <configuration>
-		                    <cveValidForHours>24</cveValidForHours>
-		                    <failBuildOnCVSS>4</failBuildOnCVSS>
+					<plugin>
+						<groupId>org.owasp</groupId>
+						<artifactId>dependency-check-maven</artifactId>
+						<version>${dependencyCheck.version}</version>
+						<configuration>
+							<cveValidForHours>24</cveValidForHours>
+							<failBuildOnCVSS>4</failBuildOnCVSS>
 							<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-		                    <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
-		                    <format>HTML</format>
-		                    <skip>${dependencyCheck.skip}</skip>
-		                </configuration>
-		                <executions>
-		                    <execution>
-		                        <goals>
-		                            <goal>check</goal>
-		                        </goals>
-		                    </execution>
-		                </executions>
-		            </plugin>
+							<outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
+							<format>HTML</format>
+							<skip>${dependencyCheck.skip}</skip>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>

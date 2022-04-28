@@ -175,5 +175,11 @@ jhipster:
 
 # application:
 
-connection:
-  secret: s3cr3t
+adcs-proxy:
+  connection:
+    secret: s3cr3t
+    salt: ca3sSalt
+    iterations: 4567
+    api-key-salt: apiKeySalt
+    api-key-iterations: 3756
+    pbeAlgo: PBKDF2WithHmacSHA256
