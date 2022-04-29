@@ -11,18 +11,6 @@
 	<url>https://github.com/kuehne-trustable-de/adcsCert/tree/master/adcsCert/adcsProxyClient</url>
 	<description>client implementation of the ADCS Proxy client</description>
 
-
-	<prerequisites>
-		<maven>2.2.0</maven>
-	</prerequisites>
-
-	<licenses>
-		<license>
-    		<name>Apache License, Version 2.0</name>
-    		<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-  		</license>	
-  	</licenses>
-
 	<developers>
 		<developer>
 			<name>Andreas Kuehne</name>
@@ -37,6 +25,23 @@
 			<organizationUrl>https://trustable.de</organizationUrl>
 		</developer>
 	</developers>
+
+	<scm>
+		<connection>https://github.com/kuehne-trustable-de/adcsCert.git</connection>
+		<developerConnection>https://github.com/kuehne-trustable-de/adcsCert.git</developerConnection>
+		<url>https://github.com/kuehne-trustable-de/adcsCert.git</url>
+	</scm>
+
+	<prerequisites>
+		<maven>2.2.0</maven>
+	</prerequisites>
+
+	<licenses>
+		<license>
+    		<name>Apache License, Version 2.0</name>
+    		<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+  		</license>	
+  	</licenses>
 
 	<properties>
 		<java.version>1.7</java.version>

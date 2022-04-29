@@ -24,7 +24,13 @@
 			<organizationUrl>https://trustable.de</organizationUrl>
 		</developer>
 	</developers>
-	
+
+	<scm>
+		<connection>https://github.com/kuehne-trustable-de/adcsCert.git</connection>
+		<developerConnection>https://github.com/kuehne-trustable-de/adcsCert.git</developerConnection>
+		<url>https://github.com/kuehne-trustable-de/adcsCert.git</url>
+	</scm>
+
 	<properties>
 		<adcsCert.version>1.2.5</adcsCert.version>
 

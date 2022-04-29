@@ -34,13 +34,6 @@
 		</developer>
 	</developers>
 
-	<scm>
-		<!-- connection>https://github.com/kuehne-trustable-de/ca3sCore.git</connection>
-		<developerConnection>https://github.com/kuehne-trustable-de/ca3sCore.git</developerConnection>
-		<url>https://github.com/kuehne-trustable-de/ca3sCore.git</url-->
-	</scm>
-
-
     <repositories>
         <!-- jhipster-needle-maven-repository -->
     </repositories>
