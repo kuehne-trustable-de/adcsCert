@@ -69,13 +69,13 @@
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>7.2.0</jhipster-dependencies.version>
+        <jhipster-dependencies.version>7.5.1</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
-        <spring-boot.version>2.5.4</spring-boot.version>
-        <archunit-junit5.version>0.21.0</archunit-junit5.version>
+        <spring-boot.version>2.6.3</spring-boot.version>
+        <archunit-junit5.version>0.23.1</archunit-junit5.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
+        <jackson-databind-nullable.version>0.2.2</jackson-databind-nullable.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
@@ -109,7 +109,7 @@
 
 	    <cryptoUtil.version>1.3.4</cryptoUtil.version>
 
-    	<nimbus-jose-jwt-version>8.2.1</nimbus-jose-jwt-version>
+    	<nimbus-jose-jwt-version>9.22</nimbus-jose-jwt-version>
 
         <jna.version>4.5.2</jna.version>
 
@@ -214,18 +214,13 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-oas</artifactId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
