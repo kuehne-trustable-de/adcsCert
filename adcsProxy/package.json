@@ -46,7 +46,7 @@
     "packaging": "jar"
   },
   "devDependencies": {
-    "generator-jhipster": "^7.1.0",
+    "generator-jhipster": "^7.8.1",
     "prettier": "2.4.0",
     "prettier-plugin-java": "1.4.0",
     "prettier-plugin-packagejson": "2.2.11"
