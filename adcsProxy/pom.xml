@@ -184,7 +184,7 @@
             <dependency>
                 <groupId>net.java.dev.jna</groupId>
                 <artifactId>jna-platform</artifactId>
-                <version>5.11.0</version>
+                <version>4.5.2</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.checkerframework/checker-qual -->
