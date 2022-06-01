@@ -8,32 +8,31 @@ package de.trustable.ca3s.adcs.proxy.web.rest;
 
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Authorization;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T18:45:40.714Z[GMT]")
-@Api(value = "adcsCertificateRevoker", description = "the adcsCertificateRevoker API")
+@Tag(name = "adcsCertificateRevoker", description = "the adcsCertificateRevoker API")
 public interface AdcsCertificateRevokerApi {
 
-    @ApiOperation(value = "revoke a certificate", nickname = "revokeCertificate", notes = "revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature", authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "certificate revoked"),
-        @ApiResponse(code = 400, message = "invalid input, object invalid"),
-        @ApiResponse(code = 401, message = "authentication / authorization missing, especially JWS invalid"),
-        @ApiResponse(code = 409, message = "certificate already revoked") })
+    @Operation(summary = "revoke a certificate",
+        description = "revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature",
+        responses = {
+        @ApiResponse(responseCode = "204", description = "certificate revoked"),
+        @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+        @ApiResponse(responseCode = "401", description = "authentication / authorization missing, especially JWS invalid"),
+        @ApiResponse(responseCode = "409", description = "certificate already revoked") })
     @RequestMapping(value = "/adcsCertificateRevoker",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> revokeCertificate(@ApiParam(value = "serial, reason and revocation date wrapped in a JWS"  )  @Valid @RequestBody JWSWrappedRequest body);
+    ResponseEntity<Void> revokeCertificate(@Parameter(description = "serial, reason and revocation date wrapped in a JWS"  )  @Valid @RequestBody JWSWrappedRequest body);
 
 }

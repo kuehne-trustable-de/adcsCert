@@ -6,11 +6,10 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * GetCertificateResponse
@@ -39,7 +38,7 @@ public class GetCertificateResponse   {
    * Get values
    * @return values
   **/
-  @ApiModelProperty(value = "")
+  @Schema()
   @Valid
   public List<GetCertificateResponseValues> getValues() {
     return values;
@@ -71,7 +70,7 @@ public class GetCertificateResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetCertificateResponse {\n");
-    
+
     sb.append("    values: ").append(toIndentedString(values)).append("\n");
     sb.append("}");
     return sb.toString();

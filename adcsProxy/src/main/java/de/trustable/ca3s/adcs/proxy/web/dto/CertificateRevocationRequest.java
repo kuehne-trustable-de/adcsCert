@@ -4,11 +4,11 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * CertificateRevocationRequest
@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T21:06:07.917Z[GMT]")
 public class CertificateRevocationRequest   {
-	
+
   @JsonProperty("serial")
   private String serial = null;
 
@@ -35,7 +35,7 @@ public class CertificateRevocationRequest   {
    * certificate serial number
    * @return serial
   **/
-  @ApiModelProperty(required = true, value = "certificate serial number")
+  @Schema(required = true, description = "certificate serial number")
   @NotNull
 
   public String getSerial() {
@@ -55,7 +55,7 @@ public class CertificateRevocationRequest   {
    * Get reason
    * @return reason
   **/
-  @ApiModelProperty(example = "4", required = true, value = "")
+  @Schema(example = "4", required = true)
   @NotNull
 
   public Integer getReason() {
@@ -75,7 +75,7 @@ public class CertificateRevocationRequest   {
    * Get date
    * @return date
   **/
-  @ApiModelProperty(example = "2017-07-21T17:32:28Z", value = "")
+  @Schema(example = "2017-07-21T17:32:28Z")
 
 
   @Override
@@ -115,7 +115,7 @@ public void setRevTime(long revTime) {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CertificateRevocationRequest {\n");
-    
+
     sb.append("    serial: ").append(toIndentedString(serial)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("   revTime: ").append(toIndentedString(revTime)).append("\n");

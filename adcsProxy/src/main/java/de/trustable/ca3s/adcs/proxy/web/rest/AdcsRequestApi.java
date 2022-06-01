@@ -6,33 +6,32 @@
 package de.trustable.ca3s.adcs.proxy.web.rest;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import de.trustable.ca3s.adcs.proxy.web.dto.GetCertificateResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-08-30T11:55:34.168Z[GMT]")
-@Api(value = "adcsRequest", description = "the adcsRequest API")
+@Tag(name = "adcsRequest", description = "the adcsRequest API")
 public interface AdcsRequestApi {
 
-    @ApiOperation(value = "get details of a certificate request identified by its Id", nickname = "getRequestById", notes = "details of a certificate request identified by its Id", response = GetCertificateResponse.class, authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "request id found", response = GetCertificateResponse.class),
-        @ApiResponse(code = 400, message = "invalid input, object invalid"),
-        @ApiResponse(code = 401, message = "authentication / authorization missing"),
-        @ApiResponse(code = 404, message = "no existing item for the given id") })
+    @Operation(summary = "get details of a certificate request identified by its Id", description ="details of a certificate request identified by its Id",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "request id found"),
+            @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+            @ApiResponse(responseCode = "401", description = "authentication / authorization missing"),
+            @ApiResponse(responseCode = "404", description = "no existing item for the given id") }
+        )
     @RequestMapping(value = "/adcsRequest/{reqId}",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<GetCertificateResponse> getRequestById(@ApiParam(value = "certificate request id",required=true) @PathVariable("reqId") String reqId);
+    ResponseEntity<GetCertificateResponse> getRequestById(@Parameter(description = "certificate request id",required=true) @PathVariable("reqId") String reqId);
 
 }

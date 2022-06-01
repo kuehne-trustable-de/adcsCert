@@ -5,54 +5,48 @@
  */
 package de.trustable.ca3s.adcs.proxy.web.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import de.trustable.ca3s.adcs.proxy.web.dto.ADCSInstanceDetailsResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Authorization;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-16T20:41:45.662Z[GMT]")
-@Api(value = "adcsInfo", description = "the adcsInfo API")
+@Tag(name = "adcsInfo", description = "the adcsInfo API")
 public interface AdcsInfoApi {
 
-    @ApiOperation(value = "get description of ADCS instance", nickname = "getADCSInfo", notes = "get description of ADCS instance", response = String.class, authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "ADCS info", response = String.class),
-        @ApiResponse(code = 401, message = "authentication / authorization missing"),
-        @ApiResponse(code = 503, message = "ADCS server unavailable")})
+    @Operation(summary = "get description of ADCS instance",
+        description = "get description of ADCS instance",
+        responses ={
+        @ApiResponse(responseCode = "200", description = "ADCS info"),
+        @ApiResponse(responseCode = "401", description = "authentication / authorization missing"),
+        @ApiResponse(responseCode = "503", description = "ADCS server unavailable")})
     @RequestMapping(value = "/adcsInfo",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<String> getADCSInfo();
 
-    @ApiOperation(value = "get the templates available at this ADCS instance", nickname = "getCATemplates", notes = "get the templates available at this ADCS instance", response = String.class, authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Array of template names", response = String[].class),
-        @ApiResponse(code = 401, message = "authentication / authorization missing"),
-        @ApiResponse(code = 503, message = "ADCS server unavailable")})
+    @Operation(summary = "get the templates available at this ADCS instance", description = "get the templates available at this ADCS instance",
+        responses ={
+        @ApiResponse(responseCode = "200", description = "Array of template names"),
+        @ApiResponse(responseCode = "401", description = "authentication / authorization missing"),
+        @ApiResponse(responseCode = "503", description = "ADCS server unavailable")})
     @RequestMapping(value = "/adcsTemplates",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<String[]> getCATemplates();
 
-    @ApiOperation(value = "get the details describing this ADCS instance", nickname = "getADCSInstanceDetails", notes = "get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance", response = ADCSInstanceDetailsResponse.class, authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Details regarding this ADCS instance", response = ADCSInstanceDetailsResponse.class),
-        @ApiResponse(code = 401, message = "authentication / authorization missing"),
-        @ApiResponse(code = 503, message = "ADCS server unavailable")})
+    @Operation(summary = "get the details describing this ADCS instance", description = "get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance",
+        responses ={
+        @ApiResponse(responseCode = "200", description = "Details regarding this ADCS instance"),
+        @ApiResponse(responseCode = "401", description = "authentication / authorization missing"),
+        @ApiResponse(responseCode = "503", description = "ADCS server unavailable")})
     @RequestMapping(value = "/adcsInstanceDetails",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<ADCSInstanceDetailsResponse> getCAInstanceDetails();
 

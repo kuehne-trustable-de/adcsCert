@@ -7,7 +7,7 @@
 
     <groupId>de.trustable.ca3s</groupId>
     <artifactId>adcs-proxy</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.7</version>
     <packaging>jar</packaging>
     <name>Adcs Proxy</name>
 
@@ -215,10 +215,16 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
-        <dependency>
+        <!--dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
+        </dependency-->
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.8</version>
         </dependency>
 
         <dependency>

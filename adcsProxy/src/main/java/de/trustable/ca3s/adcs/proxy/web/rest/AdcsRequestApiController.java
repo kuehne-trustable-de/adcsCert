@@ -3,6 +3,7 @@ package de.trustable.ca3s.adcs.proxy.web.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import de.trustable.ca3s.adcs.proxy.web.dto.GetCertificateResponseValues;
 import de.trustable.ca3s.adcsCertUtil.ADCSException;
 import de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector;
 import de.trustable.ca3s.adcsCertUtil.OODBConnectionsADCSException;
-import io.swagger.annotations.ApiParam;
 
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-08-30T11:55:34.168Z[GMT]")
@@ -29,7 +29,7 @@ public class AdcsRequestApiController implements AdcsRequestApi {
 
     @Autowired
     private LocalADCSService localADCSService;
-    
+
 
     private final HttpServletRequest request;
 
@@ -38,19 +38,19 @@ public class AdcsRequestApiController implements AdcsRequestApi {
         this.request = request;
     }
 
-    public ResponseEntity<GetCertificateResponse> getRequestById(@ApiParam(value = "certificate request id",required=true) @PathVariable("reqId") String reqId) {
+    public ResponseEntity<GetCertificateResponse> getRequestById(@Parameter(description = "certificate request id",required=true) @PathVariable("reqId") String reqId) {
         String accept = request.getHeader("Accept");
         log.debug("getRequestById for id '" + reqId + "'");
-        
+
         if (accept != null && accept.contains("application/json")) {
             try {
-            	
+
             	ADCSWinNativeConnector adcsConn = localADCSService.getADCSConnector();
             	de.trustable.ca3s.adcsCertUtil.GetCertificateResponse adcsCertResp = adcsConn.getCertificateByRequestId(reqId);
 
             	if( adcsCertResp != null) {
 	            	GetCertificateResponse getCertResp = new GetCertificateResponse();
-	            	
+
 	            	addCertResponseElement("ReqId", adcsCertResp.getReqId(), getCertResp);
 	            	addCertResponseElement("Template", adcsCertResp.getTemplate(), getCertResp);
 	            	addCertResponseElement("ResolvedDate", adcsCertResp.getResolvedDate(), getCertResp);
@@ -59,7 +59,7 @@ public class AdcsRequestApiController implements AdcsRequestApi {
 	            	addCertResponseElement("RevokedReason", adcsCertResp.getRevokedReason(), getCertResp);
 	            	addCertResponseElement("Disposition", adcsCertResp.getDisposition(), getCertResp);
 	            	addCertResponseElement("DispositionMessage", adcsCertResp.getDispositionMessage(), getCertResp);
-	            	
+
 	                return new ResponseEntity<GetCertificateResponse>(getCertResp, HttpStatus.OK);
             	} else {
                     log.debug("getRequestById for id '" + reqId + "': nothing found");
