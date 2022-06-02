@@ -12,74 +12,61 @@
 
 package de.trustable.ca3s.client.invoker;
 
-import okhttp3.OkHttpClient;
 
-import javax.net.ssl.HostnameVerifier;
+import de.trustable.ca3s.client.invoker.auth.ApiKeyAuth;
+import de.trustable.ca3s.client.invoker.auth.Authentication;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.client.ClientBuilder;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ADCSApiClient extends ApiClient {
 
+    private static final Logger log = Logger.getLogger(ADCSApiClient.class.getName());
 
-    private TrustManager[] trustManagers;
+    private final TrustManager[] trustManagers;
 
-    /*
-     * Constructor for ApiClient
-     */
     public ADCSApiClient(TrustManager[] trustManagers) {
 
-        super(initHttpClient(trustManagers));
+        super(null);
 
-        setTrustManagers(trustManagers);
+        // Setup authentications (key: authentication name, value: authentication).
+        authentications = new HashMap<>();
+        authentications.put("ApiKeyAuth", new ApiKeyAuth("header", "X-API-Key"));
 
-        // Set default User-Agent.
-        setUserAgent("ADCSProxyClient/1.0.0/java");
+        // Prevent the authentications from being modified.
+        authentications = Collections.unmodifiableMap(authentications);
 
+        this.trustManagers = trustManagers;
+        httpClient = buildHttpClient();
+
+        log.fine("instantiating ADCSApiClient with trustManagers " + Arrays.toString(trustManagers));
     }
 
-    public TrustManager[] getTrustManagers() {
-        return trustManagers;
-    }
+    @Override
+    protected void customizeClientBuilder(ClientBuilder clientBuilder) {
 
-    /**
-     * Configure trust manager to validate authorization in an SSL session.
-     * Use null to reset to default.
-     *
-     * @param managers The TrustManagers to use
-     * @return ApiClient
-     */
-    public ADCSApiClient setTrustManagers(TrustManager[] managers) {
-        this.trustManagers = managers;
-        return this;
-    }
-
-    
-    
-    /**
-     * Apply SSL related settings to httpClient according to the current values of
-     * verifyingSsl and sslCaCert.
-     */
-    static OkHttpClient initHttpClient(TrustManager[] trustManagers) {
-        try {
-
-            HostnameVerifier hostnameVerifier = null;
-
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-            if (trustManagers != null) {
+        if( trustManagers == null ) {
+            log.info("customizeClientBuilder without trustManagers");
+        }else{
+            log.fine("customizeClientBuilder with " + trustManagers.getClass().getName());
+            try {
                 SSLContext sslContext = SSLContext.getInstance("TLS");
                 sslContext.init(null, trustManagers, new SecureRandom());
-                builder.sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustManagers[0]);
+
+                clientBuilder.sslContext(sslContext);
+                log.fine("jackson client customized");
+            } catch (GeneralSecurityException gse) {
+                log.log(Level.SEVERE, "problem customizing jackson client", gse);
             }
-            if( hostnameVerifier != null) {
-                builder.hostnameVerifier(hostnameVerifier);
-            }
-            return builder.build();
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
     }
+
 }

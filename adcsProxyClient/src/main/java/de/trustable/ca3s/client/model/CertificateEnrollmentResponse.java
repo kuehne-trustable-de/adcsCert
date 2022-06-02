@@ -13,46 +13,41 @@
 
 package de.trustable.ca3s.client.model;
 
-import com.google.gson.*;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import de.trustable.ca3s.client.invoker.JSON;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
+
 
 /**
  * CertificateEnrollmentResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@JsonPropertyOrder({
+  CertificateEnrollmentResponse.JSON_PROPERTY_STATUS,
+  CertificateEnrollmentResponse.JSON_PROPERTY_REQ_ID,
+  CertificateEnrollmentResponse.JSON_PROPERTY_CERT,
+  CertificateEnrollmentResponse.JSON_PROPERTY_CERT_C_A
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public class CertificateEnrollmentResponse {
-  public static final String SERIALIZED_NAME_STATUS = "status";
-  @SerializedName(SERIALIZED_NAME_STATUS)
+  public static final String JSON_PROPERTY_STATUS = "status";
   private String status;
 
-  public static final String SERIALIZED_NAME_REQ_ID = "reqId";
-  @SerializedName(SERIALIZED_NAME_REQ_ID)
+  public static final String JSON_PROPERTY_REQ_ID = "reqId";
   private Integer reqId;
 
-  public static final String SERIALIZED_NAME_CERT = "cert";
-  @SerializedName(SERIALIZED_NAME_CERT)
+  public static final String JSON_PROPERTY_CERT = "cert";
   private String cert;
 
-  public static final String SERIALIZED_NAME_CERT_C_A = "certCA";
-  @SerializedName(SERIALIZED_NAME_CERT_C_A)
+  public static final String JSON_PROPERTY_CERT_C_A = "certCA";
   private String certCA;
 
   public CertificateEnrollmentResponse() { 
   }
 
   public CertificateEnrollmentResponse status(String status) {
-    
     this.status = status;
     return this;
   }
@@ -61,20 +56,24 @@ public class CertificateEnrollmentResponse {
    * Get status
    * @return status
   **/
+  @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public String getStatus() {
     return status;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setStatus(String status) {
     this.status = status;
   }
 
 
   public CertificateEnrollmentResponse reqId(Integer reqId) {
-    
     this.reqId = reqId;
     return this;
   }
@@ -83,20 +82,24 @@ public class CertificateEnrollmentResponse {
    * Get reqId
    * @return reqId
   **/
+  @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_REQ_ID)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public Integer getReqId() {
     return reqId;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_REQ_ID)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setReqId(Integer reqId) {
     this.reqId = reqId;
   }
 
 
   public CertificateEnrollmentResponse cert(String cert) {
-    
     this.cert = cert;
     return this;
   }
@@ -105,20 +108,24 @@ public class CertificateEnrollmentResponse {
    * Get cert
    * @return cert
   **/
+  @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_CERT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public String getCert() {
     return cert;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_CERT)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCert(String cert) {
     this.cert = cert;
   }
 
 
   public CertificateEnrollmentResponse certCA(String certCA) {
-    
     this.certCA = certCA;
     return this;
   }
@@ -127,19 +134,26 @@ public class CertificateEnrollmentResponse {
    * Get certCA
    * @return certCA
   **/
+  @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_CERT_C_A)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public String getCertCA() {
     return certCA;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_CERT_C_A)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCertCA(String certCA) {
     this.certCA = certCA;
   }
 
 
-
+  /**
+   * Return true if this CertificateEnrollmentResponse object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -183,113 +197,5 @@ public class CertificateEnrollmentResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("status");
-    openapiFields.add("reqId");
-    openapiFields.add("cert");
-    openapiFields.add("certCA");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("status");
-    openapiRequiredFields.add("reqId");
-    openapiRequiredFields.add("cert");
-    openapiRequiredFields.add("certCA");
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to CertificateEnrollmentResponse
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (CertificateEnrollmentResponse.openapiRequiredFields.isEmpty()) {
-          return;
-        } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in CertificateEnrollmentResponse is not found in the empty JSON string", CertificateEnrollmentResponse.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!CertificateEnrollmentResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `CertificateEnrollmentResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : CertificateEnrollmentResponse.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if (jsonObj.get("status") != null && !jsonObj.get("status").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
-      }
-      if (jsonObj.get("cert") != null && !jsonObj.get("cert").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `cert` to be a primitive type in the JSON string but got `%s`", jsonObj.get("cert").toString()));
-      }
-      if (jsonObj.get("certCA") != null && !jsonObj.get("certCA").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `certCA` to be a primitive type in the JSON string but got `%s`", jsonObj.get("certCA").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!CertificateEnrollmentResponse.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'CertificateEnrollmentResponse' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<CertificateEnrollmentResponse> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(CertificateEnrollmentResponse.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<CertificateEnrollmentResponse>() {
-           @Override
-           public void write(JsonWriter out, CertificateEnrollmentResponse value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public CertificateEnrollmentResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
-
- /**
-  * Create an instance of CertificateEnrollmentResponse given an JSON string
-  *
-  * @param jsonString JSON string
-  * @return An instance of CertificateEnrollmentResponse
-  * @throws IOException if the JSON string is invalid with respect to CertificateEnrollmentResponse
-  */
-  public static CertificateEnrollmentResponse fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, CertificateEnrollmentResponse.class);
-  }
-
- /**
-  * Convert an instance of CertificateEnrollmentResponse to an JSON string
-  *
-  * @return JSON string
-  */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
-  }
 }
 

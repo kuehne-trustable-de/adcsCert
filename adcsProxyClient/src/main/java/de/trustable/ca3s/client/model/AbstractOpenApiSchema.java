@@ -13,16 +13,16 @@
 
 package de.trustable.ca3s.client.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import javax.ws.rs.core.GenericType;
 import java.util.Map;
 import java.util.Objects;
 
-//import com.fasterxml.jackson.annotation.JsonValue;
-
 /**
  * Abstract class for oneOf,anyOf schemas defined in OpenAPI spec
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public abstract class AbstractOpenApiSchema {
 
     // store the actual instance of the schema/object
@@ -51,7 +51,7 @@ public abstract class AbstractOpenApiSchema {
      *
      * @return an instance of the actual schema/object
      */
-    //@JsonValue
+    @JsonValue
     public Object getActualInstance() {return instance;}
 
     /**

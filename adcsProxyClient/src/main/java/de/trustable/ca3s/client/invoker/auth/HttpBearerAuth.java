@@ -20,7 +20,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public class HttpBearerAuth implements Authentication {
   private final String scheme;
   private String bearerToken;
@@ -48,9 +48,8 @@ public class HttpBearerAuth implements Authentication {
   }
 
   @Override
-  public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams, Map<String, String> cookieParams,
-                            String payload, String method, URI uri) throws ApiException {
-    if (bearerToken == null) {
+  public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams, Map<String, String> cookieParams, String payload, String method, URI uri) throws ApiException {
+    if(bearerToken == null) {
       return;
     }
 

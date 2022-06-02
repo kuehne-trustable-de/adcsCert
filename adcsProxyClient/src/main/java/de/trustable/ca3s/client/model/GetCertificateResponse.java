@@ -13,32 +13,31 @@
 
 package de.trustable.ca3s.client.model;
 
-import com.google.gson.*;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import de.trustable.ca3s.client.invoker.JSON;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 
 /**
  * GetCertificateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@JsonPropertyOrder({
+  GetCertificateResponse.JSON_PROPERTY_VALUES
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public class GetCertificateResponse {
-  public static final String SERIALIZED_NAME_VALUES = "values";
-  @SerializedName(SERIALIZED_NAME_VALUES)
+  public static final String JSON_PROPERTY_VALUES = "values";
   private List<GetCertificateResponseValues> values = null;
 
   public GetCertificateResponse() { 
   }
 
   public GetCertificateResponse values(List<GetCertificateResponseValues> values) {
-    
     this.values = values;
     return this;
   }
@@ -55,19 +54,26 @@ public class GetCertificateResponse {
    * Get values
    * @return values
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_VALUES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<GetCertificateResponseValues> getValues() {
     return values;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_VALUES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValues(List<GetCertificateResponseValues> values) {
     this.values = values;
   }
 
 
-
+  /**
+   * Return true if this GetCertificateResponse object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,102 +111,5 @@ public class GetCertificateResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("values");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to GetCertificateResponse
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (GetCertificateResponse.openapiRequiredFields.isEmpty()) {
-          return;
-        } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in GetCertificateResponse is not found in the empty JSON string", GetCertificateResponse.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!GetCertificateResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `GetCertificateResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-      JsonArray jsonArrayvalues = jsonObj.getAsJsonArray("values");
-      if (jsonArrayvalues != null) {
-        // ensure the json data is an array
-        if (!jsonObj.get("values").isJsonArray()) {
-          throw new IllegalArgumentException(String.format("Expected the field `values` to be an array in the JSON string but got `%s`", jsonObj.get("values").toString()));
-        }
-
-        // validate the optional field `values` (array)
-        for (int i = 0; i < jsonArrayvalues.size(); i++) {
-          GetCertificateResponseValues.validateJsonObject(jsonArrayvalues.get(i).getAsJsonObject());
-        };
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!GetCertificateResponse.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'GetCertificateResponse' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<GetCertificateResponse> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(GetCertificateResponse.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<GetCertificateResponse>() {
-           @Override
-           public void write(JsonWriter out, GetCertificateResponse value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public GetCertificateResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
-
- /**
-  * Create an instance of GetCertificateResponse given an JSON string
-  *
-  * @param jsonString JSON string
-  * @return An instance of GetCertificateResponse
-  * @throws IOException if the JSON string is invalid with respect to GetCertificateResponse
-  */
-  public static GetCertificateResponse fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, GetCertificateResponse.class);
-  }
-
- /**
-  * Convert an instance of GetCertificateResponse to an JSON string
-  *
-  * @return JSON string
-  */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
-  }
 }
 

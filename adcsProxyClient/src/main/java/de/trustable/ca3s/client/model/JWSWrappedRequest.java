@@ -13,36 +13,31 @@
 
 package de.trustable.ca3s.client.model;
 
-import com.google.gson.*;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import de.trustable.ca3s.client.invoker.JSON;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
+
 
 /**
  * CSR and additional attributes (e.g. template) wrapped in a JWS
  */
 @ApiModel(description = "CSR and additional attributes (e.g. template) wrapped in a JWS")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@JsonPropertyOrder({
+  JWSWrappedRequest.JSON_PROPERTY_JWS
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public class JWSWrappedRequest {
-  public static final String SERIALIZED_NAME_JWS = "jws";
-  @SerializedName(SERIALIZED_NAME_JWS)
+  public static final String JSON_PROPERTY_JWS = "jws";
   private String jws;
 
   public JWSWrappedRequest() { 
   }
 
   public JWSWrappedRequest jws(String jws) {
-    
     this.jws = jws;
     return this;
   }
@@ -51,19 +46,26 @@ public class JWSWrappedRequest {
    * Get jws
    * @return jws
   **/
+  @javax.annotation.Nonnull
   @ApiModelProperty(example = "eyJhbGciOiJIUzI1NiJ9.eyJjc3IiOiItLS0tLUJFR0lOIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLVxyXG5NSUlDZ0RDQ0FXZ0NBUUF3RkRFU01CQUdBMVVFQXd3Sk1UQXVNUzR3TGpFd01JSUJJakFOQmdrcWhraUc5dzBCXHJcbkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQTJWcDZneW10d2RCTzhwYXE3V1BDVnhDeS9VOU5sai93SFp4S21vZldcclxuTXJYZmUxT0MyRWdOWWZCQ1M3OEVzc0dBejJkK2pCeGpMeS9aY2w5Zm0zdzVkS3BZNjk0RExHenc3bmFUVU1kU1xyXG5Ha29zZXVsQStYTHdHRk9TaE1GM2c3aS9QK0FQTDJVQTZVR1AxRGsyT3JyQ1ZHVGdQYVlFcXh0RkVycmtEZUc5XHJcbm1VOHZ6WFUyWFdFL3NqQzhOQXAyYXRkckIwOWFxSTNkcVRPNmJFdjdBeTh0SUtMbHpoaGplY3JhUnpZMTlUS1RcclxuWmxZazJwSnR6RlJhZlJGUDZ3b2tDRUwvK3lkWndjanJ2clJtZkRKYlpIQ0lGWjlyQzVvQTBiblkrYkZ6eWtwNlxyXG5xUFpUci81eWRUeldRd29VaGVWa0ZGa25EdVNtSHV1cytxSGhNU0NJNzM5dTF3SURBUUFCb0Njd0pRWUpLb1pJXHJcbmh2Y05BUWtPTVJnd0ZqQVVCZ05WSFJFRURUQUxnZ2t4TUM0eExqQXVNVEF3RFFZSktvWklodmNOQVFFTEJRQURcclxuZ2dFQkFDMm9zK3BFWkcvYmozQkJqMkRVYWladzNsUnpOVzI2dUxGeXZqSWdQcWhuRlZNc0Q0RkdXWUdCM3MxMVxyXG52Z3l6ZS9mSStuQVMyMFFabDQxQjh4QXRFOVE3WVpXMk9qaUxWVUFRdFZaUlhxSnpjZEYzZ0d6RWlpQlg0dGxqXHJcbldIRkhMOHhiVm1tcStkSzhxQTdoOTZ5Z2NNUEJLVUViYnZyeGZWL1dGQTd3cDdhRTlncVVsb3M1ZzQybnhOOTlcclxuNFBBNWZBTnI1b1FZSmU4K0VvQWVsTTFVYlMrelpGU3AxL0xKV05EZTdlSkdLMTJ3aG85TWJtajFIRlA1WFhMVVxyXG5DQTRjVE0rZkZHRG95MHBwVkFUN3U0NUdCVGZKYTZhUzNObjRITlFjdFdmcE5vRlRtRUMxTlRUY1l3b3NtUHZoXHJcbkhTL1FIK1o4MFkweW1HQkN2MjJPQUdsQTJlVT1cclxuLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tXHJcbiIsImF0dHJpYnV0ZXMiOltdfQ.c2pKbTsW-pWpPjRi-S0Q7AqtacohEXw5ZYVwjHCtuAI", required = true, value = "")
+  @JsonProperty(JSON_PROPERTY_JWS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
   public String getJws() {
     return jws;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_JWS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setJws(String jws) {
     this.jws = jws;
   }
 
 
-
+  /**
+   * Return true if this JWSWrappedRequest object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -101,101 +103,5 @@ public class JWSWrappedRequest {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("jws");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("jws");
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to JWSWrappedRequest
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (JWSWrappedRequest.openapiRequiredFields.isEmpty()) {
-          return;
-        } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in JWSWrappedRequest is not found in the empty JSON string", JWSWrappedRequest.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!JWSWrappedRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `JWSWrappedRequest` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : JWSWrappedRequest.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if (jsonObj.get("jws") != null && !jsonObj.get("jws").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `jws` to be a primitive type in the JSON string but got `%s`", jsonObj.get("jws").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!JWSWrappedRequest.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'JWSWrappedRequest' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<JWSWrappedRequest> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(JWSWrappedRequest.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<JWSWrappedRequest>() {
-           @Override
-           public void write(JsonWriter out, JWSWrappedRequest value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public JWSWrappedRequest read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
-
- /**
-  * Create an instance of JWSWrappedRequest given an JSON string
-  *
-  * @param jsonString JSON string
-  * @return An instance of JWSWrappedRequest
-  * @throws IOException if the JSON string is invalid with respect to JWSWrappedRequest
-  */
-  public static JWSWrappedRequest fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, JWSWrappedRequest.class);
-  }
-
- /**
-  * Convert an instance of JWSWrappedRequest to an JSON string
-  *
-  * @return JSON string
-  */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
-  }
 }
 

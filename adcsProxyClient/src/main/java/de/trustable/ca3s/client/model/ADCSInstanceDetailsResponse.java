@@ -13,72 +13,71 @@
 
 package de.trustable.ca3s.client.model;
 
-import com.google.gson.*;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import de.trustable.ca3s.client.invoker.JSON;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 
 /**
  * ADCSInstanceDetailsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@JsonPropertyOrder({
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_CA_NAME,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_CA_TYPE,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_PARENT_CA_NAME,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_PRODUCT_VERSION,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_FILE_VERSION,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_DNS_NAME,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_SIGNING_CERTS,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_SIGNING_CERT_CHAINS,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_TEMPLATES,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_TEMPLATE_O_I_DS,
+  ADCSInstanceDetailsResponse.JSON_PROPERTY_SUBJECT_TEMPLATE_O_I_DS
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public class ADCSInstanceDetailsResponse {
-  public static final String SERIALIZED_NAME_CA_NAME = "caName";
-  @SerializedName(SERIALIZED_NAME_CA_NAME)
+  public static final String JSON_PROPERTY_CA_NAME = "caName";
   private String caName;
 
-  public static final String SERIALIZED_NAME_CA_TYPE = "caType";
-  @SerializedName(SERIALIZED_NAME_CA_TYPE)
+  public static final String JSON_PROPERTY_CA_TYPE = "caType";
   private String caType;
 
-  public static final String SERIALIZED_NAME_PARENT_CA_NAME = "parentCaName";
-  @SerializedName(SERIALIZED_NAME_PARENT_CA_NAME)
+  public static final String JSON_PROPERTY_PARENT_CA_NAME = "parentCaName";
   private String parentCaName;
 
-  public static final String SERIALIZED_NAME_PRODUCT_VERSION = "productVersion";
-  @SerializedName(SERIALIZED_NAME_PRODUCT_VERSION)
+  public static final String JSON_PROPERTY_PRODUCT_VERSION = "productVersion";
   private String productVersion;
 
-  public static final String SERIALIZED_NAME_FILE_VERSION = "fileVersion";
-  @SerializedName(SERIALIZED_NAME_FILE_VERSION)
+  public static final String JSON_PROPERTY_FILE_VERSION = "fileVersion";
   private String fileVersion;
 
-  public static final String SERIALIZED_NAME_DNS_NAME = "dnsName";
-  @SerializedName(SERIALIZED_NAME_DNS_NAME)
+  public static final String JSON_PROPERTY_DNS_NAME = "dnsName";
   private String dnsName;
 
-  public static final String SERIALIZED_NAME_SIGNING_CERTS = "signingCerts";
-  @SerializedName(SERIALIZED_NAME_SIGNING_CERTS)
+  public static final String JSON_PROPERTY_SIGNING_CERTS = "signingCerts";
   private List<String> signingCerts = null;
 
-  public static final String SERIALIZED_NAME_SIGNING_CERT_CHAINS = "signingCertChains";
-  @SerializedName(SERIALIZED_NAME_SIGNING_CERT_CHAINS)
+  public static final String JSON_PROPERTY_SIGNING_CERT_CHAINS = "signingCertChains";
   private List<String> signingCertChains = null;
 
-  public static final String SERIALIZED_NAME_TEMPLATES = "templates";
-  @SerializedName(SERIALIZED_NAME_TEMPLATES)
+  public static final String JSON_PROPERTY_TEMPLATES = "templates";
   private List<String> templates = null;
 
-  public static final String SERIALIZED_NAME_TEMPLATE_O_I_DS = "templateOIDs";
-  @SerializedName(SERIALIZED_NAME_TEMPLATE_O_I_DS)
+  public static final String JSON_PROPERTY_TEMPLATE_O_I_DS = "templateOIDs";
   private List<String> templateOIDs = null;
 
-  public static final String SERIALIZED_NAME_SUBJECT_TEMPLATE_O_I_DS = "subjectTemplateOIDs";
-  @SerializedName(SERIALIZED_NAME_SUBJECT_TEMPLATE_O_I_DS)
+  public static final String JSON_PROPERTY_SUBJECT_TEMPLATE_O_I_DS = "subjectTemplateOIDs";
   private List<String> subjectTemplateOIDs = null;
 
   public ADCSInstanceDetailsResponse() { 
   }
 
   public ADCSInstanceDetailsResponse caName(String caName) {
-    
     this.caName = caName;
     return this;
   }
@@ -87,20 +86,24 @@ public class ADCSInstanceDetailsResponse {
    * Get caName
    * @return caName
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_CA_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getCaName() {
     return caName;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_CA_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCaName(String caName) {
     this.caName = caName;
   }
 
 
   public ADCSInstanceDetailsResponse caType(String caType) {
-    
     this.caType = caType;
     return this;
   }
@@ -109,20 +112,24 @@ public class ADCSInstanceDetailsResponse {
    * Get caType
    * @return caType
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_CA_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getCaType() {
     return caType;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_CA_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCaType(String caType) {
     this.caType = caType;
   }
 
 
   public ADCSInstanceDetailsResponse parentCaName(String parentCaName) {
-    
     this.parentCaName = parentCaName;
     return this;
   }
@@ -131,20 +138,24 @@ public class ADCSInstanceDetailsResponse {
    * Get parentCaName
    * @return parentCaName
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_PARENT_CA_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getParentCaName() {
     return parentCaName;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_PARENT_CA_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setParentCaName(String parentCaName) {
     this.parentCaName = parentCaName;
   }
 
 
   public ADCSInstanceDetailsResponse productVersion(String productVersion) {
-    
     this.productVersion = productVersion;
     return this;
   }
@@ -153,20 +164,24 @@ public class ADCSInstanceDetailsResponse {
    * Get productVersion
    * @return productVersion
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_PRODUCT_VERSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getProductVersion() {
     return productVersion;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_PRODUCT_VERSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setProductVersion(String productVersion) {
     this.productVersion = productVersion;
   }
 
 
   public ADCSInstanceDetailsResponse fileVersion(String fileVersion) {
-    
     this.fileVersion = fileVersion;
     return this;
   }
@@ -175,20 +190,24 @@ public class ADCSInstanceDetailsResponse {
    * Get fileVersion
    * @return fileVersion
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_FILE_VERSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getFileVersion() {
     return fileVersion;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_FILE_VERSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFileVersion(String fileVersion) {
     this.fileVersion = fileVersion;
   }
 
 
   public ADCSInstanceDetailsResponse dnsName(String dnsName) {
-    
     this.dnsName = dnsName;
     return this;
   }
@@ -197,20 +216,24 @@ public class ADCSInstanceDetailsResponse {
    * Get dnsName
    * @return dnsName
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_DNS_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getDnsName() {
     return dnsName;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_DNS_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDnsName(String dnsName) {
     this.dnsName = dnsName;
   }
 
 
   public ADCSInstanceDetailsResponse signingCerts(List<String> signingCerts) {
-    
     this.signingCerts = signingCerts;
     return this;
   }
@@ -227,20 +250,24 @@ public class ADCSInstanceDetailsResponse {
    * Get signingCerts
    * @return signingCerts
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_SIGNING_CERTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<String> getSigningCerts() {
     return signingCerts;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_SIGNING_CERTS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSigningCerts(List<String> signingCerts) {
     this.signingCerts = signingCerts;
   }
 
 
   public ADCSInstanceDetailsResponse signingCertChains(List<String> signingCertChains) {
-    
     this.signingCertChains = signingCertChains;
     return this;
   }
@@ -257,20 +284,24 @@ public class ADCSInstanceDetailsResponse {
    * Get signingCertChains
    * @return signingCertChains
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_SIGNING_CERT_CHAINS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<String> getSigningCertChains() {
     return signingCertChains;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_SIGNING_CERT_CHAINS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSigningCertChains(List<String> signingCertChains) {
     this.signingCertChains = signingCertChains;
   }
 
 
   public ADCSInstanceDetailsResponse templates(List<String> templates) {
-    
     this.templates = templates;
     return this;
   }
@@ -287,20 +318,24 @@ public class ADCSInstanceDetailsResponse {
    * Get templates
    * @return templates
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_TEMPLATES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<String> getTemplates() {
     return templates;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_TEMPLATES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTemplates(List<String> templates) {
     this.templates = templates;
   }
 
 
   public ADCSInstanceDetailsResponse templateOIDs(List<String> templateOIDs) {
-    
     this.templateOIDs = templateOIDs;
     return this;
   }
@@ -317,19 +352,24 @@ public class ADCSInstanceDetailsResponse {
    * Get templateOIDs
    * @return templateOIDs
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_TEMPLATE_O_I_DS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
   public List<String> getTemplateOIDs() {
     return templateOIDs;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_TEMPLATE_O_I_DS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTemplateOIDs(List<String> templateOIDs) {
     this.templateOIDs = templateOIDs;
   }
 
 
   public ADCSInstanceDetailsResponse subjectTemplateOIDs(List<String> subjectTemplateOIDs) {
-    
     this.subjectTemplateOIDs = subjectTemplateOIDs;
     return this;
   }
@@ -346,19 +386,26 @@ public class ADCSInstanceDetailsResponse {
    * Get subjectTemplateOIDs
    * @return subjectTemplateOIDs
   **/
+  @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_SUBJECT_TEMPLATE_O_I_DS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<String> getSubjectTemplateOIDs() {
     return subjectTemplateOIDs;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_SUBJECT_TEMPLATE_O_I_DS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSubjectTemplateOIDs(List<String> subjectTemplateOIDs) {
     this.subjectTemplateOIDs = subjectTemplateOIDs;
   }
 
 
-
+  /**
+   * Return true if this ADCSInstanceDetailsResponse object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -416,138 +463,5 @@ public class ADCSInstanceDetailsResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("caName");
-    openapiFields.add("caType");
-    openapiFields.add("parentCaName");
-    openapiFields.add("productVersion");
-    openapiFields.add("fileVersion");
-    openapiFields.add("dnsName");
-    openapiFields.add("signingCerts");
-    openapiFields.add("signingCertChains");
-    openapiFields.add("templates");
-    openapiFields.add("templateOIDs");
-    openapiFields.add("subjectTemplateOIDs");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to ADCSInstanceDetailsResponse
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (ADCSInstanceDetailsResponse.openapiRequiredFields.isEmpty()) {
-          return;
-        } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in ADCSInstanceDetailsResponse is not found in the empty JSON string", ADCSInstanceDetailsResponse.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!ADCSInstanceDetailsResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ADCSInstanceDetailsResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-      if (jsonObj.get("caName") != null && !jsonObj.get("caName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `caName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("caName").toString()));
-      }
-      if (jsonObj.get("caType") != null && !jsonObj.get("caType").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `caType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("caType").toString()));
-      }
-      if (jsonObj.get("parentCaName") != null && !jsonObj.get("parentCaName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `parentCaName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("parentCaName").toString()));
-      }
-      if (jsonObj.get("productVersion") != null && !jsonObj.get("productVersion").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `productVersion` to be a primitive type in the JSON string but got `%s`", jsonObj.get("productVersion").toString()));
-      }
-      if (jsonObj.get("fileVersion") != null && !jsonObj.get("fileVersion").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `fileVersion` to be a primitive type in the JSON string but got `%s`", jsonObj.get("fileVersion").toString()));
-      }
-      if (jsonObj.get("dnsName") != null && !jsonObj.get("dnsName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `dnsName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dnsName").toString()));
-      }
-      // ensure the json data is an array
-      if (jsonObj.get("signingCerts") != null && !jsonObj.get("signingCerts").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `signingCerts` to be an array in the JSON string but got `%s`", jsonObj.get("signingCerts").toString()));
-      }
-      // ensure the json data is an array
-      if (jsonObj.get("signingCertChains") != null && !jsonObj.get("signingCertChains").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `signingCertChains` to be an array in the JSON string but got `%s`", jsonObj.get("signingCertChains").toString()));
-      }
-      // ensure the json data is an array
-      if (jsonObj.get("templates") != null && !jsonObj.get("templates").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `templates` to be an array in the JSON string but got `%s`", jsonObj.get("templates").toString()));
-      }
-      // ensure the json data is an array
-      if (jsonObj.get("templateOIDs") != null && !jsonObj.get("templateOIDs").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `templateOIDs` to be an array in the JSON string but got `%s`", jsonObj.get("templateOIDs").toString()));
-      }
-      // ensure the json data is an array
-      if (jsonObj.get("subjectTemplateOIDs") != null && !jsonObj.get("subjectTemplateOIDs").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `subjectTemplateOIDs` to be an array in the JSON string but got `%s`", jsonObj.get("subjectTemplateOIDs").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!ADCSInstanceDetailsResponse.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'ADCSInstanceDetailsResponse' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<ADCSInstanceDetailsResponse> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(ADCSInstanceDetailsResponse.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<ADCSInstanceDetailsResponse>() {
-           @Override
-           public void write(JsonWriter out, ADCSInstanceDetailsResponse value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public ADCSInstanceDetailsResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
-
- /**
-  * Create an instance of ADCSInstanceDetailsResponse given an JSON string
-  *
-  * @param jsonString JSON string
-  * @return An instance of ADCSInstanceDetailsResponse
-  * @throws IOException if the JSON string is invalid with respect to ADCSInstanceDetailsResponse
-  */
-  public static ADCSInstanceDetailsResponse fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, ADCSInstanceDetailsResponse.class);
-  }
-
- /**
-  * Convert an instance of ADCSInstanceDetailsResponse to an JSON string
-  *
-  * @return JSON string
-  */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
-  }
 }
 

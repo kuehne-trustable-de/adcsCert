@@ -12,23 +12,26 @@
 
 package de.trustable.ca3s.client.api;
 
-import com.google.gson.reflect.TypeToken;
-import de.trustable.ca3s.client.invoker.*;
+import de.trustable.ca3s.client.invoker.ADCSApiClient;
+import de.trustable.ca3s.client.invoker.ApiException;
+import de.trustable.ca3s.client.invoker.ApiResponse;
+import de.trustable.ca3s.client.invoker.Pair;
 import de.trustable.ca3s.client.model.ADCSInstanceDetailsResponse;
 import de.trustable.ca3s.client.model.CertificateEnrollmentResponse;
 import de.trustable.ca3s.client.model.GetCertificateResponse;
 import de.trustable.ca3s.client.model.JWSWrappedRequest;
 
 import javax.net.ssl.TrustManager;
-import java.lang.reflect.Type;
+import javax.ws.rs.core.GenericType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+@SuppressWarnings("ALL")
 public class RemoteADCSClient {
-    private ADCSApiClient localVarApiClient;
+    private ADCSApiClient apiClient;
     private int localHostIndex;
     private String localCustomBaseUrl;
 
@@ -59,99 +62,26 @@ public class RemoteADCSClient {
     	ADCSApiClient defaultClient = new ADCSApiClient(trustManagers);
     	defaultClient.setBasePath(baseUrl);
     	defaultClient.setApiKey(apiKey); 
-        this.localVarApiClient = defaultClient;
+        this.apiClient = defaultClient;
     }
     
     public ADCSApiClient getApiClient() {
-        return localVarApiClient;
+        return apiClient;
     }
 
     public void setApiClient(ADCSApiClient apiClient) {
-        this.localVarApiClient = apiClient;
+        this.apiClient = apiClient;
     }
 
-
-    /**
-     * Build call for buildCertificate
-     * @param jwSWrappedRequest  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 201 </td><td> new certificate created </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call buildCertificateCall(JWSWrappedRequest jwSWrappedRequest, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = jwSWrappedRequest;
-
-        // create path and map variables
-        String localVarPath = "/adcsCertificateBuilder";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-                "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-                "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call buildCertificateValidateBeforeCall(JWSWrappedRequest jwSWrappedRequest, final ApiCallback _callback) throws ApiException {
-
-        // verify the required parameter 'jwSWrappedRequest' is set
-        if (jwSWrappedRequest == null) {
-            throw new ApiException("Missing the required parameter 'jwSWrappedRequest' when calling buildCertificate(Async)");
-        }
-
-
-        okhttp3.Call localVarCall = buildCertificateCall(jwSWrappedRequest, _callback);
-        return localVarCall;
-
-    }
 
     /**
      * request a certificate
      * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
      * @param jwSWrappedRequest  (required)
      * @return CertificateEnrollmentResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 201 </td><td> new certificate created </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -159,8 +89,7 @@ public class RemoteADCSClient {
     </table>
      */
     public CertificateEnrollmentResponse buildCertificate(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
-        ApiResponse<CertificateEnrollmentResponse> localVarResp = buildCertificateWithHttpInfo(jwSWrappedRequest);
-        return localVarResp.getData();
+        return buildCertificateWithHttpInfo(jwSWrappedRequest).getData();
     }
 
     /**
@@ -168,9 +97,9 @@ public class RemoteADCSClient {
      * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
      * @param jwSWrappedRequest  (required)
      * @return ApiResponse&lt;CertificateEnrollmentResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 201 </td><td> new certificate created </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -178,115 +107,54 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<CertificateEnrollmentResponse> buildCertificateWithHttpInfo(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
-        okhttp3.Call localVarCall = buildCertificateValidateBeforeCall(jwSWrappedRequest, null);
-        Type localVarReturnType = new TypeToken<CertificateEnrollmentResponse>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * request a certificate (asynchronously)
-     * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param jwSWrappedRequest  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 201 </td><td> new certificate created </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call buildCertificateAsync(JWSWrappedRequest jwSWrappedRequest, final ApiCallback<CertificateEnrollmentResponse> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = buildCertificateValidateBeforeCall(jwSWrappedRequest, _callback);
-        Type localVarReturnType = new TypeToken<CertificateEnrollmentResponse>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    /**
-     * Build call for revokeCertificate
-     * @param jwSWrappedRequest  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 204 </td><td> certificate revoked </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
-    <tr><td> 409 </td><td> certificate already revoked </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call revokeCertificateCall(JWSWrappedRequest jwSWrappedRequest, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
         Object localVarPostBody = jwSWrappedRequest;
 
-        // create path and map variables
-        String localVarPath = "/adcsCertificateRevoker";
+        // verify the required parameter 'jwSWrappedRequest' is set
+        if (jwSWrappedRequest == null) {
+            throw new ApiException(400, "Missing the required parameter 'jwSWrappedRequest' when calling buildCertificate");
+        }
 
+        // create path and map variables
+        String localVarPath = "/adcsCertificateBuilder";
+
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-        final String[] localVarAccepts = {
 
+
+
+
+
+        final String[] localVarAccepts = {
+                "application/json"
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
         final String[] localVarContentTypes = {
                 "application/json"
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
         String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+
+        GenericType<CertificateEnrollmentResponse> localVarReturnType = new GenericType<CertificateEnrollmentResponse>() {};
+
+        return apiClient.invokeAPI("AdcsCertificateBuilderApi.buildCertificate", localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
 
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call revokeCertificateValidateBeforeCall(JWSWrappedRequest jwSWrappedRequest, final ApiCallback _callback) throws ApiException {
-
-        // verify the required parameter 'jwSWrappedRequest' is set
-        if (jwSWrappedRequest == null) {
-            throw new ApiException("Missing the required parameter 'jwSWrappedRequest' when calling revokeCertificate(Async)");
-        }
-
-
-        okhttp3.Call localVarCall = revokeCertificateCall(jwSWrappedRequest, _callback);
-        return localVarCall;
-
-    }
 
     /**
      * revoke a certificate
      * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
      * @param jwSWrappedRequest  (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 204 </td><td> certificate revoked </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -303,9 +171,9 @@ public class RemoteADCSClient {
      * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
      * @param jwSWrappedRequest  (required)
      * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 204 </td><td> certificate revoked </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -314,107 +182,47 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<Void> revokeCertificateWithHttpInfo(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
-        okhttp3.Call localVarCall = revokeCertificateValidateBeforeCall(jwSWrappedRequest, null);
-        return localVarApiClient.execute(localVarCall);
-    }
+        Object localVarPostBody = jwSWrappedRequest;
 
-    /**
-     * revoke a certificate (asynchronously)
-     * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param jwSWrappedRequest  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 204 </td><td> certificate revoked </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
-    <tr><td> 409 </td><td> certificate already revoked </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call revokeCertificateAsync(JWSWrappedRequest jwSWrappedRequest, final ApiCallback<Void> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = revokeCertificateValidateBeforeCall(jwSWrappedRequest, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
-        return localVarCall;
-    }
-
-    /**
-     * Build call for getADCSInfo
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> ADCS info </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getADCSInfoCall(final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
+        // verify the required parameter 'jwSWrappedRequest' is set
+        if (jwSWrappedRequest == null) {
+            throw new ApiException(400, "Missing the required parameter 'jwSWrappedRequest' when calling revokeCertificate");
         }
 
-        Object localVarPostBody = null;
-
         // create path and map variables
-        String localVarPath = "/adcsInfo";
+        String localVarPath = "/adcsCertificateRevoker";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-                "application/json"
+
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
         final String[] localVarContentTypes = {
-
+                "application/json"
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
         String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+
+        return apiClient.invokeAPI("AdcsCertificateRevokerApi.revokeCertificate", localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, null, false);
     }
 
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getADCSInfoValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-
-
-        okhttp3.Call localVarCall = getADCSInfoCall(_callback);
-        return localVarCall;
-
-    }
 
     /**
      * get description of ADCS instance
      * get description of ADCS instance
      * @return String
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> ADCS info </td><td>  -  </td></tr>
     <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
@@ -422,17 +230,16 @@ public class RemoteADCSClient {
     </table>
      */
     public String getADCSInfo() throws ApiException {
-        ApiResponse<String> localVarResp = getADCSInfoWithHttpInfo();
-        return localVarResp.getData();
+        return getADCSInfoWithHttpInfo().getData();
     }
 
     /**
      * get description of ADCS instance
      * get description of ADCS instance
      * @return ApiResponse&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> ADCS info </td><td>  -  </td></tr>
     <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
@@ -440,106 +247,46 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<String> getADCSInfoWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = getADCSInfoValidateBeforeCall(null);
-        Type localVarReturnType = new TypeToken<String>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * get description of ADCS instance (asynchronously)
-     * get description of ADCS instance
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> ADCS info </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getADCSInfoAsync(final ApiCallback<String> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getADCSInfoValidateBeforeCall(_callback);
-        Type localVarReturnType = new TypeToken<String>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getCAInstanceDetails
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> Details regarding this ADCS instance </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getCAInstanceDetailsCall(final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/adcsInstanceDetails";
+        String localVarPath = "/adcsInfo";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+
+
+
+
         final String[] localVarAccepts = {
                 "application/json"
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
         final String[] localVarContentTypes = {
 
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
         String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+
+        GenericType<String> localVarReturnType = new GenericType<String>() {};
+
+        return apiClient.invokeAPI("AdcsInfoApi.getADCSInfo", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getCAInstanceDetailsValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-
-
-        okhttp3.Call localVarCall = getCAInstanceDetailsCall(_callback);
-        return localVarCall;
-
-    }
-
     /**
      * get the details describing this ADCS instance
      * get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance
      * @return ADCSInstanceDetailsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> Details regarding this ADCS instance </td><td>  -  </td></tr>
     <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
@@ -547,17 +294,16 @@ public class RemoteADCSClient {
     </table>
      */
     public ADCSInstanceDetailsResponse getCAInstanceDetails() throws ApiException {
-        ApiResponse<ADCSInstanceDetailsResponse> localVarResp = getCAInstanceDetailsWithHttpInfo();
-        return localVarResp.getData();
+        return getCAInstanceDetailsWithHttpInfo().getData();
     }
 
     /**
      * get the details describing this ADCS instance
      * get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance
      * @return ApiResponse&lt;ADCSInstanceDetailsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> Details regarding this ADCS instance </td><td>  -  </td></tr>
     <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
@@ -565,106 +311,46 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<ADCSInstanceDetailsResponse> getCAInstanceDetailsWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = getCAInstanceDetailsValidateBeforeCall(null);
-        Type localVarReturnType = new TypeToken<ADCSInstanceDetailsResponse>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * get the details describing this ADCS instance (asynchronously)
-     * get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> Details regarding this ADCS instance </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getCAInstanceDetailsAsync(final ApiCallback<ADCSInstanceDetailsResponse> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getCAInstanceDetailsValidateBeforeCall(_callback);
-        Type localVarReturnType = new TypeToken<ADCSInstanceDetailsResponse>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getCATemplates
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> Array of template names </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getCATemplatesCall(final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/adcsTemplates";
+        String localVarPath = "/adcsInstanceDetails";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+
+
+
+
         final String[] localVarAccepts = {
                 "application/json"
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
         final String[] localVarContentTypes = {
 
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
         String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+
+        GenericType<ADCSInstanceDetailsResponse> localVarReturnType = new GenericType<ADCSInstanceDetailsResponse>() {};
+
+        return apiClient.invokeAPI("AdcsInfoApi.getCAInstanceDetails", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getCATemplatesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
-
-
-        okhttp3.Call localVarCall = getCATemplatesCall(_callback);
-        return localVarCall;
-
-    }
-
     /**
      * get the templates available at this ADCS instance
      * get the templates available at this ADCS instance
      * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> Array of template names </td><td>  -  </td></tr>
     <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
@@ -672,17 +358,16 @@ public class RemoteADCSClient {
     </table>
      */
     public List<String> getCATemplates() throws ApiException {
-        ApiResponse<List<String>> localVarResp = getCATemplatesWithHttpInfo();
-        return localVarResp.getData();
+        return getCATemplatesWithHttpInfo().getData();
     }
 
     /**
      * get the templates available at this ADCS instance
      * get the templates available at this ADCS instance
      * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> Array of template names </td><td>  -  </td></tr>
     <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
@@ -690,106 +375,38 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<List<String>> getCATemplatesWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = getCATemplatesValidateBeforeCall(null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * get the templates available at this ADCS instance (asynchronously)
-     * get the templates available at this ADCS instance
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> Array of template names </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getCATemplatesAsync(final ApiCallback<List<String>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getCATemplatesValidateBeforeCall(_callback);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    /**
-     * Build call for getRequestById
-     * @param reqId certificate request id (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> request id found </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 404 </td><td> no existing item for the given id </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getRequestByIdCall(String reqId, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/adcsRequest/{reqId}"
-                .replaceAll("\\{" + "reqId" + "\\}", localVarApiClient.escapeString(reqId.toString()));
+        String localVarPath = "/adcsTemplates";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+
+
+
+
         final String[] localVarAccepts = {
                 "application/json"
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
         final String[] localVarContentTypes = {
 
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
         String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
 
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRequestByIdValidateBeforeCall(String reqId, final ApiCallback _callback) throws ApiException {
+        GenericType<List<String>> localVarReturnType = new GenericType<List<String>>() {};
 
-        // verify the required parameter 'reqId' is set
-        if (reqId == null) {
-            throw new ApiException("Missing the required parameter 'reqId' when calling getRequestById(Async)");
-        }
-
-
-        okhttp3.Call localVarCall = getRequestByIdCall(reqId, _callback);
-        return localVarCall;
-
+        return apiClient.invokeAPI("AdcsInfoApi.getCATemplates", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
 
     /**
@@ -797,9 +414,9 @@ public class RemoteADCSClient {
      * details of a certificate request identified by its Id
      * @param reqId certificate request id (required)
      * @return GetCertificateResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> request id found </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -808,8 +425,7 @@ public class RemoteADCSClient {
     </table>
      */
     public GetCertificateResponse getRequestById(String reqId) throws ApiException {
-        ApiResponse<GetCertificateResponse> localVarResp = getRequestByIdWithHttpInfo(reqId);
-        return localVarResp.getData();
+        return getRequestByIdWithHttpInfo(reqId).getData();
     }
 
     /**
@@ -817,9 +433,9 @@ public class RemoteADCSClient {
      * details of a certificate request identified by its Id
      * @param reqId certificate request id (required)
      * @return ApiResponse&lt;GetCertificateResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> request id found </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -828,121 +444,44 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<GetCertificateResponse> getRequestByIdWithHttpInfo(String reqId) throws ApiException {
-        okhttp3.Call localVarCall = getRequestByIdValidateBeforeCall(reqId, null);
-        Type localVarReturnType = new TypeToken<GetCertificateResponse>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * get details of a certificate request identified by its Id (asynchronously)
-     * details of a certificate request identified by its Id
-     * @param reqId certificate request id (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> request id found </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 404 </td><td> no existing item for the given id </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getRequestByIdAsync(String reqId, final ApiCallback<GetCertificateResponse> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getRequestByIdValidateBeforeCall(reqId, _callback);
-        Type localVarReturnType = new TypeToken<GetCertificateResponse>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    /**
-     * Build call for getRequestIdList
-     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
-     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
-     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @param limit The numbers of items to return (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> request id list created </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 409 </td><td> an item already exists </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getRequestIdListCall(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
         Object localVarPostBody = null;
 
-        // create path and map variables
-        String localVarPath = "/adcsRequests/Ids";
+        // verify the required parameter 'reqId' is set
+        if (reqId == null) {
+            throw new ApiException(400, "Missing the required parameter 'reqId' when calling getRequestById");
+        }
 
+        // create path and map variables
+        String localVarPath = "/adcsRequest/{reqId}"
+                .replaceAll("\\{" + "reqId" + "\\}", apiClient.escapeString(reqId.toString()));
+
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-        if (offset != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("offset", offset));
-        }
 
-        if (resolvedWhenTimestamp != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("resolvedWhenTimestamp", resolvedWhenTimestamp));
-        }
 
-        if (revokedWhenTimestamp != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("revokedWhenTimestamp", revokedWhenTimestamp));
-        }
 
-        if (limit != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
-        }
 
         final String[] localVarAccepts = {
                 "application/json"
         };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
         final String[] localVarContentTypes = {
 
         };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
         String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
 
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getRequestIdListValidateBeforeCall(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit, final ApiCallback _callback) throws ApiException {
+        GenericType<GetCertificateResponse> localVarReturnType = new GenericType<GetCertificateResponse>() {};
 
-
-        okhttp3.Call localVarCall = getRequestIdListCall(offset, resolvedWhenTimestamp, revokedWhenTimestamp, limit, _callback);
-        return localVarCall;
-
+        return apiClient.invokeAPI("AdcsRequestApi.getRequestById", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
 
     /**
@@ -953,9 +492,9 @@ public class RemoteADCSClient {
      * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
      * @param limit The numbers of items to return (optional)
      * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> request id list created </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -964,8 +503,7 @@ public class RemoteADCSClient {
     </table>
      */
     public List<String> getRequestIdList(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit) throws ApiException {
-        ApiResponse<List<String>> localVarResp = getRequestIdListWithHttpInfo(offset, resolvedWhenTimestamp, revokedWhenTimestamp, limit);
-        return localVarResp.getData();
+        return getRequestIdListWithHttpInfo(offset, resolvedWhenTimestamp, revokedWhenTimestamp, limit).getData();
     }
 
     /**
@@ -976,9 +514,9 @@ public class RemoteADCSClient {
      * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
      * @param limit The numbers of items to return (optional)
      * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
     <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
     <tr><td> 200 </td><td> request id list created </td><td>  -  </td></tr>
     <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
@@ -987,45 +525,43 @@ public class RemoteADCSClient {
     </table>
      */
     public ApiResponse<List<String>> getRequestIdListWithHttpInfo(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit) throws ApiException {
-        okhttp3.Call localVarCall = getRequestIdListValidateBeforeCall(offset, resolvedWhenTimestamp, revokedWhenTimestamp, limit, null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/adcsRequests/Ids";
+
+        // query params
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "offset", offset));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "resolvedWhenTimestamp", resolvedWhenTimestamp));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "revokedWhenTimestamp", revokedWhenTimestamp));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "limit", limit));
+
+
+
+
+        final String[] localVarAccepts = {
+                "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+        final String[] localVarContentTypes = {
+
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+        String[] localVarAuthNames = new String[] {  };
+
+        GenericType<List<String>> localVarReturnType = new GenericType<List<String>>() {};
+
+        return apiClient.invokeAPI("AdcsRequestsApi.getRequestIdList", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
-
-    /**
-     * get the list certificate request IDs (asynchronously)
-     * enumerate all the request (issued or pending) avialable the ADCS
-     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
-     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
-     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @param limit The numbers of items to return (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * <p>http.response.details</p>
-    <table border="1"><caption>Response Details </caption>
-    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-    <tr><td> 200 </td><td> request id list created </td><td>  -  </td></tr>
-    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
-    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
-    <tr><td> 409 </td><td> an item already exists </td><td>  -  </td></tr>
-    </table>
-     */
-    public okhttp3.Call getRequestIdListAsync(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit, final ApiCallback<List<String>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getRequestIdListValidateBeforeCall(offset, resolvedWhenTimestamp, revokedWhenTimestamp, limit, _callback);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-
-
-
-
-
-
-
 
 
 }

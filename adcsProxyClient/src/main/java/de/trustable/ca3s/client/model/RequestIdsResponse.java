@@ -13,28 +13,25 @@
 
 package de.trustable.ca3s.client.model;
 
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import de.trustable.ca3s.client.invoker.JSON;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
+
 
 /**
  * RequestIdsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-30T19:56:11.616704600+02:00[Europe/Berlin]")
+@JsonPropertyOrder({
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T16:42:19.029808700+02:00[Europe/Berlin]")
 public class RequestIdsResponse extends ArrayList<String> {
   public RequestIdsResponse() { 
   }
 
-
+  /**
+   * Return true if this RequestIdsResponse object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -71,89 +68,5 @@ public class RequestIdsResponse extends ArrayList<String> {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to RequestIdsResponse
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (RequestIdsResponse.openapiRequiredFields.isEmpty()) {
-          return;
-        } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in RequestIdsResponse is not found in the empty JSON string", RequestIdsResponse.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!RequestIdsResponse.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RequestIdsResponse` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!RequestIdsResponse.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'RequestIdsResponse' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<RequestIdsResponse> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(RequestIdsResponse.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<RequestIdsResponse>() {
-           @Override
-           public void write(JsonWriter out, RequestIdsResponse value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public RequestIdsResponse read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
-
- /**
-  * Create an instance of RequestIdsResponse given an JSON string
-  *
-  * @param jsonString JSON string
-  * @return An instance of RequestIdsResponse
-  * @throws IOException if the JSON string is invalid with respect to RequestIdsResponse
-  */
-  public static RequestIdsResponse fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, RequestIdsResponse.class);
-  }
-
- /**
-  * Convert an instance of RequestIdsResponse to an JSON string
-  *
-  * @return JSON string
-  */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
-  }
 }
 
