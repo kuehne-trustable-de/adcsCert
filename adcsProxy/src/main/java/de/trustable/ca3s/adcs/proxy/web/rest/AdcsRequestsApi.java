@@ -7,37 +7,36 @@ package de.trustable.ca3s.adcs.proxy.web.rest;
 
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.trustable.ca3s.adcs.proxy.web.dto.RequestIdsResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-09-15T19:47:12.004Z[GMT]")
-@Api(value = "adcsRequests", description = "the adcsRequests API")
+@Tag(name = "adcsRequests", description = "the adcsRequests API")
 public interface AdcsRequestsApi {
 
-    @ApiOperation(value = "get the list certificate request IDs", nickname = "getRequestIdList", notes = "enumerate all the request (issued or pending) avialable the ADCS", response = String.class, responseContainer = "List", authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "request id list created", response = RequestIdsResponse.class),
-        @ApiResponse(code = 400, message = "invalid input, object invalid"),
-        @ApiResponse(code = 401, message = "authentication / authorization missing"),
-        @ApiResponse(code = 409, message = "an item already exists") })
+    @Operation(summary = "get the list certificate request IDs",
+        description = "enumerate all the request (issued or pending) avialable the ADCS",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "request id list created"),
+            @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+            @ApiResponse(responseCode = "401", description = "authentication / authorization missing"),
+            @ApiResponse(responseCode = "409", description = "an item already exists")
+        })
     @RequestMapping(value = "/adcsRequests/Ids",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<RequestIdsResponse> getRequestIdList(@ApiParam(value = "The number of items to skip before starting to collect the result set", example = "1234") @Valid @RequestParam(value = "offset", required = false) Integer offset,
-    		@ApiParam(value = "The resolvedWhen value must be after this timestamp value (with milliseconds)", example = "1577836800000") @Valid @RequestParam(value = "resolvedWhenTimestamp", required = false) Long resolvedWhenTimestamp, 
-    		@ApiParam(value = "The revokedWhen value must be after this timestamp value (with milliseconds). Either provide this parameter or resolvedWhenTimestamp or offset.", example = "1577836800000") @Valid @RequestParam(value = "revokedWhenTimestamp", required = false) Long revokedWhenTimestamp, 
-    		@ApiParam(value = "The numbers of items to be returned", example = "100") @Valid @RequestParam(value = "limit", required = false) Integer limit);
+    ResponseEntity<RequestIdsResponse> getRequestIdList(@Parameter(description = "The number of items to skip before starting to collect the result set", example = "1234") @Valid @RequestParam(value = "offset", required = false) Integer offset,
+    		@Parameter(description = "The resolvedWhen value must be after this timestamp value (with milliseconds)", example = "1577836800000") @Valid @RequestParam(value = "resolvedWhenTimestamp", required = false) Long resolvedWhenTimestamp,
+    		@Parameter(description = "The revokedWhen value must be after this timestamp value (with milliseconds). Either provide this parameter or resolvedWhenTimestamp or offset.", example = "1577836800000") @Valid @RequestParam(value = "revokedWhenTimestamp", required = false) Long revokedWhenTimestamp,
+    		@Parameter(description = "The numbers of items to be returned", example = "100") @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
 }

@@ -2,11 +2,11 @@ package de.trustable.ca3s.adcs.proxy.web.dto;
 
 import java.util.Objects;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * GetCertificateResponseValues
@@ -29,7 +29,7 @@ public class GetCertificateResponseValues   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "reqId", value = "")
+  @Schema(example = "reqId")
 
   public String getName() {
     return name;
@@ -48,7 +48,7 @@ public class GetCertificateResponseValues   {
    * Get value
    * @return value
   **/
-  @ApiModelProperty(example = "12345", value = "")
+  @Schema(example = "12345")
 
   public String getValue() {
     return value;
@@ -81,7 +81,7 @@ public class GetCertificateResponseValues   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetCertificateResponseValues {\n");
-    
+
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");

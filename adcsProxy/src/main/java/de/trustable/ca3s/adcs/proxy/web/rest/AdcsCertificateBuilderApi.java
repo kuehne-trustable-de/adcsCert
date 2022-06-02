@@ -8,33 +8,32 @@ package de.trustable.ca3s.adcs.proxy.web.rest;
 
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import de.trustable.ca3s.adcs.proxy.web.dto.CertificateEnrollmentResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Authorization;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T18:27:31.111Z[GMT]")
-@Api(value = "adcsCertificateBuilder", description = "the adcsCertificateBuilder API")
+@Tag(name = "adcsCertificateBuilder", description = "the adcsCertificateBuilder API")
 public interface AdcsCertificateBuilderApi {
 
-    @ApiOperation(value = "request a certificate", nickname = "buildCertificate", notes = "build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature", response = CertificateEnrollmentResponse.class, authorizations = {
-            @Authorization(value = "APIKeyHeader")
-        }, tags={ "ADCSProxy", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "new certificate created", response = CertificateEnrollmentResponse.class),
-        @ApiResponse(code = 400, message = "invalid input, object invalid"),
-        @ApiResponse(code = 401, message = "authentication / authorization missing, especially JWS invalid") })
+    @Operation(summary = "request a certificate",
+        description = "build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature",
+        responses = {
+        @ApiResponse(responseCode = "201", description = "new certificate created"),
+        @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+        @ApiResponse(responseCode = "401", description = "authentication / authorization missing, especially JWS invalid") })
     @RequestMapping(value = "/adcsCertificateBuilder",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<CertificateEnrollmentResponse> buildCertificate(@ApiParam(value = "CSR and additional attributes (e.g. template) wrapped in a JWS"  )  @Valid @RequestBody JWSWrappedRequest body);
+    ResponseEntity<CertificateEnrollmentResponse> buildCertificate(@Parameter(description = "CSR and additional attributes (e.g. template) wrapped in a JWS"  )  @Valid @RequestBody JWSWrappedRequest body);
 
 }

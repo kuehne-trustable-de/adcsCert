@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,6 @@ import de.trustable.ca3s.adcs.proxy.web.dto.CertificateArrayResponse;
 import de.trustable.ca3s.adcs.proxy.web.dto.RequestIdsResponse;
 import de.trustable.ca3s.adcsCertUtil.ADCSException;
 import de.trustable.ca3s.adcsCertUtil.OODBConnectionsADCSException;
-import io.swagger.annotations.ApiParam;
-
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-08-30T11:55:34.168Z[GMT]")
 @Controller
@@ -31,7 +30,7 @@ public class AdcsRequestsApiController implements AdcsRequestsApi {
 
     @Autowired
     private LocalADCSService localADCSService;
-    
+
     private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
@@ -39,17 +38,17 @@ public class AdcsRequestsApiController implements AdcsRequestsApi {
         this.request = request;
     }
 
-    public ResponseEntity<RequestIdsResponse> getRequestIdList(@ApiParam(value = "The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp.") @Valid @RequestParam(value = "offset",  required = false) Integer offset, 
-    		@ApiParam(value = "The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp.") @Valid @RequestParam(value = "resolvedWhenTimestamp", required = false) Long resolvedWhenTimestamp, 
-    		@ApiParam(value = "The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset.") @Valid @RequestParam(value = "revokedWhenTimestamp", required = false) Long revokedWhenTimestamp, 
-    		@ApiParam(value = "The numbers of items to return") @Valid @RequestParam(value = "limit", required = false) Integer limit) {
+    public ResponseEntity<RequestIdsResponse> getRequestIdList(@Parameter(description = "The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp.") @Valid @RequestParam(value = "offset",  required = false) Integer offset,
+    		@Parameter(description = "The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp.") @Valid @RequestParam(value = "resolvedWhenTimestamp", required = false) Long resolvedWhenTimestamp,
+    		@Parameter(description = "The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset.") @Valid @RequestParam(value = "revokedWhenTimestamp", required = false) Long revokedWhenTimestamp,
+    		@Parameter(description = "The numbers of items to return") @Valid @RequestParam(value = "limit", required = false) Integer limit) {
         String accept = request.getHeader("Accept");
-        
+
         int intOffset = 0;
         if( offset != null) {
         	intOffset = offset;
         }
-        
+
         int intLimit = 1000;
         if( limit != null) {
         	intLimit = limit;
@@ -69,12 +68,12 @@ public class AdcsRequestsApiController implements AdcsRequestsApi {
             log.error("Unexpected offset '" + offset + "', expected to by >= 0 ");
             return new ResponseEntity<RequestIdsResponse>(HttpStatus.BAD_REQUEST);
         }
-        
+
         if( (intLimit < 0 ) || (intLimit > 4096)) {
             log.error("Unexpected limit '" + limit + "', expected to by >= 0 and < 4096");
             return new ResponseEntity<RequestIdsResponse>(HttpStatus.BAD_REQUEST);
         }
-        
+
         if (accept != null && accept.contains("application/json")) {
             try {
             	List<String> adcsCertResp = localADCSService.getADCSConnector().getRequesIdList(intLimit, intOffset, longResolvedWhenTimestamp, longRevokedWhenTimestamp);
@@ -84,7 +83,7 @@ public class AdcsRequestsApiController implements AdcsRequestsApi {
             		reqIdList.add(id);
             	}
                 return new ResponseEntity<RequestIdsResponse>(reqIdList, HttpStatus.OK);
-                
+
             } catch (OODBConnectionsADCSException e) {
                 log.error("Out of DBCOnnections, try again later ...", e);
                 return new ResponseEntity<RequestIdsResponse>(HttpStatus.SERVICE_UNAVAILABLE);
@@ -97,7 +96,7 @@ public class AdcsRequestsApiController implements AdcsRequestsApi {
         return new ResponseEntity<RequestIdsResponse>(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 
-    public ResponseEntity<CertificateArrayResponse> getRequestsById(@ApiParam(value = "The number of items to skip before starting to collect the result set") @Valid @RequestParam(value = "id", required = false) List<String> id) {
+    public ResponseEntity<CertificateArrayResponse> getRequestsById(@Parameter(description = "The number of items to skip before starting to collect the result set") @Valid @RequestParam(value = "id", required = false) List<String> id) {
 
         return new ResponseEntity<CertificateArrayResponse>(HttpStatus.NOT_IMPLEMENTED);
     }

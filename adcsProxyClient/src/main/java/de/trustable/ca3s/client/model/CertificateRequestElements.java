@@ -12,13 +12,11 @@
 
 package de.trustable.ca3s.client.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.google.gson.annotations.SerializedName;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * CertificateRequestElements
  */
@@ -40,7 +38,6 @@ public class CertificateRequestElements {
    * Get csr
    * @return csr
   **/
-  @Schema(example = "-----BEGIN NEW CERTIFICATE REQUEST----- MIIC/DCCAeQCAQAwHDEaMBgGA1UEAxMRV1MtMjAxOS1Jc3N1aW5nQ0EwggEiMA0G CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC6/GWkDeV1KrHz4ZrSGG5e/vqFDndl 9K9Q9cqdnF3+gZJo9oRYVASvMZ5zAJFpvZZ87KT8E6WlRUjZ4T2egap9GSsjXr5R 2Q/N6i5FK7pTnSSMrYBSqVWdti8yQ7+bt+mdJExbP5IVjuXWPTE1PpYzJUrfJUpV JpBfGmYhzGDMTiXLrZOen0bKbytx4j4wevFWgsBdfeuZs2zchF4VYKt/SAZwTxW0 3BeSlB/sxN6POvHDofD/CPD1vOsz8oVCCyVTKC4RS9S8YEkELSbxI/0quMFLkXXn rgVl7v+Za+7PZJ1q4ra0B2Doa2+X64LDq4YxyYdnHQzyMmm15fWnTe/dAgMBAAGg gZowHQYKKwYBBAGCNw0CAzEPFg0xMC4wLjE3NzYzLjIuMHkGCSqGSIb3DQEJDjFs MGowEAYJKwYBBAGCNxUBBAMCAQAwHQYDVR0OBBYEFPZBinSxew5Q6MlHG3Mz0oT+ sHsYMBkGCSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQEAwIBhjAPBgNV HRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQAXgvm54Mzszp4UActJ5u0i JIawzSpbK/tjIElugatRqPbZCoZXsGW3HWr/LWNRc8GxooG+fxWYnNLvqq4U8TLx HBiISOTDGsK7C0X1LRG/Mh6uYGSlA7RW/smUyR8FHwPnwxlPDdafw3+QN0ZpkKA4 4rvQ4WrObPzmA/ybdK1RBXNjD3BQZjHpYV2SF9O1vDfs1mmkKezQejvnh2tPgTkJ sT7E1GdqCPjpWQ1C8Kiz/PRdz/jt1D2ZeeAfJyS8G8lIwqq/w0nPlIGcKidMXKo1 SSD3AwieROIlyDb5ueVaxnydIAjDlO/a1VsJz/UKibH3+fjHa/grnU6MGancxKLO -----END NEW CERTIFICATE REQUEST----- ", required = true, description = "")
   public String getCsr() {
     return csr;
   }
@@ -63,7 +60,6 @@ public class CertificateRequestElements {
    * Get attributes
    * @return attributes
   **/
-  @Schema(required = true, description = "")
   public List<CertificateRequestElementsAttributes> getAttributes() {
     return attributes;
   }
@@ -74,7 +70,7 @@ public class CertificateRequestElements {
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -107,7 +103,7 @@ public class CertificateRequestElements {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

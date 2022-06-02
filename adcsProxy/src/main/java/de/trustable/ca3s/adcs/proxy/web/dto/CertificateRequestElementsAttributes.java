@@ -2,11 +2,10 @@ package de.trustable.ca3s.adcs.proxy.web.dto;
 
 import java.util.Objects;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * CertificateRequestElementsAttributes
@@ -29,7 +28,7 @@ public class CertificateRequestElementsAttributes   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "CertificateTemplate", value = "")
+  @Schema(example = "CertificateTemplate")
 
   public String getName() {
     return name;
@@ -48,7 +47,7 @@ public class CertificateRequestElementsAttributes   {
    * Get value
    * @return value
   **/
-  @ApiModelProperty(example = "CA3SWebServer", value = "")
+  @Schema(example = "CA3SWebServer")
 
   public String getValue() {
     return value;
@@ -81,7 +80,7 @@ public class CertificateRequestElementsAttributes   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CertificateRequestElementsAttributes {\n");
-    
+
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");

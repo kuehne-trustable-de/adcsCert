@@ -12,35 +12,54 @@
 
 package de.trustable.ca3s.client.api;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
+import de.trustable.ca3s.client.invoker.ADCSApiClient;
+import de.trustable.ca3s.client.invoker.ApiException;
+import de.trustable.ca3s.client.invoker.ApiResponse;
+import de.trustable.ca3s.client.invoker.Pair;
+import de.trustable.ca3s.client.model.ADCSInstanceDetailsResponse;
+import de.trustable.ca3s.client.model.CertificateEnrollmentResponse;
+import de.trustable.ca3s.client.model.GetCertificateResponse;
+import de.trustable.ca3s.client.model.JWSWrappedRequest;
+
+import javax.net.ssl.TrustManager;
+import javax.ws.rs.core.GenericType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.reflect.TypeToken;
 
-import de.trustable.ca3s.client.model.ADCSInstanceDetailsResponse;
-import de.trustable.ca3s.client.model.CertificateEnrollmentResponse;
-import de.trustable.ca3s.client.model.GetCertificateResponse;
-import de.trustable.ca3s.client.model.JWSWrappedRequest;
-import io.swagger.client.ApiCallback;
-import io.swagger.client.ApiException;
-import io.swagger.client.ApiResponse;
-import io.swagger.client.Pair;
-import io.swagger.client.ProgressRequestBody;
-import io.swagger.client.ProgressResponseBody;
-
+@SuppressWarnings("ALL")
 public class RemoteADCSClient {
     private ADCSApiClient apiClient;
+    private int localHostIndex;
+    private String localCustomBaseUrl;
+
+
+
+    public int getHostIndex() {
+        return localHostIndex;
+    }
+
+    public void setHostIndex(int hostIndex) {
+        this.localHostIndex = hostIndex;
+    }
+
+    public String getCustomBaseUrl() {
+        return localCustomBaseUrl;
+    }
+
+    public void setCustomBaseUrl(String customBaseUrl) {
+        this.localCustomBaseUrl = customBaseUrl;
+    }
+
 
     public RemoteADCSClient(final String baseUrl) {
-    	this(baseUrl, null);
+    	this(baseUrl, null, null);
     }
-    
-    public RemoteADCSClient(final String baseUrl, final String apiKey) {
-    	ADCSApiClient defaultClient = new ADCSApiClient();
+
+    public RemoteADCSClient(final String baseUrl, final String apiKey, TrustManager[] trustManagers) {
+    	ADCSApiClient defaultClient = new ADCSApiClient(trustManagers);
     	defaultClient.setBasePath(baseUrl);
     	defaultClient.setApiKey(apiKey); 
         this.apiClient = defaultClient;
@@ -56,523 +75,338 @@ public class RemoteADCSClient {
 
 
     /**
-     * Build call for buildCertificate
-     * @param body CSR and additional attributes (e.g. template) wrapped in a JWS (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
+     * request a certificate
+     * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
+     * @param jwSWrappedRequest  (required)
+     * @return CertificateEnrollmentResponse
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 201 </td><td> new certificate created </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
+    </table>
      */
-    public com.squareup.okhttp.Call buildCertificateCall(JWSWrappedRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
+    public CertificateEnrollmentResponse buildCertificate(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
+        return buildCertificateWithHttpInfo(jwSWrappedRequest).getData();
+    }
+
+    /**
+     * request a certificate
+     * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
+     * @param jwSWrappedRequest  (required)
+     * @return ApiResponse&lt;CertificateEnrollmentResponse&gt;
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 201 </td><td> new certificate created </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
+    </table>
+     */
+    public ApiResponse<CertificateEnrollmentResponse> buildCertificateWithHttpInfo(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
+        Object localVarPostBody = jwSWrappedRequest;
+
+        // verify the required parameter 'jwSWrappedRequest' is set
+        if (jwSWrappedRequest == null) {
+            throw new ApiException(400, "Missing the required parameter 'jwSWrappedRequest' when calling buildCertificate");
+        }
 
         // create path and map variables
         String localVarPath = "/adcsCertificateBuilder";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+
+
+
+
+
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        String[] localVarAuthNames = new String[] {  };
+
+        GenericType<CertificateEnrollmentResponse> localVarReturnType = new GenericType<CertificateEnrollmentResponse>() {};
+
+        return apiClient.invokeAPI("AdcsCertificateBuilderApi.buildCertificate", localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
+    }
+
+
+    /**
+     * revoke a certificate
+     * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
+     * @param jwSWrappedRequest  (required)
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 204 </td><td> certificate revoked </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
+    <tr><td> 409 </td><td> certificate already revoked </td><td>  -  </td></tr>
+    </table>
+     */
+    public void revokeCertificate(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
+        revokeCertificateWithHttpInfo(jwSWrappedRequest);
+    }
+
+    /**
+     * revoke a certificate
+     * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
+     * @param jwSWrappedRequest  (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 204 </td><td> certificate revoked </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing, especially JWS invalid </td><td>  -  </td></tr>
+    <tr><td> 409 </td><td> certificate already revoked </td><td>  -  </td></tr>
+    </table>
+     */
+    public ApiResponse<Void> revokeCertificateWithHttpInfo(JWSWrappedRequest jwSWrappedRequest) throws ApiException {
+        Object localVarPostBody = jwSWrappedRequest;
+
+        // verify the required parameter 'jwSWrappedRequest' is set
+        if (jwSWrappedRequest == null) {
+            throw new ApiException(400, "Missing the required parameter 'jwSWrappedRequest' when calling revokeCertificate");
         }
-
-                String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-
-    private com.squareup.okhttp.Call buildCertificateValidateBeforeCall(JWSWrappedRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-
-        com.squareup.okhttp.Call call = buildCertificateCall(body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * request a certificate
-     * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param body CSR and additional attributes (e.g. template) wrapped in a JWS (optional)
-     * @return CertificateEnrollmentResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public CertificateEnrollmentResponse buildCertificate(JWSWrappedRequest body) throws ApiException {
-        ApiResponse<CertificateEnrollmentResponse> resp = buildCertificateWithHttpInfo(body);
-        return resp.getData();
-    }
-
-    /**
-     * request a certificate
-     * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param body CSR and additional attributes (e.g. template) wrapped in a JWS (optional)
-     * @return ApiResponse&lt;CertificateEnrollmentResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<CertificateEnrollmentResponse> buildCertificateWithHttpInfo(JWSWrappedRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = buildCertificateValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<CertificateEnrollmentResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * request a certificate (asynchronously)
-     * build a certificate using the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param body CSR and additional attributes (e.g. template) wrapped in a JWS (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call buildCertificateAsync(JWSWrappedRequest body, final ApiCallback<CertificateEnrollmentResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = buildCertificateValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<CertificateEnrollmentResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getADCSInfo
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getADCSInfoCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/adcsInfo";
+        String localVarPath = "/adcsCertificateRevoker";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
+        String[] localVarAuthNames = new String[] {  };
 
-                String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.invokeAPI("AdcsCertificateRevokerApi.revokeCertificate", localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, null, false);
     }
 
-
-    private com.squareup.okhttp.Call getADCSInfoValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-
-        com.squareup.okhttp.Call call = getADCSInfoCall(progressListener, progressRequestListener);
-        return call;
-
-    }
 
     /**
      * get description of ADCS instance
      * get description of ADCS instance
      * @return String
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> ADCS info </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
+    </table>
      */
     public String getADCSInfo() throws ApiException {
-        ApiResponse<String> resp = getADCSInfoWithHttpInfo();
-        return resp.getData();
+        return getADCSInfoWithHttpInfo().getData();
     }
 
     /**
      * get description of ADCS instance
      * get description of ADCS instance
      * @return ApiResponse&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> ADCS info </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
+    </table>
      */
     public ApiResponse<String> getADCSInfoWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getADCSInfoValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<String>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * get description of ADCS instance (asynchronously)
-     * get description of ADCS instance
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getADCSInfoAsync(final ApiCallback<String> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getADCSInfoValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<String>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getADCSInfo1
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getADCSInfo1Call(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/adcsTemplates";
+        String localVarPath = "/adcsInfo";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
 
-                String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    private com.squareup.okhttp.Call getADCSInfo1ValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-
-        com.squareup.okhttp.Call call = getADCSInfo1Call(progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * get the templates available at this ADCS instance
-     * get the templates available at this ADCS instance
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public List<String> getADCSInfo1() throws ApiException {
-        ApiResponse<List<String>> resp = getADCSInfo1WithHttpInfo();
-        return resp.getData();
-    }
-
-    /**
-     * get the templates available at this ADCS instance
-     * get the templates available at this ADCS instance
-     * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<List<String>> getADCSInfo1WithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getADCSInfo1ValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * get the templates available at this ADCS instance (asynchronously)
-     * get the templates available at this ADCS instance
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getADCSInfo1Async(final ApiCallback<List<String>> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getADCSInfo1ValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    
-    
-    /**
-     * Build call for getADCSInstanceDetails
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getADCSInstanceDetailsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/adcsInstanceDetails";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            
+
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
+        String[] localVarAuthNames = new String[] {  };
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        GenericType<String> localVarReturnType = new GenericType<String>() {};
+
+        return apiClient.invokeAPI("AdcsInfoApi.getADCSInfo", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
-
-    private com.squareup.okhttp.Call getADCSInstanceDetailsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-
-        com.squareup.okhttp.Call call = getADCSInstanceDetailsCall(progressListener, progressRequestListener);
-        return call;
-
-    }
-
     /**
      * get the details describing this ADCS instance
      * get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance
      * @return ADCSInstanceDetailsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> Details regarding this ADCS instance </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
+    </table>
      */
-    public ADCSInstanceDetailsResponse getADCSInstanceDetails() throws ApiException {
-        ApiResponse<ADCSInstanceDetailsResponse> resp = getADCSInstanceDetailsWithHttpInfo();
-        return resp.getData();
+    public ADCSInstanceDetailsResponse getCAInstanceDetails() throws ApiException {
+        return getCAInstanceDetailsWithHttpInfo().getData();
     }
 
     /**
      * get the details describing this ADCS instance
      * get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance
      * @return ApiResponse&lt;ADCSInstanceDetailsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> Details regarding this ADCS instance </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
+    </table>
      */
-    public ApiResponse<ADCSInstanceDetailsResponse> getADCSInstanceDetailsWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getADCSInstanceDetailsValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<ADCSInstanceDetailsResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * get the details describing this ADCS instance (asynchronously)
-     * get the some details like version, type, signing certificate chain, and templates configured of this ADCS instance
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getADCSInstanceDetailsAsync(final ApiCallback<ADCSInstanceDetailsResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getADCSInstanceDetailsValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<ADCSInstanceDetailsResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-
-    /**
-     * Build call for getRequestById
-     * @param reqId certificate request id (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getRequestByIdCall(String reqId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public ApiResponse<ADCSInstanceDetailsResponse> getCAInstanceDetailsWithHttpInfo() throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/adcsRequest/{reqId}"
-            .replaceAll("\\{" + "reqId" + "\\}", apiClient.escapeString(reqId.toString()));
+        String localVarPath = "/adcsInstanceDetails";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+
+
+
+
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            
+
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
+        String[] localVarAuthNames = new String[] {  };
 
-                String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        GenericType<ADCSInstanceDetailsResponse> localVarReturnType = new GenericType<ADCSInstanceDetailsResponse>() {};
+
+        return apiClient.invokeAPI("AdcsInfoApi.getCAInstanceDetails", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
+    }
+    /**
+     * get the templates available at this ADCS instance
+     * get the templates available at this ADCS instance
+     * @return List&lt;String&gt;
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> Array of template names </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
+    </table>
+     */
+    public List<String> getCATemplates() throws ApiException {
+        return getCATemplatesWithHttpInfo().getData();
     }
 
-    private com.squareup.okhttp.Call getRequestByIdValidateBeforeCall(String reqId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'reqId' is set
-        if (reqId == null) {
-            throw new ApiException("Missing the required parameter 'reqId' when calling getRequestById(Async)");
-        }
-        
+    /**
+     * get the templates available at this ADCS instance
+     * get the templates available at this ADCS instance
+     * @return ApiResponse&lt;List&lt;String&gt;&gt;
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> Array of template names </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 503 </td><td> ADCS server unavailable </td><td>  -  </td></tr>
+    </table>
+     */
+    public ApiResponse<List<String>> getCATemplatesWithHttpInfo() throws ApiException {
+        Object localVarPostBody = null;
 
-        com.squareup.okhttp.Call call = getRequestByIdCall(reqId, progressListener, progressRequestListener);
-        return call;
+        // create path and map variables
+        String localVarPath = "/adcsTemplates";
 
+        // query params
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+
+
+
+        final String[] localVarAccepts = {
+                "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+        final String[] localVarContentTypes = {
+
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+        String[] localVarAuthNames = new String[] {  };
+
+        GenericType<List<String>> localVarReturnType = new GenericType<List<String>>() {};
+
+        return apiClient.invokeAPI("AdcsInfoApi.getCATemplates", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
 
     /**
@@ -580,11 +414,18 @@ public class RemoteADCSClient {
      * details of a certificate request identified by its Id
      * @param reqId certificate request id (required)
      * @return GetCertificateResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> request id found </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 404 </td><td> no existing item for the given id </td><td>  -  </td></tr>
+    </table>
      */
     public GetCertificateResponse getRequestById(String reqId) throws ApiException {
-        ApiResponse<GetCertificateResponse> resp = getRequestByIdWithHttpInfo(reqId);
-        return resp.getData();
+        return getRequestByIdWithHttpInfo(reqId).getData();
     }
 
     /**
@@ -592,333 +433,135 @@ public class RemoteADCSClient {
      * details of a certificate request identified by its Id
      * @param reqId certificate request id (required)
      * @return ApiResponse&lt;GetCertificateResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> request id found </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 404 </td><td> no existing item for the given id </td><td>  -  </td></tr>
+    </table>
      */
     public ApiResponse<GetCertificateResponse> getRequestByIdWithHttpInfo(String reqId) throws ApiException {
-        com.squareup.okhttp.Call call = getRequestByIdValidateBeforeCall(reqId, null, null);
-        Type localVarReturnType = new TypeToken<GetCertificateResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
+        Object localVarPostBody = null;
 
-    /**
-     * get details of a certificate request identified by its Id (asynchronously)
-     * details of a certificate request identified by its Id
-     * @param reqId certificate request id (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRequestByIdAsync(String reqId, final ApiCallback<GetCertificateResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
+        // verify the required parameter 'reqId' is set
+        if (reqId == null) {
+            throw new ApiException(400, "Missing the required parameter 'reqId' when calling getRequestById");
         }
 
-        com.squareup.okhttp.Call call = getRequestByIdValidateBeforeCall(reqId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<GetCertificateResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+        // create path and map variables
+        String localVarPath = "/adcsRequest/{reqId}"
+                .replaceAll("\\{" + "reqId" + "\\}", apiClient.escapeString(reqId.toString()));
+
+        // query params
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+
+
+
+        final String[] localVarAccepts = {
+                "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+        final String[] localVarContentTypes = {
+
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+        String[] localVarAuthNames = new String[] {  };
+
+        GenericType<GetCertificateResponse> localVarReturnType = new GenericType<GetCertificateResponse>() {};
+
+        return apiClient.invokeAPI("AdcsRequestApi.getRequestById", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
+
     /**
-     * Build call for getRequestIdList
-     * @param limit The numbers of items to return (optional)
+     * get the list certificate request IDs
+     * enumerate all the request (issued or pending) avialable the ADCS
      * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
      * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
      * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
+     * @param limit The numbers of items to return (optional)
+     * @return List&lt;String&gt;
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> request id list created </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 409 </td><td> an item already exists </td><td>  -  </td></tr>
+    </table>
      */
-    public com.squareup.okhttp.Call getRequestIdListCall(Integer limit, Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public List<String> getRequestIdList(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit) throws ApiException {
+        return getRequestIdListWithHttpInfo(offset, resolvedWhenTimestamp, revokedWhenTimestamp, limit).getData();
+    }
+
+    /**
+     * get the list certificate request IDs
+     * enumerate all the request (issued or pending) avialable the ADCS
+     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
+     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
+     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
+     * @param limit The numbers of items to return (optional)
+     * @return ApiResponse&lt;List&lt;String&gt;&gt;
+     * @throws ApiException if fails to make API call
+     * 
+    <table><caption>Result</caption>
+    <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+    <tr><td> 200 </td><td> request id list created </td><td>  -  </td></tr>
+    <tr><td> 400 </td><td> invalid input, object invalid </td><td>  -  </td></tr>
+    <tr><td> 401 </td><td> authentication / authorization missing </td><td>  -  </td></tr>
+    <tr><td> 409 </td><td> an item already exists </td><td>  -  </td></tr>
+    </table>
+     */
+    public ApiResponse<List<String>> getRequestIdListWithHttpInfo(Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, Integer limit) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/adcsRequests/Ids";
 
+        // query params
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (resolvedWhenTimestamp != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("resolvedWhenTimestamp", resolvedWhenTimestamp));
-        if (revokedWhenTimestamp != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("revokedWhenTimestamp", revokedWhenTimestamp));
-
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "offset", offset));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "resolvedWhenTimestamp", resolvedWhenTimestamp));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "revokedWhenTimestamp", revokedWhenTimestamp));
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "limit", limit));
 
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
 
-                String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    private com.squareup.okhttp.Call getRequestIdListValidateBeforeCall(Integer limit, Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-
-        com.squareup.okhttp.Call call = getRequestIdListCall(limit, offset, resolvedWhenTimestamp, revokedWhenTimestamp, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * get the list certificate request IDs
-     * enumerate all the request (issued or pending) available the ADCS
-     * @param limit The numbers of items to return (optional)
-     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
-     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
-     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public List<String> getRequestIdList(Integer limit, Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp) throws ApiException {
-        ApiResponse<List<String>> resp = getRequestIdListWithHttpInfo(limit, offset, resolvedWhenTimestamp, revokedWhenTimestamp);
-        return resp.getData();
-    }
-
-    /**
-     * get the list certificate request IDs
-     * enumerate all the request (issued or pending) available the ADCS
-     * @param limit The numbers of items to return (optional)
-     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public List<String> getRequestIdList(Integer limit, Integer offset) throws ApiException {
-        ApiResponse<List<String>> resp = getRequestIdListWithHttpInfo(limit, offset, null, null);
-        return resp.getData();
-    }
-
-    /**
-     * get the list certificate request IDs resolved after a given instant
-     * enumerate all the request (issued or pending) available the ADCS
-     * @param limit The numbers of items to return (optional)
-     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public List<String> getRequestIdListResolvedAfter(Integer limit, Long resolvedWhenTimestamp) throws ApiException {
-        ApiResponse<List<String>> resp = getRequestIdListWithHttpInfo(limit, null, resolvedWhenTimestamp, null);
-        return resp.getData();
-    }
-
-    /**
-     * get the list certificate request IDs revoked after a given instant
-     * enumerate all the request (issued or pending) available the ADCS
-     * @param limit The numbers of items to return (optional)
-     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public List<String> getRequestIdListRevokedAfter(Integer limit, Long revokedWhenTimestamp) throws ApiException {
-        ApiResponse<List<String>> resp = getRequestIdListWithHttpInfo(limit, null, null, revokedWhenTimestamp);
-        return resp.getData();
-    }
-
-    /**
-     * get the list certificate request IDs
-     * enumerate all the request (issued or pending) avialable the ADCS
-     * @param limit The numbers of items to return (optional)
-     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
-     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
-     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<List<String>> getRequestIdListWithHttpInfo(Integer limit, Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp) throws ApiException {
-        com.squareup.okhttp.Call call = getRequestIdListValidateBeforeCall(limit, offset, resolvedWhenTimestamp, revokedWhenTimestamp, null, null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * get the list certificate request IDs (asynchronously)
-     * enumerate all the request (issued or pending) avialable the ADCS
-     * @param limit The numbers of items to return (optional)
-     * @param offset The number of items to skip before starting to collect the result set. Either provide this parameter or resolvedWhenTimestamp or revokedWhenTimestamp. (optional)
-     * @param resolvedWhenTimestamp The resolvedWhen value must be after this timestamp value. Either provide this parameter or offset or revokedWhenTimestamp. (optional)
-     * @param revokedWhenTimestamp The revokedWhen value must be after this timestamp value. Either provide this parameter or resolvedWhenTimestamp or offset. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRequestIdListAsync(Integer limit, Integer offset, Long resolvedWhenTimestamp, Long revokedWhenTimestamp, final ApiCallback<List<String>> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getRequestIdListValidateBeforeCall(limit, offset, resolvedWhenTimestamp, revokedWhenTimestamp, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for revokeCertificate
-     * @param body serial, reason and revocation date wrapped in a JWS (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call revokeCertificateCall(JWSWrappedRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/adcsCertificateRevoker";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "*/*"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            "application/json"
+
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
+        String[] localVarAuthNames = new String[] {  };
 
-                String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        GenericType<List<String>> localVarReturnType = new GenericType<List<String>>() {};
+
+        return apiClient.invokeAPI("AdcsRequestsApi.getRequestIdList", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                localVarAuthNames, localVarReturnType, false);
     }
 
-    private com.squareup.okhttp.Call revokeCertificateValidateBeforeCall(JWSWrappedRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
 
-        com.squareup.okhttp.Call call = revokeCertificateCall(body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * revoke a certificate
-     * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param body serial, reason and revocation date wrapped in a JWS (optional)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void revokeCertificate(JWSWrappedRequest body) throws ApiException {
-        revokeCertificateWithHttpInfo(body);
-    }
-
-    /**
-     * revoke a certificate
-     * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param body serial, reason and revocation date wrapped in a JWS (optional)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> revokeCertificateWithHttpInfo(JWSWrappedRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = revokeCertificateValidateBeforeCall(body, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * revoke a certificate (asynchronously)
-     * revoke a certificate issued by the local ADCS. The request parameter are wrapped into Javascript Web Signature
-     * @param body serial, reason and revocation date wrapped in a JWS (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call revokeCertificateAsync(JWSWrappedRequest body, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = revokeCertificateValidateBeforeCall(body, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
 }

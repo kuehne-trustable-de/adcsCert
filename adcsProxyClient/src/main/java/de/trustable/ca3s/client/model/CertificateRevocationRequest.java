@@ -1,8 +1,8 @@
 package de.trustable.ca3s.client.model;
 
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Objects;
 
 /**
  * CertificateRevocationRequest
@@ -74,7 +74,7 @@ public void setRevTime(long revTime) {
 }
 
 @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -108,7 +108,7 @@ public void setRevTime(long revTime) {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -4,11 +4,10 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * CertificateEnrollmentResponse
@@ -37,7 +36,7 @@ public class CertificateEnrollmentResponse   {
    * Get status
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true)
   @NotNull
 
   public String getStatus() {
@@ -57,7 +56,7 @@ public class CertificateEnrollmentResponse   {
    * Get reqId
    * @return reqId
   **/
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true)
   @NotNull
 
   public Integer getReqId() {
@@ -77,7 +76,7 @@ public class CertificateEnrollmentResponse   {
    * Get cert
    * @return cert
   **/
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true)
   @NotNull
 
   public String getCert() {
@@ -97,7 +96,7 @@ public class CertificateEnrollmentResponse   {
    * Get certCA
    * @return certCA
   **/
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true)
   @NotNull
 
   public String getCertCA() {
@@ -133,7 +132,7 @@ public class CertificateEnrollmentResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CertificateEnrollmentResponse {\n");
-    
+
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    reqId: ").append(toIndentedString(reqId)).append("\n");
     sb.append("    cert: ").append(toIndentedString(cert)).append("\n");

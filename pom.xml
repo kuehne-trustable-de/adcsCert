@@ -6,7 +6,7 @@
 	
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsCert</artifactId>
-	<version>1.2.5</version>
+	<version>1.2.7</version>
     
     <packaging>pom</packaging>
 
@@ -170,6 +170,7 @@
 			<layout>default</layout>
 		</snapshotRepository>
 	</distributionManagement>
+
 
 	<profiles>
 		<profile>

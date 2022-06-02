@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import com.nimbusds.jose.JOSEException;
 import de.trustable.ca3s.adcs.proxy.service.JWSService;
 import de.trustable.ca3s.adcs.proxy.web.dto.CertificateRevocationRequest;
 import de.trustable.ca3s.adcsCertUtil.ADCSException;
-import io.swagger.annotations.ApiParam;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-20T18:45:40.714Z[GMT]")
 @Controller
 public class AdcsCertificateRevokerApiController implements AdcsCertificateRevokerApi {
@@ -34,26 +35,26 @@ public class AdcsCertificateRevokerApiController implements AdcsCertificateRevok
 
     @Autowired
     private LocalADCSService localADCSService;
-    
+
     @Autowired
     private JWSService jwsService;
-    
-    
+
+
     @org.springframework.beans.factory.annotation.Autowired
     public AdcsCertificateRevokerApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
-    public ResponseEntity<Void> revokeCertificate(@ApiParam(value = "serial, reason and revocation date wrapped in a JWS"  )  @Valid @RequestBody JWSWrappedRequest body) {
+    public ResponseEntity<Void> revokeCertificate(@Parameter(description = "serial, reason and revocation date wrapped in a JWS"  )  @Valid @RequestBody JWSWrappedRequest body) {
   //      String accept = request.getHeader("Accept");
   //      if (accept != null && accept.contains("application/json")) {
             try {
-            	
+
                 log.debug("incoming JWS " + body);
 
                 String payload = jwsService.getJWSPayload(body.getJws());
 
-                CertificateRevocationRequest revRequest = objectMapper.readValue(payload, CertificateRevocationRequest.class); 
+                CertificateRevocationRequest revRequest = objectMapper.readValue(payload, CertificateRevocationRequest.class);
 
                 Date revDate = new Date(revRequest.getRevTime());
     			localADCSService.getADCSConnector().revokeCertifcate(revRequest.getSerial(), revRequest.getReason(), revDate );
