@@ -48,6 +48,12 @@ spring:
       discovery:
         enabled: true
 
+  # No user login required
+  security:
+    user:
+      name: S/0e2nw6oTUzq
+      password: KjaiDQwFi2uOWUJf5uifFcbo7jwFBZ3KsWDyd8MexPUmHzM60DT
+
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
 # keytool -genkey -alias adcsproxy -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
