@@ -219,7 +219,7 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <!--version>1.6.9</version-->
-            <version>1.6.8</version>
+            <version>1.6.11</version>
         </dependency>
 
         <dependency>
