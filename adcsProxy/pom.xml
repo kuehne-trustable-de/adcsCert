@@ -62,7 +62,7 @@
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>7.8.1</jhipster-dependencies.version>
+        <jhipster-dependencies.version>7.9.3</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
         <spring-boot.version>2.7.3</spring-boot.version>
@@ -71,23 +71,23 @@
         <jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
-        <maven-site-plugin.version>3.12.0</maven-site-plugin.version>
+        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
         <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
-        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-        <checkstyle.version>10.3.1</checkstyle.version>
+        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+        <checkstyle.version>10.3.3</checkstyle.version>
         <nohttp-checkstyle.version>0.0.10</nohttp-checkstyle.version>
         <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
         <modernizer-maven-plugin.version>2.4.0</modernizer-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+        <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
         <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>
         <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
@@ -102,7 +102,7 @@
 
 	    <cryptoUtil.version>1.3.4</cryptoUtil.version>
 
-    	<nimbus-jose-jwt-version>9.23</nimbus-jose-jwt-version>
+    	<nimbus-jose-jwt-version>9.25</nimbus-jose-jwt-version>
 
         <jna.version>4.5.2</jna.version>
 
@@ -219,7 +219,7 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <!--version>1.6.9</version-->
-            <version>1.6.8</version>
+            <version>1.6.11</version>
         </dependency>
 
         <dependency>
