@@ -10,6 +10,18 @@
     
     <packaging>pom</packaging>
 
+	<name>adcsCert</name>
+	<description>Collection of tools to integrate a given ADCS instance into a PKI landscape especially by
+		connection to the ca3s certificate management system.
+	</description>
+	<url>https://github.com/kuehne-trustable-de/adcsCert</url>
+
+	<licenses>
+		<license>
+			<name>European Union Public Licence (EUPL-1.2)</name>
+			<url>https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12</url>
+		</license>
+	</licenses>
   	<developers>
 		<developer>
 			<name>Andreas Kuehne</name>

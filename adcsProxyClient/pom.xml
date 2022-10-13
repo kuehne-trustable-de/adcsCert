@@ -6,10 +6,11 @@
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsProxyClient</artifactId>
 	<packaging>jar</packaging>
-	<name>adcsProxyClient</name>
 	<version>1.2.8</version>
+
+	<name>adcsProxyClient</name>
+	<description>client implementation of the ADCS Proxy</description>
 	<url>https://github.com/kuehne-trustable-de/adcsCert/tree/master/adcsCert/adcsProxyClient</url>
-	<description>client implementation of the ADCS Proxy client</description>
 
 	<developers>
 		<developer>

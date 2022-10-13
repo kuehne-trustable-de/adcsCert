@@ -9,8 +9,11 @@
     <artifactId>adcs-proxy</artifactId>
     <version>1.2.8</version>
     <packaging>jar</packaging>
-    <name>Adcs Proxy</name>
 
+    <name>adcsProxy</name>
+    <description>REST server to offer certificate issuance, revocation and retrieval by an ADCS instance remotely.
+    </description>
+    <url>https://github.com/kuehne-trustable-de/adcsCert</url>
 
 	<licenses>
 		<license>
@@ -33,6 +36,12 @@
 			<organizationUrl>https://trustable.de</organizationUrl>
 		</developer>
 	</developers>
+
+    <scm>
+        <connection>https://github.com/kuehne-trustable-de/adcsCert.git</connection>
+        <developerConnection>https://github.com/kuehne-trustable-de/adcsCert.git</developerConnection>
+        <url>https://github.com/kuehne-trustable-de/adcsCert.git</url>
+    </scm>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
@@ -96,7 +105,7 @@
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
         <!-- jhipster-needle-maven-property -->
 
-        <adcsCert.version>1.2.5</adcsCert.version>
+        <adcsCert.version>1.2.8</adcsCert.version>
         <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
         <certBundleVersion>1.1.1</certBundleVersion>
 
@@ -1000,18 +1009,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-        <profile>
-            <!--
-                Profile for tracing requests with Zipkin.
-            -->
-            <id>zipkin</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-zipkin</artifactId>
-                </dependency>
-            </dependencies>
         </profile>
         <profile>
             <!--

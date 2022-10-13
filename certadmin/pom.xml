@@ -13,6 +13,9 @@
 	<artifactId>adcsCertAdmin</artifactId>
 	<packaging>jar</packaging>
 
+	<name>adcsCertAdmin</name>
+	<description>Java binding for the certadm.dll</description>
+	<url>https://github.com/kuehne-trustable-de/adcsCert</url>
 
 	<licenses>
 		<license>
@@ -35,6 +38,12 @@
 			<organizationUrl>https://trustable.de</organizationUrl>
 		</developer>
 	</developers>
+
+	<scm>
+		<connection>https://github.com/kuehne-trustable-de/adcsCert.git</connection>
+		<developerConnection>https://github.com/kuehne-trustable-de/adcsCert.git</developerConnection>
+		<url>https://github.com/kuehne-trustable-de/adcsCert.git</url>
+	</scm>
 
 	<build>
 		<plugins>

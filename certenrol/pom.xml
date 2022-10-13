@@ -13,6 +13,10 @@
 	<artifactId>adcsCertEnrol</artifactId>
 	<packaging>jar</packaging>
 
+	<name>adcsCertEnrol</name>
+	<description>Java binding for the CertEnroll.dll</description>
+	<url>https://github.com/kuehne-trustable-de/adcsCert</url>
+
 	<licenses>
 		<license>
 			<name>European Union Public Licence (EUPL-1.2)</name>
@@ -34,6 +38,12 @@
 			<organizationUrl>https://trustable.de</organizationUrl>
 		</developer>
 	</developers>
+
+	<scm>
+		<connection>https://github.com/kuehne-trustable-de/adcsCert.git</connection>
+		<developerConnection>https://github.com/kuehne-trustable-de/adcsCert.git</developerConnection>
+		<url>https://github.com/kuehne-trustable-de/adcsCert.git</url>
+	</scm>
 
 	<build>
 		<plugins>

@@ -13,6 +13,9 @@
 	<artifactId>adcsCertCli</artifactId>
 	<packaging>jar</packaging>
 
+	<name>adcsCertCli</name>
+	<description>Java binding for the certcli.dll</description>
+	<url>https://github.com/kuehne-trustable-de/adcsCert</url>
 
 	<licenses>
 		<license>
@@ -36,6 +39,11 @@
 		</developer>
 	</developers>
 
+	<scm>
+		<connection>https://github.com/kuehne-trustable-de/adcsCert.git</connection>
+		<developerConnection>https://github.com/kuehne-trustable-de/adcsCert.git</developerConnection>
+		<url>https://github.com/kuehne-trustable-de/adcsCert.git</url>
+	</scm>
 
 	<build>
 		<plugins>
