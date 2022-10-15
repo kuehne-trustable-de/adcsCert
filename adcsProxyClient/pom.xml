@@ -6,7 +6,7 @@
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsProxyClient</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.8</version>
+	<version>1.2.9</version>
 
 	<name>adcsProxyClient</name>
 	<description>client implementation of the ADCS Proxy</description>
@@ -60,8 +60,8 @@
         <dependencyCheck.skip>false</dependencyCheck.skip>
 
 		<!-- renovabot suggests :
-		<jersey-version>3.0.4</jersey-version -->
-		<jersey-version>3.0.8</jersey-version>
+		<jersey-version>3.0.8</jersey-version-->
+		<jersey-version>2.37</jersey-version>
 
 		<gson-fire-version>1.8.5</gson-fire-version>
 		<gson-version>2.9.1</gson-version>
