@@ -45,7 +45,7 @@
 
 	<properties>
 		<adcsCert.version>1.2.9</adcsCert.version>
-		<cryptoUtil.version>1.3.6</cryptoUtil.version>
+		<cryptoUtil.version>1.3.7</cryptoUtil.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
