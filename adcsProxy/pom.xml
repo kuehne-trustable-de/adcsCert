@@ -74,7 +74,7 @@
         <jhipster-dependencies.version>7.9.3</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
-        <spring-boot.version>2.7.7</spring-boot.version>
+        <spring-boot.version>2.7.8</spring-boot.version>
         <archunit-junit5.version>1.0.1</archunit-junit5.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <jackson-databind-nullable.version>0.2.4</jackson-databind-nullable.version>
@@ -90,9 +90,9 @@
         <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
-        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
-        <checkstyle.version>10.6.0</checkstyle.version>
-        <nohttp-checkstyle.version>0.0.10</nohttp-checkstyle.version>
+        <maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
+        <checkstyle.version>10.7.0</checkstyle.version>
+        <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
         <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
         <modernizer-maven-plugin.version>2.5.0</modernizer-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
@@ -109,9 +109,9 @@
         <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
         <certBundleVersion>1.1.1</certBundleVersion>
 
-	    <cryptoUtil.version>1.3.7</cryptoUtil.version>
+	    <cryptoUtil.version>1.3.11</cryptoUtil.version>
 
-    	<nimbus-jose-jwt-version>9.28</nimbus-jose-jwt-version>
+    	<nimbus-jose-jwt-version>9.30.1</nimbus-jose-jwt-version>
 
         <jna.version>4.5.2</jna.version>
 
