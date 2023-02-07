@@ -6,7 +6,7 @@
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsProxyClient</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.9</version>
+	<version>1.2.10</version>
 
 	<name>adcsProxyClient</name>
 	<description>client implementation of the ADCS Proxy</description>
