@@ -79,7 +79,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <!-- Plugin versions -->
-        <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+        <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
         <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
