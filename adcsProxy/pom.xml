@@ -79,7 +79,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <!-- Plugin versions -->
-        <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+        <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
         <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
@@ -89,8 +89,9 @@
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
+        <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
         <checkstyle.version>10.11.0</checkstyle.version>
         <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
         <git-commit-id-plugin.version>6.0.0</git-commit-id-plugin.version>
@@ -200,7 +201,7 @@
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker-qual</artifactId>
-                <version>3.34.0</version>
+                <version>3.36.0</version>
             </dependency>
 
         </dependencies>
