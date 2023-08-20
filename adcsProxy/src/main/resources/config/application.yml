@@ -14,48 +14,49 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+logging:
+  level:
+    ROOT: DEBUG
+    io.github.jhipster: INFO
+    de.trustable.ca3s.adcs.proxy: DEBUG
+
 feign:
-  circuitbreaker:
-    enabled: true
+  hystrix:
+    enabled: false
   # client:
-  #   config:
-  #     default:
-  #       connectTimeout: 5000
-  #       readTimeout: 5000
+  #     config:
+  #         default:
+  #             connectTimeout: 5000
+  #             readTimeout: 5000
+
+# See https://github.com/Netflix/Hystrix/wiki/Configuration
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          # See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
+          # thread:
+          #     timeoutInMilliseconds: 10000
+  shareSecurityContext: true
+
 management:
   endpoints:
     web:
       base-path: /management
       exposure:
-        include:
-          [
-            "configprops",
-            "env",
-            "health",
-            "info",
-            "jhimetrics",
-            "logfile",
-            "loggers",
-            "prometheus",
-            "threaddump",
-          ]
+        include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump']
   endpoint:
     health:
       show-details: when_authorized
-      roles: "ROLE_ADMIN"
-      probes:
-        enabled: true
+      roles: 'ROLE_ADMIN'
     jhimetrics:
-      enabled: true
+      enabled: false
   info:
     git:
       mode: full
   health:
-    group:
-      liveness:
-        include: livenessState
-      readiness:
-        include: readinessState
     mail:
       enabled: false # When using the MailService, configure an SMTP server and set this to true
   metrics:
@@ -87,22 +88,24 @@ spring:
   application:
     name: adcsProxy
   profiles:
-    # The commented value for `active` can be replaced with valid Spring profiles to load.
-    # Otherwise, it will be filled in by maven when building the JAR file
-    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
-    active: #spring.profiles.active#
-    group:
-      dev:
-        - dev
-        - api-docs
-        # Uncomment to activate TLS for the dev profile
-        #- tls
+    active: prod
+    include:
+    # - swagger
+    # - tls
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
   jmx:
     enabled: false
   messages:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
+  mvc:
+    favicon:
+      enabled: false
   task:
     execution:
       thread-name-prefix: adcs-proxy-task-
@@ -121,7 +124,31 @@ spring:
       console-available: true
 
 server:
+  # plain text port for e.g. monitoring
+  port: 8080
+
+  tls:
+    # port for relevant connections
+    port: 8443
+    # limit the scope of this endpoint to a protected network if possible
+    host: 0.0.0.0
+    # the CN of the ADCS proxy's certificate is derived from the server name.
+    # Add additional names for the certificate here if required. Ensure the given template supports it
+    # additionalSANs: ci-adcs-2.ci.ca3s.org
+    key-store-password: password
+    key-store: /NUL
+    #    ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+    certificate:
+      preExpiryRefreshDays: 5
+    key:
+      # provide the template name after the '@'
+      alias: localADCSAlias@CIWebServer-2days
+      algorithm: RSA
+      length: 4096
+    signing:
+      algorithm: SHA256withRSA
   servlet:
+    context-path: /ADCSConnector
     session:
       cookie:
         http-only: true
@@ -129,7 +156,7 @@ server:
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
-  display-ribbon-on-profiles: "dev"
+  display-ribbon-on-profiles: 'prod'
 
 # ===================================================================
 # JHipster specific properties
@@ -138,16 +165,21 @@ info:
 # ===================================================================
 
 jhipster:
+  security:
+    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        # As this is the PRODUCTION configuration, you MUST change the default key, and store it securely:
+        # - In the JHipster Registry (which includes a Spring Cloud Config server)
+        # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
+        # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
+        base64-secret: YjYyYzMwZDdkY2E5ODJmNTVjYzhiYmFhNDFlNjdiYzFjNGZkNGQzZWIwYmI2MDFiOTMzMTM4NGU3NDgxOTYwZGYzYmE3ZGYxOTAzZDUxODhiZTdjYmMxZTVmZjEzODlmYjdlZDQxMDRlYjQ3ZjQzMzRkM2QwNjIwNWUyYjdjZDg=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
   clientApp:
-    name: "adcsProxyApp"
-  # By default CORS is disabled. Uncomment to enable.
-  # cors:
-  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
-  #   allowed-methods: "*"
-  #   allowed-headers: "*"
-  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
-  #   allow-credentials: true
-  #   max-age: 1800
+    name: 'adcsProxy'
   mail:
     from: adcsProxy@localhost
   api-docs:
@@ -162,22 +194,13 @@ jhipster:
     contact-email: kuehne@trustable.de
     license: Apache License, Version 2.0
     license-url: https://www.apache.org/licenses/LICENSE-2.0.txt
-  security:
-    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# application:
 
 adcs-proxy:
   connection:
+    # Provide a secure protection secret for the incoming connections (you can type `openssl rand -base64 32` on your command line to generate one)    secret: s3cr3t
     secret: s3cr3t
+
+    # leave the settings below 'as is'
     salt: ca3sSalt
     iterations: 4567
     api-key-salt: apiKeySalt

@@ -126,7 +126,7 @@ jhipster:
 
 adcs-proxy:
   connection:
-    secret: s3cr3t
+    # Provide a secure protection secret for the incoming connections (you can type `openssl rand -base64 32` on your command line to generate one)    secret: s3cr3t
     salt: ca3sSalt
     iterations: 4567
     api-key-salt: apiKeySalt
