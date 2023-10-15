@@ -112,7 +112,7 @@
 
 	    <cryptoUtil.version>1.3.21</cryptoUtil.version>
 
-    	<nimbus-jose-jwt-version>9.31</nimbus-jose-jwt-version>
+    	<nimbus-jose-jwt-version>9.36</nimbus-jose-jwt-version>
 
         <jna.version>4.5.2</jna.version>
 
