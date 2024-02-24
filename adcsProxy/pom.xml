@@ -110,7 +110,7 @@
         <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
         <certBundleVersion>1.1.1</certBundleVersion>
 
-	    <cryptoUtil.version>1.3.21</cryptoUtil.version>
+	    <cryptoUtil.version>1.3.24</cryptoUtil.version>
 
     	<nimbus-jose-jwt-version>9.36</nimbus-jose-jwt-version>
 
