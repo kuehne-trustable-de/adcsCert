@@ -57,7 +57,7 @@
 		<maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
 		<junit-version>4.13.2</junit-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <dependencyCheck.version>8.4.0</dependencyCheck.version>
+        <dependencyCheck.version>8.4.3</dependencyCheck.version>
         <dependencyCheck.skip>false</dependencyCheck.skip>
 
 		<!-- renovabot suggests :
