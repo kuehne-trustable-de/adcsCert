@@ -80,7 +80,7 @@
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
-        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
+        <maven-site-plugin.version>3.20.0</maven-site-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
