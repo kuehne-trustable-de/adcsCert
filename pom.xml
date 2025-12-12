@@ -59,9 +59,11 @@
 		<commons-pool2.version>2.12.0</commons-pool2.version>
 		
 		<dependencyCheck.version>12.1.9</dependencyCheck.version>
-		<dependencyCheck.skip>false</dependencyCheck.skip>
-		
- 	</properties>
+		<dependencyCheck.skip>false </dependencyCheck.skip>
+
+        <maven.autoPublish>false</maven.autoPublish>
+
+    </properties>
       	 	
 	<dependencies>
 		<dependency>
@@ -69,7 +71,7 @@
 			<artifactId>jna</artifactId>
 			<version>${jna.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna-platform</artifactId>
@@ -124,29 +126,40 @@
 	          </execution>
 	        </executions>
 	      </plugin>
-		  <plugin>
-		    <groupId>org.apache.maven.plugins</groupId>
-		    <artifactId>maven-gpg-plugin</artifactId>
-		    <version>3.2.5</version>
-			  <executions>
-			    <execution>
-				  <id>sign-artifacts</id>
-				  <phase>deploy</phase>
-				  <goals>
-				    <goal>sign</goal>
-				  </goals>
-				  <configuration>
-				    <keyname>${gpg.keyname}</keyname>
-				    <passphraseServerId>${gpg.keyname}</passphraseServerId>
-				    <gpgArguments>
-				      <arg>--pinentry-mode</arg>
-				      <arg>loopback</arg>
-				    </gpgArguments>
-				  </configuration>
-			    </execution>
-			  </executions>
-		  </plugin>
-        <!-- jhipster-needle-maven-add-plugin -->
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-gpg-plugin</artifactId>
+              <version>3.2.7</version>
+              <executions>
+                  <execution>
+                      <id>sign-artifacts</id>
+                      <phase>deploy</phase>
+                      <goals>
+                          <goal>sign</goal>
+                      </goals>
+                      <configuration>
+                          <keyname>${gpg.keyname}</keyname>
+                          <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                          <gpgArguments>
+                              <arg>--pinentry-mode</arg>
+                              <arg>loopback</arg>
+                          </gpgArguments>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
+
+          <plugin>
+              <groupId>org.sonatype.central</groupId>
+              <artifactId>central-publishing-maven-plugin</artifactId>
+              <version>0.9.0</version>
+              <extensions>true</extensions>
+              <configuration>
+                  <publishingServerId>central</publishingServerId>
+                  <autoPublish>${maven.autoPublish}</autoPublish>
+              </configuration>
+          </plugin>
+          <!-- jhipster-needle-maven-add-plugin -->
 
 		  <plugin>
 			  <groupId>org.codehaus.mojo</groupId>
@@ -165,23 +178,6 @@
 	  </plugins>
     </build>
 
-    <distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>trustable.eu</id>
-			<name>trustable Repository</name>
-			<url>https://trustable.eu/artifactory/ca3s</url>
-			<layout>default</layout>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>true</uniqueVersion>
-			<id>Snap_trustable.eu</id>
-			<name>trustable Snapshots</name>
-			<url>https://trustable.eu/artifactory/ca3s</url>
-			<layout>default</layout>
-		</snapshotRepository>
-	</distributionManagement>
-
 
 	<profiles>
 		<profile>
@@ -193,12 +189,13 @@
 						<artifactId>dependency-check-maven</artifactId>
 						<version>${dependencyCheck.version}</version>
 						<configuration>
-							<cveValidForHours>24</cveValidForHours>
 							<failBuildOnCVSS>4</failBuildOnCVSS>
-							<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
 							<outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
 							<format>HTML</format>
+							<nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
+							<nodeAuditSkipDevDependencies>true</nodeAuditSkipDevDependencies>
 							<skip>${dependencyCheck.skip}</skip>
+							<nvdApiKey>${dependencyCheck.nvdApiKey}</nvdApiKey>
 						</configuration>
 						<executions>
 							<execution>
@@ -220,52 +217,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
-
-					<!--plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-checkstyle-plugin</artifactId>
-						<version>${maven-checkstyle.version}</version>
-						<dependencies>
-							<dependency>
-								<groupId>com.puppycrawl.tools</groupId>
-								<artifactId>checkstyle</artifactId>
-								<version>${checkstyle.version}</version>
-							</dependency>
-							<dependency>
-								<groupId>io.spring.nohttp</groupId>
-								<artifactId>nohttp-checkstyle</artifactId>
-								<version>${spring-nohttp-checkstyle.version}</version>
-							</dependency>
-						</dependencies>
-						<configuration>
-							<configLocation>checkstyle.xml</configLocation>
-							<includes>pom.xml,README.md</includes>
-							<excludes>.git/**/*,target/**/*,node_modules/**/*,node/**/*</excludes>
-							<sourceDirectories>./</sourceDirectories>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>check</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.5</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin-->
 
 				</plugins>
 			</build>
