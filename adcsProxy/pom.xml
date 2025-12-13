@@ -76,7 +76,7 @@
         <spring-boot.version>2.7.18</spring-boot.version>
         <archunit-junit5.version>1.4.1</archunit-junit5.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+        <jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
