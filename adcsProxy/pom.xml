@@ -7,7 +7,7 @@
 
     <groupId>de.trustable.ca3s</groupId>
     <artifactId>adcs-proxy</artifactId>
-    <version>1.2.13</version>
+    <version>1.2.16</version>
     <packaging>jar</packaging>
 
     <name>adcsProxy</name>
@@ -106,7 +106,9 @@
         <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
         <!-- jhipster-needle-maven-property -->
 
-        <adcsCert.version>1.2.13</adcsCert.version>
+        <spring.version>5.3.39</spring.version>
+
+        <adcsCert.version>1.2.16</adcsCert.version>
         <adcsUtilVersion>${adcsCert.version}</adcsUtilVersion>
         <certBundleVersion>1.1.4</certBundleVersion>
 
@@ -115,6 +117,9 @@
     	<nimbus-jose-jwt-version>10.6</nimbus-jose-jwt-version>
 
         <jna.version>4.5.2</jna.version>
+
+        <dependencyCheck.version>12.1.9</dependencyCheck.version>
+        <dependencyCheck.skip>false</dependencyCheck.skip>
 
         <maven.autoPublish>false</maven.autoPublish>
 
@@ -192,11 +197,11 @@
                 <version>2.2.41</version>
             </dependency>
 
-            <dependency>
+            <!--dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.version}</version>
-            </dependency>
+            </dependency-->
 
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -210,8 +215,90 @@
                 <version>${springdoc.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.20.0</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>1.28.0</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hppc -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-hppc</artifactId>
+                <version>2.20.1</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.16</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>1.33</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jcl</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>9.0.113</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-websocket</artifactId>
+                <version>9.0.113</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
 
     <dependencies>
         <dependency>
@@ -231,9 +318,14 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency-->
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
         </dependency>
 
         <dependency>
@@ -281,10 +373,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -793,8 +885,8 @@
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 16.</message>
-                                <version>[1.8,17)</version>
+                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 21.</message>
+                                <version>[1.8,22)</version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
@@ -943,7 +1035,35 @@
 
                 </plugin>
                 <!-- jhipster-needle-maven-add-plugin-management -->
-
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependencyCheck.version}</version>
+                    <configuration>
+                        <failBuildOnCVSS>4</failBuildOnCVSS>
+                        <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
+                        <format>HTML</format>
+                        <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
+                        <nodeAuditSkipDevDependencies>true</nodeAuditSkipDevDependencies>
+                        <skip>${dependencyCheck.skip}</skip>
+                        <nvdApiKey>${dependencyCheck.nvdApiKey}</nvdApiKey>
+                        <suppressionFiles>
+                            <suppressionFile>
+                                ${project.basedir}/src/main/resources/config/dependency-suppression/suppression.xml
+                            </suppressionFile>
+                            <suppressionFile>
+                                ${project.basedir}/src/main/resources/config/dependency-suppression/suppression_flexmark.xml
+                            </suppressionFile>
+                        </suppressionFiles>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
