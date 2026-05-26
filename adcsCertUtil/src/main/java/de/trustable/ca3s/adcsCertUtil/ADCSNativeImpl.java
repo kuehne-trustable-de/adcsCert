@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.jna.platform.win32.COM.util.ComThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,8 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
     public static final String CA_DETAILS_TYPE_INTERMEDIATE = "Intermediate";
     public static final String CA_DETAILS_TYPE_ROOT = "Root";
+
+    public static final String COM_THREAD_TIMEOUT_MILLISEC = "adcs-proxy.com-thread.timeoutInMilliseconds";
 
     static final int CVRC_COLUMN_SCHEMA = 0;
     static final int CVR_SEEK_EQ = 1;
@@ -77,11 +80,23 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     }
 
     public ADCSNativeImpl() throws ADCSException {
+        this(5000L);
+    }
+
+    public ADCSNativeImpl(final long timeoutMilliSec) throws ADCSException {
+
+        ComThread comThread = new ComThread("ADCSNativeImpl COM Thread",
+                timeoutMilliSec,
+                new Thread.UncaughtExceptionHandler() {
+                    public void uncaughtException(Thread t, Throwable e) {
+                        LOG.warn("Uncaught exception in ADCSNativeImpl", e);
+                    }
+                });
 
         // Initialize Factories for COM object creation, one intended for reading and one for creation and revocation
         // Every factory uses a dedicated thread for processing
-        factReadOnly = new Factory();
-        factModify = new Factory();
+        factReadOnly = new Factory(comThread);
+        factModify = new Factory(comThread);
 
         config = getConfig(factReadOnly);
 
