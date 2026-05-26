@@ -225,6 +225,8 @@ jhipster:
 # ===================================================================
 
 adcs-proxy:
+  com-thread:
+    timeoutInMilliseconds: 30000
   connection:
     secret: s3cr3t
     salt: ca3sSalt

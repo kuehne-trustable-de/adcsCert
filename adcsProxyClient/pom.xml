@@ -6,7 +6,7 @@
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>adcsProxyClient</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.16</version>
+	<version>1.2.17</version>
 
 	<name>adcsProxyClient</name>
 	<description>client implementation of the ADCS Proxy</description>
@@ -61,7 +61,7 @@
 
 		<!-- renovabot suggests :
 		<jersey-version>3.0.8</jersey-version-->
-		<jersey-version>4.0.0</jersey-version>
+		<jersey-version>2.43</jersey-version>
 
 		<gson-fire-version>1.9.0</gson-fire-version>
 		<gson-version>2.13.2</gson-version>
@@ -153,6 +153,7 @@
                     <outputDirectory>${project.build.directory}/dependency-check</outputDirectory>
                     <format>HTML</format>
                     <skip>${dependencyCheck.skip}</skip>
+                    <nvdApiKey>${dependencyCheck.nvdApiKey}</nvdApiKey>
 					<suppressionFiles>
 						<suppressionFile>${project.basedir}/dependencychecksuppress.xml</suppressionFile>
 					</suppressionFiles>
@@ -373,7 +374,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson-version}</version>
+			<version>2.20</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

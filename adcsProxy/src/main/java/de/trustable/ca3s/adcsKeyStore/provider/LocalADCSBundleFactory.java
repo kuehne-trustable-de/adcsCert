@@ -40,6 +40,8 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl.COM_THREAD_TIMEOUT_MILLISEC;
+
 public class LocalADCSBundleFactory implements BundleFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(
@@ -60,6 +62,8 @@ public class LocalADCSBundleFactory implements BundleFactory {
     private String signingAlgo = "SHA256withRSA";
     private int keylength = 2048;
     private String[] sanArr = new String[0];
+
+    private long timeoutMillSec = 5000L;
 
     /**
      *
@@ -82,6 +86,10 @@ public class LocalADCSBundleFactory implements BundleFactory {
 
             signingAlgo =
                 propProvider.getProperty(SIGNING_ALGO, "SHA256withRSA");
+
+
+            String timeoutMillSecString = propProvider.getProperty(COM_THREAD_TIMEOUT_MILLISEC, "5000");
+            timeoutMillSec = Long.parseUnsignedLong(timeoutMillSecString);
         }
     }
 
@@ -108,7 +116,7 @@ public class LocalADCSBundleFactory implements BundleFactory {
                 kp.getPrivate()
             );
 
-            LocalADCSService adcsService = new LocalADCSService();
+            LocalADCSService adcsService = new LocalADCSService(timeoutMillSec);
             Map<String, String> attrMap = new HashMap<String, String>();
 
             if (bundleName.contains("@")) {

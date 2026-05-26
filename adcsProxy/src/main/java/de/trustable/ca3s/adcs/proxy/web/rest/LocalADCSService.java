@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import de.trustable.ca3s.adcs.proxy.web.dto.CertificateEnrollmentResponse;
@@ -15,6 +16,8 @@ import de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl;
 import de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector;
 import de.trustable.ca3s.adcsCertUtil.NoLocalADCSException;
 
+import static de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl.COM_THREAD_TIMEOUT_MILLISEC;
+
 @Service
 public class LocalADCSService {
 
@@ -22,22 +25,26 @@ public class LocalADCSService {
 
 	private ADCSWinNativeConnector adcsConnector;
 
-	/**
-	  * build a local service
-	  */
-	public LocalADCSService() {
+    public LocalADCSService() {
+        this(5000L);
+    }
+
+    /**
+      * build a local service
+      */
+	public LocalADCSService(@Value("${adcs-proxy.com-thread.timeoutInMilliseconds:5000}") final long timeoutMilliSec) {
 
 		boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
-		
+
 		if (!isWindows) {
 			LOGGER.info("ADCSConnector available on Windows, only");
 		} else {
 
 			LOGGER.debug("ADCSConnector cTor trying to load Windows native interface classes...");
-			
+
 			do {
 				try {
-					adcsConnector = new ADCSNativeImpl();
+					adcsConnector = new ADCSNativeImpl(timeoutMilliSec);
 					LOGGER.info("ADCSConnector cTor instantiated using Windows native interface");
 					break;
 				}catch( NoLocalADCSException nlae) {
@@ -55,12 +62,12 @@ public class LocalADCSService {
 					break;
 				}
 			} while (true);
-		}	
+		}
 	}
 
 	/**
 	  * build a local service with a given connector
-	 * 
+	 *
 	 * @param adcsConnector
 	 */
 	public LocalADCSService(ADCSWinNativeConnector adcsConnector) {
@@ -73,10 +80,10 @@ public class LocalADCSService {
 	public ADCSWinNativeConnector getADCSConnector() {
 		return adcsConnector;
 	}
-	
-	
+
+
 	public CertificateEnrollmentResponse requestCertificate(CertificateRequestElements cre) throws ADCSException {
-		
+
     	List<CertificateRequestElementsAttributes> reqAttributeList = cre.getAttributes();
     	HashMap<String, String> attrMap = new HashMap<String, String>();
     	for(CertificateRequestElementsAttributes creAttr: reqAttributeList) {
@@ -85,7 +92,7 @@ public class LocalADCSService {
 
     	de.trustable.ca3s.adcsCertUtil.CertificateEnrollmentResponse adcsResp = getADCSConnector().submitRequest(cre.getCsr(), attrMap);
     	CertificateEnrollmentResponse ceResp = new CertificateEnrollmentResponse();
-    	
+
     	Integer reqIdInt = (int)adcsResp.getReqId();
     	ceResp.reqId(reqIdInt);
     	ceResp.status( adcsResp.getStatus().toString());
