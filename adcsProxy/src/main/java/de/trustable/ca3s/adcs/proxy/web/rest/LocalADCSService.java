@@ -16,6 +16,8 @@ import de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl;
 import de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector;
 import de.trustable.ca3s.adcsCertUtil.NoLocalADCSException;
 
+import static de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl.COM_THREAD_TIMEOUT_MILLISEC;
+
 @Service
 public class LocalADCSService {
 
