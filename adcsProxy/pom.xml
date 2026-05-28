@@ -121,7 +121,7 @@
         <dependencyCheck.version>12.1.9</dependencyCheck.version>
         <dependencyCheck.skip>false</dependencyCheck.skip>
 
-        <maven.autoPublish>false</maven.autoPublish>
+        <maven.autoPublish>true</maven.autoPublish>
 
     </properties>
 

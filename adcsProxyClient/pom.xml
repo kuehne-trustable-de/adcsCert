@@ -80,7 +80,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spotless.version>2.21.0</spotless.version>
 
-        <maven.autoPublish>false</maven.autoPublish>
+        <maven.autoPublish>true</maven.autoPublish>
 
     </properties>
 
