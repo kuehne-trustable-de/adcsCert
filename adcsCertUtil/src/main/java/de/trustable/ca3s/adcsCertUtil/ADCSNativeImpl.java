@@ -70,7 +70,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     CCertView cCertViewPEM;
     IEnumCERTVIEWROW certRowPEM;
 
-    String config = "uninitialized";
+    String config;
 
     static {
         // Initialize COM Subsystem
@@ -193,7 +193,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
                 }
                 strbufAttributes.append(key).append(":").append(value);
             }
-            LOG.debug("request attribute list : '" + strbufAttributes.toString() + "'");
+            LOG.debug("request attribute list : '" + strbufAttributes + "'");
 
             Integer status = cCertReq.Submit(requestFormatFlags, b64Csr, strbufAttributes.toString(), config);
 
@@ -286,14 +286,13 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
         LOG.debug("Resubmit status : 0x" + statusAsHex);
 
         if (status == CR_DISP_ISSUED) {
-            String certB64 = retrieveEnrolledCertificate(cCertReq, config, reqId);
-            return certB64;
+            return retrieveEnrolledCertificate(cCertReq, config, reqId);
 
         } else if (status == CR_CRL_UNAVAILABLE) {
             LOG.error("Revocation Server Offline Error : 0x" + statusAsHex);
             throw new ADCSException("resubmitting request failed : Revocation Server Offline Error : 0x" + statusAsHex);
         } else {
-            LOG.error("Unexected resubmit request status 0x" + statusAsHex);
+            LOG.error("Unexpected resubmit request status 0x" + statusAsHex);
             throw new ADCSException("resubmitting request failed with response 0x" + statusAsHex);
         }
     }
@@ -319,6 +318,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 		for( int retry = 0; retry < RETRY_MAX_WAITS; retry++){
 			try{
 				revokeCertifcateTryable(serial, reason, revocationDate);
+                return;
 			}catch(ADCSRetryException retryException){
                 if( retry+1 == RETRY_MAX_WAITS ){
                     LOG.debug("retry count expired, throwing exception (" + retryException.getLocalizedMessage() + ")");
@@ -468,7 +468,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
                 IEnumCERTVIEWCOLUMN cols = certRow.EnumCertViewColumn();
                 cols.Reset();
-                String requestId = "";
+                String requestId;
                 int col = 0;
                 while (cols.Next() != -1) {
                     LOG.debug("#" + col + ": " + cols.GetName() + " " + cols.GetType() + " " + cols.GetValue(0));
@@ -696,7 +696,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
         return new SingleCertView(cCertView, certRowPEM);
     }
 
-    public CCertView createCertView() throws ADCSException {
+    public CCertView createCertView() {
 
         LOG.debug("create new CCertView ");
 
@@ -711,7 +711,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
      * @see de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector#getCATemplates()
      */
     @Override
-    public String[] getCATemplates() throws ADCSException {
+    public String[] getCATemplates() {
         CCertRequest certReq = factReadOnly.createObject(CCertRequest.class);
 
         try {
@@ -726,7 +726,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
             }
             return nameArr;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.info("reading ca templates failed", e);
             return new String[0];
         }
     }
@@ -794,7 +794,6 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
                     sigCertArr[i] = certReq.GetCAProperty(info, CR_PROP_CASIGCERT, i, PROPTYPE_BINARY, 0).toString().replaceAll("\\r\\n", "\\n");
                 }
                 aiDetails.setSigningCerts(sigCertArr);
-                ;
 
                 String[] sigChainArr = new String[count];
 
