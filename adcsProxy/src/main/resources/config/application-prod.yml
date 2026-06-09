@@ -125,6 +125,10 @@ jhipster:
 # ===================================================================
 
 adcs-proxy:
+  com-thread:
+    # waiting period for ADCS API responses, in milliseconds. The default  value ist 5000 msec.
+    # Increase the value if e.g. CRL creation and publishing takes more time.
+    timeoutInMilliseconds: 10000
   connection:
     # Provide a secure protection secret for the incoming connections (you can type `openssl rand -base64 32` on your command line to generate one)    secret: s3cr3t
     salt: ca3sSalt
