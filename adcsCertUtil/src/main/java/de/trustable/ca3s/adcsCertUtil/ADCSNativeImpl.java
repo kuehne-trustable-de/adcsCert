@@ -188,7 +188,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
                     isCOMThreadField.setAccessible(true);
                     Object obj = isCOMThreadField.get(comThread);
                     if (obj instanceof ThreadLocal) {
-                        LOG.debug("isCOMThread {} ", obj);
+                        LOG.debug("isCOMThread {} ", ((ThreadLocal<?>) obj).get());
                     } else {
                         LOG.debug("isCOMThread returns unexpected class {} ", obj.getClass().getName());
                     }
