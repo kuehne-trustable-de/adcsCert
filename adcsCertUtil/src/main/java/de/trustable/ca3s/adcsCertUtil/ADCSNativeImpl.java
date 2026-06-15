@@ -197,6 +197,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
                     timeoutMillisecondsField.setAccessible(true);
                     long timeoutMilliseconds = timeoutMillisecondsField.getLong(comThread);
                     LOG.debug("timeoutMilliseconds {} ", timeoutMilliseconds);
+                    LOG.debug("Dump callstack", new Throwable("show callstack"));
                 }catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException | SecurityException e){
                     LOG.error("Error while accessing COM thread fields", e);
                 }
