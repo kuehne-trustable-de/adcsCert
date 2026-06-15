@@ -1,5 +1,6 @@
 package de.trustable.ca3s.adcsCertUtil;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -160,6 +161,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
     public CertificateEnrollmentResponse submitRequest(final String b64Csr, Map<String, String> attributeMap) throws ADCSException {
 		for( int retry = 0; retry < RETRY_MAX_WAITS; retry++){
 			try{
+
 				return submitRequestTryable(b64Csr, attributeMap);
 			}catch(ADCSRetryException retryException){
 				try {
@@ -175,10 +177,30 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
 
 	public CertificateEnrollmentResponse submitRequestTryable(final String b64Csr, Map<String, String> attributeMap) throws ADCSRetryException, ADCSException {
 
-			LOG.debug("submitRequest starting ");
+        LOG.debug("submitRequest starting ");
 
         try {
 
+            if( LOG.isDebugEnabled()) {
+                try {
+                    ComThread comThread = factModify.getComThread();
+                    Field isCOMThreadField = comThread.getClass().getDeclaredField("isCOMThread");
+                    isCOMThreadField.setAccessible(true);
+                    Object obj = isCOMThreadField.get(comThread);
+                    if (obj instanceof ThreadLocal) {
+                        LOG.debug("isCOMThread {} ", obj);
+                    } else {
+                        LOG.debug("isCOMThread returns unexpected class {} ", obj.getClass().getName());
+                    }
+
+                    Field timeoutMillisecondsField = comThread.getClass().getDeclaredField("timeoutMilliseconds");
+                    timeoutMillisecondsField.setAccessible(true);
+                    long timeoutMilliseconds = timeoutMillisecondsField.getLong(comThread);
+                    LOG.debug("timeoutMilliseconds {} ", timeoutMilliseconds);
+                }catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException | SecurityException e){
+                    LOG.error("Error while accessing COM thread fields", e);
+                }
+            }
             CCertRequest cCertReq = factModify.createObject(CCertRequest.class);
 
             Integer requestFormatFlags = 0;
