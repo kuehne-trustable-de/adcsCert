@@ -44,6 +44,7 @@ public class LocalADCSService {
 
 			do {
 				try {
+                    LOGGER.debug("LocalADCSService builds ADCSConnector with timoeout of {} ms", timeoutMilliSec);
 					adcsConnector = new ADCSNativeImpl(timeoutMilliSec);
 					LOGGER.info("ADCSConnector cTor instantiated using Windows native interface");
 					break;
@@ -54,14 +55,11 @@ public class LocalADCSService {
 					} catch (InterruptedException ie) {
 					    Thread.currentThread().interrupt();
 					}
-				} catch (UnsatisfiedLinkError ule) {
+				} catch (UnsatisfiedLinkError | ADCSException ule) {
 					LOGGER.info("unable to load Windows connection classes, ADCS connection unavailable.", ule);
 					break;
-				} catch (ADCSException e) {
-					LOGGER.info("unable to load Windows connection classes, ADCS connection unavailable.", e);
-					break;
 				}
-			} while (true);
+            } while (true);
 		}
 	}
 
