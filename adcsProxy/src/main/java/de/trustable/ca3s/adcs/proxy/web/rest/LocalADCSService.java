@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,6 @@ import de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl;
 import de.trustable.ca3s.adcsCertUtil.ADCSWinNativeConnector;
 import de.trustable.ca3s.adcsCertUtil.NoLocalADCSException;
 
-import static de.trustable.ca3s.adcsCertUtil.ADCSNativeImpl.COM_THREAD_TIMEOUT_MILLISEC;
-
 @Service
 public class LocalADCSService {
 
@@ -25,13 +24,10 @@ public class LocalADCSService {
 
 	private ADCSWinNativeConnector adcsConnector;
 
-    public LocalADCSService() {
-        this(5000L);
-    }
-
     /**
       * build a local service
       */
+    @Autowired
 	public LocalADCSService(@Value("${adcs-proxy.com-thread.timeoutInMilliseconds:5000}") final long timeoutMilliSec) {
 
 		boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
@@ -83,7 +79,7 @@ public class LocalADCSService {
 	public CertificateEnrollmentResponse requestCertificate(CertificateRequestElements cre) throws ADCSException {
 
     	List<CertificateRequestElementsAttributes> reqAttributeList = cre.getAttributes();
-    	HashMap<String, String> attrMap = new HashMap<String, String>();
+    	HashMap<String, String> attrMap = new HashMap<>();
     	for(CertificateRequestElementsAttributes creAttr: reqAttributeList) {
     		attrMap.put(creAttr.getName(), creAttr.getValue());
     	}
