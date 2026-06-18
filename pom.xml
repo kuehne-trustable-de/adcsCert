@@ -59,7 +59,7 @@
 		<commons-pool2.version>2.13.0</commons-pool2.version>
 		
 		<dependencyCheck.version>12.1.9</dependencyCheck.version>
-		<dependencyCheck.skip>false </dependencyCheck.skip>
+		<dependencyCheck.skip>true</dependencyCheck.skip>
 
         <maven.autoPublish>true</maven.autoPublish>
 

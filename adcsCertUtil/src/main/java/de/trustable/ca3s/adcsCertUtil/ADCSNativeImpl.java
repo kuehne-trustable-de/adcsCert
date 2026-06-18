@@ -197,7 +197,6 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
                     timeoutMillisecondsField.setAccessible(true);
                     long timeoutMilliseconds = timeoutMillisecondsField.getLong(comThread);
                     LOG.debug("timeoutMilliseconds {} ", timeoutMilliseconds);
-                    LOG.debug("Dump callstack", new Throwable("show callstack"));
                 }catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException | SecurityException e){
                     LOG.error("Error while accessing COM thread fields", e);
                 }
@@ -218,7 +217,9 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
             }
             LOG.debug("request attribute list : '" + strbufAttributes + "'");
 
+            long startTime = System.currentTimeMillis();
             Integer status = cCertReq.Submit(requestFormatFlags, b64Csr, strbufAttributes.toString(), config);
+            LOG.info("Submitting request took {} mSec", System.currentTimeMillis() - startTime);
 
             int reqId = cCertReq.GetRequestId();
             LOG.debug("Request Id : " + reqId + " has status : " + status);
@@ -274,7 +275,7 @@ public class ADCSNativeImpl implements ADCSWinNativeConnector {
             handleCOMException(rt);
             throw rt;
         } catch (Exception e) {
-            LOG.info("pool handling eyxception : ", e);
+            LOG.info("pool handling exception : ", e);
             throw new ADCSException(e.getLocalizedMessage());
         } finally {
             System.gc();

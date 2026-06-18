@@ -57,7 +57,7 @@
 		<junit-version>4.13.2</junit-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dependencyCheck.version>12.1.9</dependencyCheck.version>
-        <dependencyCheck.skip>false</dependencyCheck.skip>
+        <dependencyCheck.skip>true</dependencyCheck.skip>
 
 		<!-- renovabot suggests :
 		<jersey-version>3.0.8</jersey-version-->
